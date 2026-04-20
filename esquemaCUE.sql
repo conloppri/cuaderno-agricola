@@ -206,4 +206,37 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fenologia` (
 CONSTRAINT `fk_plantacion_fenologia` FOREIGN KEY(`plantacion_id`) REFERENCES `CuadernoDeCampoDB`.`plantacion`(`plantacion_id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`fertilizante`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fertilizante`(
+`fertilizante_id` INT auto_increment PRIMARY KEY,
+`nombre` VARCHAR(30) NOT NULL,
+`tipo` ENUM("propio", "comercial") NOT NULL,
+`descripcion` VARCHAR(200),
+`nitrogeno` DOUBLE,
+`fosforo` DOUBLE,
+`potasio` DOUBLE
+);
 
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`fertilizacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fertilizacion`(
+`fertilizacion_id` INT auto_increment PRIMARY KEY,
+`plantacion_id` INT NOT NULL,
+`fertilizante_id` INT NOT NULL,
+`dosis_unidad_id` INT NOT NULL,
+`caldo_unidad_id` INT,
+`fecha_inicio` DATE NOT NULL,
+`fecha_fin` DATE,
+`superficie` DOUBLE,
+`tipo_aplicacion` ENUM('fondo','cobertura','fertirrigacion','foliar','localizada'),
+`dosis_cantidad` DOUBLE NOT NULL,
+`caldo_cantidad` DOUBLE,
+`anotaciones` VARCHAR(200),
+CONSTRAINT `fk_plantacion_fert` FOREIGN KEY(`plantacion_id`) REFERENCES `CuadernoDeCampoDB`.`plantacion`(`plantacion_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_fertilizante_fert` FOREIGN KEY(`fertilizante_id`) REFERENCES `CuadernoDeCampoDB`.`fertilizante`(`fertilizante_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_uni_dosis_fert` FOREIGN KEY(`dosis_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_uni_caldo_fert` FOREIGN KEY(`caldo_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) ON DELETE SET NULL ON UPDATE CASCADE
+);
