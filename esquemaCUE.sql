@@ -240,3 +240,21 @@ CONSTRAINT `fk_fertilizante_fert` FOREIGN KEY(`fertilizante_id`) REFERENCES `Cua
 CONSTRAINT `fk_uni_dosis_fert` FOREIGN KEY(`dosis_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
 CONSTRAINT `fk_uni_caldo_fert` FOREIGN KEY(`caldo_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`riego`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`riego`(
+`riego_id` INT auto_increment PRIMARY KEY,
+`plantacion_id` INT NOT NULL,
+`cantidad_unidad_id` INT NOT NULL,
+`fecha_inicio` DATE NOT NULL,
+`fecha_fin` DATE,
+`superficie` DOUBLE,
+`cantidad` DOUBLE,
+`tipo_riego` ENUM("goteo", "aspersion", "microaspersion", "inundacion", "surcos", "pivot", "manual"),
+`tipo_energia` ENUM("electrica", "combustible", "solar", "gravedad"),
+`origen_agua` ENUM("subterranea", "superficial", "embalse", "rio", "canal", "reciclada", "desalada", "red_publica"),
+CONSTRAINT `fk_plantacion_riego` FOREIGN KEY(`plantacion_id`) REFERENCES `CuadernoDeCampoDB`.`plantacion`(`plantacion_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_uni_cantidad_riego` FOREIGN KEY(`cantidad_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) ON DELETE RESTRICT ON UPDATE CASCADE
+);
