@@ -230,6 +230,9 @@ CONSTRAINT `fk_provincia_personal`
   FOREIGN KEY(`provincia_id`) REFERENCES `CuadernoDeCampoDB`.`provincia`(`provincia_id`) 
   ON DELETE CASCADE 
   ON UPDATE CASCADE
+);
+
+-- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`fertilizante`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fertilizante`(
