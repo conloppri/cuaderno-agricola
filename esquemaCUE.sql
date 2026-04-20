@@ -230,5 +230,96 @@ CONSTRAINT `fk_provincia_personal`
   FOREIGN KEY(`provincia_id`) REFERENCES `CuadernoDeCampoDB`.`provincia`(`provincia_id`) 
   ON DELETE CASCADE 
   ON UPDATE CASCADE
+-- Tabla `CuadernoDeCampoDB`.`fertilizante`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fertilizante`(
+`fertilizante_id` INT auto_increment PRIMARY KEY,
+`nombre` VARCHAR(30) NOT NULL,
+`tipo` ENUM("propio", "comercial") NOT NULL,
+`descripcion` VARCHAR(200),
+`nitrogeno` DOUBLE,
+`fosforo` DOUBLE,
+`potasio` DOUBLE
+);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`fertilizacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fertilizacion`(
+`fertilizacion_id` INT auto_increment PRIMARY KEY,
+`plantacion_id` INT NOT NULL,
+`fertilizante_id` INT NOT NULL,
+`dosis_unidad_id` INT NOT NULL,
+`caldo_unidad_id` INT,
+`fecha_inicio` DATE NOT NULL,
+`fecha_fin` DATE,
+`superficie` DOUBLE,
+`tipo_aplicacion` ENUM('fondo','cobertura','fertirrigacion','foliar','localizada'),
+`dosis_cantidad` DOUBLE NOT NULL,
+`caldo_cantidad` DOUBLE,
+`anotaciones` VARCHAR(200),
+CONSTRAINT `fk_plantacion_fert` FOREIGN KEY(`plantacion_id`) REFERENCES `CuadernoDeCampoDB`.`plantacion`(`plantacion_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_fertilizante_fert` FOREIGN KEY(`fertilizante_id`) REFERENCES `CuadernoDeCampoDB`.`fertilizante`(`fertilizante_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_uni_dosis_fert` FOREIGN KEY(`dosis_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_uni_caldo_fert` FOREIGN KEY(`caldo_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`riego`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`riego`(
+`riego_id` INT auto_increment PRIMARY KEY,
+`plantacion_id` INT NOT NULL,
+`cantidad_unidad_id` INT NOT NULL,
+`fecha_inicio` DATE NOT NULL,
+`fecha_fin` DATE,
+`superficie` DOUBLE,
+`cantidad` DOUBLE,
+`tipo_riego` ENUM("goteo", "aspersion", "microaspersion", "inundacion", "surcos", "pivot", "manual"),
+`tipo_energia` ENUM("electrica", "combustible", "solar", "gravedad"),
+`origen_agua` ENUM("subterranea", "superficial", "embalse", "rio", "canal", "reciclada", "desalada", "red_publica"),
+CONSTRAINT `fk_plantacion_riego` FOREIGN KEY(`plantacion_id`) REFERENCES `CuadernoDeCampoDB`.`plantacion`(`plantacion_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_uni_cantidad_riego` FOREIGN KEY(`cantidad_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`tipo_maquina`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`tipo_maquina`(
+`tipo_maquina_id` INT auto_increment PRIMARY KEY,
+`nombre` VARCHAR(30) NOT NULL,
+`descripcion` VARCHAR(200) NULL,
+`categoria` ENUM("laboreo", "siembra", "tratamiento", "riego", "recoleccion"),
+`uso` ENUM("laboreo", "siembra", "tratamiento", "fertilizacion", "riego", "transporte", "recoleccion")
+);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`maquinaria`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`maquinaria`(
+`maquinaria_id` INT auto_increment PRIMARY KEY,
+`alias` VARCHAR(45) NULL,
+`titular` VARCHAR(45) NULL,
+`marca` VARCHAR(45) NULL,
+`modelo` VARCHAR(45) NULL,
+`num_roma` VARCHAR(45) NULL,
+`num_reganip` VARCHAR(45) NULL,
+`matricula` VARCHAR(10) NULL,
+`estado` ENUM("operativa", "en_mantenimiento", "fuera_de_servicio") NULL,
+`fecha_adquisicion` DATE NULL,
+`ultima_inspeccion` DATE NULL,
+`caducidad_itv` DATE NULL,
+`observaciones` VARCHAR(200) NULL,
+`tipo_maquina_id` INT NOT NULL,
+`explotacion_ID` VARCHAR(10) NOT NULL,
+CONSTRAINT `fk_tipo_maquina_maquinaria` 
+  FOREIGN KEY(`tipo_maquina_id`) REFERENCES `CuadernoDeCampoDB`.`tipo_maquina`(`tipo_maquina_id`) 
+  ON DELETE CASCADE 
+  ON UPDATE CASCADE,
+CONSTRAINT `fk_explotacion_maquinaria` 
+  FOREIGN KEY(`explotacion_ID`) REFERENCES `CuadernoDeCampoDB`.`explotacion`(`explotacion_ID`) 
+  ON DELETE CASCADE 
+  ON UPDATE CASCADE
 );
 
