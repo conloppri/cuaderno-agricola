@@ -329,7 +329,7 @@ CONSTRAINT `fk_explotacion_maquinaria`
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`cosecha`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `CuadernoDeCamposDB`.`cosecha`(
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`cosecha`(
 `cosecha_id` INT auto_increment PRIMARY KEY,
 `plantacion_id` INT NOT NULL,
 `maquinaria_id` INT,
@@ -344,4 +344,52 @@ CONSTRAINT `fk_plantacion_cosecha` FOREIGN KEY(`plantacion_id`) REFERENCES `Cuad
 CONSTRAINT `fk_maquinaria_cosecha` FOREIGN KEY(`maquinaria_id`) REFERENCES `CuadernoDeCampoDB`.`maquinaria`(`maquinaria_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
 CONSTRAINT `fk_personal_cosecha` FOREIGN KEY(`personal_id`) REFERENCES `CuadernoDeCampoDB`.`personal`(`personal_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
 CONSTRAINT `fk_uni_cantidad_cosecha` FOREIGN KEY(`cantidad_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`cosecha`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`cosecha`(
+`cosecha_id` INT auto_increment PRIMARY KEY,
+`plantacion_id` INT NOT NULL,
+`maquinaria_id` INT,
+`personal_id` INT,
+`cantidad_unidad_id` INT NOT NULL,
+`tipo_cosecha` ENUM("manual", "mecanizada", "semimecanizada"),
+`metodo_cosecha` ENUM("vareo", "vibrador", "cosechadora"), 
+`producto` VARCHAR(30) NOT NULL,
+`cantidad` DOUBLE NOT NULL,
+`superficie` DOUBLE,
+CONSTRAINT `fk_plantacion_cosecha` FOREIGN KEY(`plantacion_id`) REFERENCES `CuadernoDeCampoDB`.`plantacion`(`plantacion_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_maquinaria_cosecha` FOREIGN KEY(`maquinaria_id`) REFERENCES `CuadernoDeCampoDB`.`maquinaria`(`maquinaria_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_personal_cosecha` FOREIGN KEY(`personal_id`) REFERENCES `CuadernoDeCampoDB`.`personal`(`personal_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_uni_cantidad_cosecha` FOREIGN KEY(`cantidad_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`cliente`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`cliente`(
+`cliente_id` INT auto_increment PRIMARY KEY,
+`nif` VARCHAR(15) NOT NULL,
+`nombre` VARCHAR(50),
+`direccion` VARCHAR(100),
+`num_rgseaa` VARCHAR(20)
+);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`comercial`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`comercial`(
+`transaccion_id` INT auto_increment PRIMARY KEY,
+`cosecha_id` INT NOT NULL,
+`cantidad_unidad_id` INT NOT NULL,
+`cliente_id` INT NOT NULL,
+`cantidad` DOUBLE NOT NULL,
+`num_albaran` VARCHAR(20),
+CONSTRAINT `fk_cosecha_comercial` FOREIGN KEY(`cosecha_id`) REFERENCES `CuadernoDeCampoDB`.`cosecha`(`cosecha_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_cliente_comercial` FOREIGN KEY(`cliente_id`) REFERENCES `CuadernoDeCampoDB`.`cliente`(`cliente_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+CONSTRAINT `fk_uni_cantidad_comercial` FOREIGN KEY(`cantidad_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
