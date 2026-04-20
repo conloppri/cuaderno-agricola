@@ -206,4 +206,29 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fenologia` (
 CONSTRAINT `fk_plantacion_fenologia` FOREIGN KEY(`plantacion_id`) REFERENCES `CuadernoDeCampoDB`.`plantacion`(`plantacion_id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`personal`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`personal` (
+`personal_id` INT auto_increment PRIMARY KEY,
+`dni` VARCHAR(9) NOT NULL,
+`nombre` VARCHAR(45),
+`apellidos` VARCHAR(45),
+`telefono` VARCHAR(15),
+`email` VARCHAR(45),
+`direccion` VARCHAR(45),
+`nacionalidad` VARCHAR(45),
+`rol` ENUM("propietario", "tecnico", "trabajador", "administrativo"),
+`municipio_id` INT NOT NULL,
+`provincia_id` INT NOT NULL,
+CONSTRAINT `fk_municipio_personal` 
+  FOREIGN KEY(`municipio_id`) REFERENCES `CuadernoDeCampoDB`.`municipio`(`municipio_id`) 
+  ON DELETE CASCADE 
+  ON UPDATE CASCADE,
+CONSTRAINT `fk_provincia_personal` 
+  FOREIGN KEY(`provincia_id`) REFERENCES `CuadernoDeCampoDB`.`provincia`(`provincia_id`) 
+  ON DELETE CASCADE 
+  ON UPDATE CASCADE
+);
 
