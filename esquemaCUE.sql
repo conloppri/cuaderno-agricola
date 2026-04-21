@@ -383,3 +383,47 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fitosanitario`(
 `descripcion` VARCHAR(100),
 `stock` INT
 );
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`tratamientos`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`tratamientos`(
+`tratamientos_id` INT auto_increment PRIMARY KEY,
+`fecha` DATETIME,
+`descripcion` VARCHAR(100),
+`modo_aplicacion` VARCHAR(45),
+`dosis` DOUBLE,
+`caldo` DOUBLE,
+`superficie_tratada` DOUBLE,
+`fitosanitario_id` INT NOT NULL,
+`plantacion_id` INT NOT NULL,
+CONSTRAINT `fk_fitosanitarios_tratamientos` 
+  FOREIGN KEY(`fitosanitario_id`) REFERENCES `CuadernoDeCampoDB`.`fitosanitario`(`fitosanitario_id`) 
+  ON DELETE CASCADE 
+  ON UPDATE CASCADE,
+CONSTRAINT `fk_plantacion_tratamientos` 
+  FOREIGN KEY(`plantacion_id`) REFERENCES `CuadernoDeCampoDB`.`plantacion`(`plantacion_id`) 
+  ON DELETE CASCADE 
+  ON UPDATE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`analitica`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`analitica`(
+`analitica_id` INT auto_increment PRIMARY KEY,
+`fecha` DATETIME,
+`tipo_analisis` VARCHAR(20),
+`material` VARCHAR(20),
+`nombre_laboratiorio` VARCHAR(45),
+`nif_laboratorio` VARCHAR(15),
+`parametros_suelo` VARCHAR(200),
+`n_boletin_analisis` VARCHAR(10),
+`anotaciones` VARCHAR(200),
+`plantacion_id` INT NOT NULL,
+CONSTRAINT `fk_plantacion_analitica` 
+  FOREIGN KEY(`plantacion_id`) REFERENCES `CuadernoDeCampoDB`.`plantacion`(`plantacion_id`) 
+  ON DELETE CASCADE 
+  ON UPDATE CASCADE
+);
