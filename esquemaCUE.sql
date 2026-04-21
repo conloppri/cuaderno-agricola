@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`usuarios_explotacion` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`provincia`(
 `provincia_id` INT NOT NULL PRIMARY KEY,
-`nombre` VARCHAR(20) NOT NULL
+`nombre` VARCHAR(30) NOT NULL
 );
   
 -- -----------------------------------------------------
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`provincia`(
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`municipio`(
 `municipio_id` INT NOT NULL PRIMARY KEY,
 `provincia_id` INT NOT NULL,
-`nombre` VARCHAR(20) NOT NULL,
+`nombre` VARCHAR(50) NOT NULL,
 CONSTRAINT `fk_provincia_municipio` FOREIGN KEY(`provincia_id`) REFERENCES `CuadernoDeCampoDB`.`provincia`(`provincia_id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -105,7 +105,7 @@ CONSTRAINT `fk_provincia_municipio` FOREIGN KEY(`provincia_id`) REFERENCES `Cuad
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`unidad`(
 `unidad_id` INT auto_increment PRIMARY KEY,
 `unidad` VARCHAR(10),
-`tipo` ENUM("volumen", "peso", "densidad", "cosecha")  
+`tipo` ENUM("volumen", "masa", "densidad", "cantidad", "concentracion", "por_superficie")   
 );
     
 -- -----------------------------------------------------
