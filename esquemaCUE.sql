@@ -373,3 +373,13 @@ CONSTRAINT `fk_cosecha_comercial` FOREIGN KEY(`cosecha_id`) REFERENCES `Cuaderno
 CONSTRAINT `fk_cliente_comercial` FOREIGN KEY(`cliente_id`) REFERENCES `CuadernoDeCampoDB`.`cliente`(`cliente_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
 CONSTRAINT `fk_uni_cantidad_comercial` FOREIGN KEY(`cantidad_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`fitosanitario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fitosanitario`(
+`fitosanitario_id` INT auto_increment PRIMARY KEY,
+`nombre` VARCHAR(20) NOT NULL,
+`descripcion` VARCHAR(100),
+`stock` INT
+);
