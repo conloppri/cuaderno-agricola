@@ -292,18 +292,6 @@ CONSTRAINT `fk_uni_cantidad_riego` FOREIGN KEY(`cantidad_unidad_id`) REFERENCES 
 );
 
 -- -----------------------------------------------------
--- Tabla `CuadernoDeCampoDB`.`tipo_maquina`
--- -----------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`tipo_maquina`(
-`tipo_maquina_id` INT auto_increment PRIMARY KEY,
-`nombre` VARCHAR(30) NOT NULL,
-`descripcion` VARCHAR(200) NULL,
-`categoria` ENUM("laboreo", "siembra", "tratamiento", "riego", "recoleccion"),
-`uso` ENUM("laboreo", "siembra", "tratamiento", "fertilizacion", "riego", "transporte", "recoleccion")
-);
-
--- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`maquinaria`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`maquinaria`(
@@ -320,12 +308,8 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`maquinaria`(
 `ultima_inspeccion` DATE NULL,
 `caducidad_itv` DATE NULL,
 `observaciones` VARCHAR(200) NULL,
-`tipo_maquina_id` INT NOT NULL,
+`tipo_maquina_id` ENUM('tractor','arado','subsolador','cultivador','grada','sembradora','plantadora','pulverizador','atomizador','cosechadora','vibrador','remolque','desbrozadora','trituradora','otros') NOT NULL,
 `explotacion_id` INT NOT NULL,
-CONSTRAINT `fk_tipo_maquina_maquinaria` 
-  FOREIGN KEY(`tipo_maquina_id`) REFERENCES `CuadernoDeCampoDB`.`tipo_maquina`(`tipo_maquina_id`) 
-  ON DELETE CASCADE 
-  ON UPDATE CASCADE,
 CONSTRAINT `fk_explotacion_maquinaria` 
   FOREIGN KEY(`explotacion_id`) REFERENCES `CuadernoDeCampoDB`.`explotacion`(`explotacion_id`) 
   ON DELETE CASCADE 
