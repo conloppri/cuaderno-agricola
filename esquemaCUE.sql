@@ -433,3 +433,20 @@ CONSTRAINT `fk_plantacion_analitica`
   ON DELETE CASCADE 
   ON UPDATE CASCADE
 );
+
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`instalacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`instalacion`(
+`instalacion_id` INT auto_increment PRIMARY KEY,
+`nombre` VARCHAR(45) NULL,
+`tipo` ENUM("nave", "almacen", "balsa", "silo") NULL,
+`superficie` DOUBLE NULL,
+`estado` ENUM("Disponible", "No disponible", "En mantenimiento") NULL,
+`explotacion_id` INT NOT NULL,
+CONSTRAINT `fk_explotacion_instalacion` 
+  FOREIGN KEY(`explotacion_id`) REFERENCES `CuadernoDeCampoDB`.`explotacion`(`explotacion_id`) 
+  ON DELETE CASCADE 
+  ON UPDATE CASCADE
+);
