@@ -15,7 +15,7 @@ INSERT INTO `CuadernoDeCampoDB`.`unidad` (unidad, tipo) VALUES
 -- -----------------------------------------------------
 
 INSERT INTO `CuadernoDeCampoDB`.`provincia` (provincia_id, nombre) VALUES
-(1, 'Araba/Álava'), (2, 'Albacete'),(3, 'Alicante'),(4, 'Almería'),(5, 'Ávila'),(6, 'Badajoz'),(7, 'Islas Baleares'),(8, 'Barcelona'),(9, 'Burgos'),
+(01, 'Araba/Álava'), (02, 'Albacete'),(03, 'Alicante'),(04, 'Almería'),(05, 'Ávila'),(06, 'Badajoz'),(07, 'Islas Baleares'),(08, 'Barcelona'),(09, 'Burgos'),
 (10, 'Cáceres'),(11, 'Cádiz'),(12, 'Castellón'),(13, 'Ciudad Real'),(14, 'Córdoba'),(15, 'A Coruña'),(16, 'Cuenca'),(17, 'Girona'),(18, 'Granada'),(19, 'Guadalajara'),
 (20, 'Gipuzkoa'),(21, 'Huelva'),(22, 'Huesca'),(23, 'Jaén'),(24, 'León'),(25, 'Lleida'),(26, 'La Rioja'),(27, 'Lugo'),(28, 'Madrid'),(29, 'Málaga'),
 (30, 'Murcia'),(31, 'Navarra'),(32, 'Ourense'),(33, 'Asturias'),(34, 'Palencia'),(35, 'Las Palmas'),(36, 'Pontevedra'),(37, 'Salamanca'),(38, 'Santa Cruz de Tenerife'),(39, 'Cantabria'),

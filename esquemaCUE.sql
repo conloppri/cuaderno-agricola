@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`usuarios` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`organizacion` (
   `organizacion_id` INT auto_increment NOT NULL,
-  `nif` VARCHAR(10) NOT NULL,
+  `nif` VARCHAR(9) NOT NULL,
   `nombre_razon_social` VARCHAR(45) NULL,
   `nombre_organizacion` VARCHAR(45) NULL,
   `nreg_exp_nacional` VARCHAR(45) NULL,
