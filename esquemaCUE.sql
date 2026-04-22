@@ -308,7 +308,7 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`maquinaria`(
 `ultima_inspeccion` DATE NULL,
 `caducidad_itv` DATE NULL,
 `observaciones` VARCHAR(200) NULL,
-`tipo_maquina_id` ENUM('tractor','arado','subsolador','cultivador','grada','sembradora','plantadora','pulverizador','atomizador','cosechadora','vibrador','remolque','desbrozadora','trituradora','otros') NOT NULL,
+`tipo_maquina` ENUM('tractor','arado','subsolador','cultivador','grada','sembradora','plantadora','pulverizador','atomizador','cosechadora','vibrador','remolque','desbrozadora','trituradora','otros') NOT NULL,
 `explotacion_id` INT NOT NULL,
 CONSTRAINT `fk_explotacion_maquinaria` 
   FOREIGN KEY(`explotacion_id`) REFERENCES `CuadernoDeCampoDB`.`explotacion`(`explotacion_id`) 
