@@ -146,10 +146,11 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`unidad_gestion`(
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`cultivo`(
 `cultivo_id` INT auto_increment PRIMARY KEY,
-`genero` VARCHAR(20),
+`nombre` VARCHAR(20),
 `variedad` VARCHAR(20),
+UNIQUE(`nombre`, `variedad`), -- Evitar duplicados
 `descripcion` VARCHAR(100),
-`tipo` ENUM("leñoso","herbaceo", "horticola", "forrejero", "ganadero"),
+`tipo` ENUM("leñoso","herbaceo", "horticola", "forrajero"),
 `ciclo` ENUM("anual", "bianual", "perenne")
 ); 
 
@@ -157,10 +158,10 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`cultivo`(
 -- Tabla `CuadernoDeCampoDB`.`ecorregimen`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`ecorregimen`(
-`ecorregimen_id` INT auto_increment PRIMARY KEY,
-`nombre` VARCHAR(20) NOT NULL, 
+`ecorregimen_id` VARCHAR(4) PRIMARY KEY,
+`nombre` VARCHAR(100) NOT NULL, 
 `descripcion` VARCHAR(200),
-`active` BOOLEAN
+`activo` BOOLEAN
 );
 
 -- -----------------------------------------------------
@@ -191,7 +192,7 @@ CONSTRAINT `fk_unidad_densidad` FOREIGN KEY(`densidad_unidad`) REFERENCES `Cuade
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`ecorregimen_plantacion`(
-`ecorregimen_id` INT NOT NULL,
+`ecorregimen_id` VARCHAR(4) NOT NULL,
 `plantacion_id` INT NOT NULL,
 PRIMARY KEY(`ecorregimen_id`, `plantacion_id`),
 CONSTRAINT `fk_ecorregimen` FOREIGN KEY(`ecorregimen_id`) REFERENCES `CuadernoDeCampoDB`.`ecorregimen`(`ecorregimen_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
