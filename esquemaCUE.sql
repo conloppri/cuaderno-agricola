@@ -27,9 +27,10 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`provincia`(
 -- Tabla `CuadernoDeCampoDB`.`municipio`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`municipio`(
-`municipio_id` INT NOT NULL PRIMARY KEY,
 `provincia_id` INT NOT NULL,
+`municipio_id` INT NOT NULL,
 `nombre` VARCHAR(50) NOT NULL,
+CONSTRAINT `pk_municipio` PRIMARY KEY(`provincia_id`, `municipio_id`),
 CONSTRAINT `fk_provincia_municipio` FOREIGN KEY(`provincia_id`) REFERENCES `CuadernoDeCampoDB`.`provincia`(`provincia_id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`organizacion` (
   `nreg_exp_autonomico` VARCHAR(45) NULL,
   `regepa` VARCHAR(15) NULL,
   `direccion` VARCHAR(45) NULL,
-  `municipio_id` INT NULL, 
+  `municipio_id` INT NULL,
   `cod_postal` VARCHAR(5) NULL,
   `provincia_id` INT NULL, 
   `comunidad` VARCHAR(45) NULL,
@@ -64,8 +65,7 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`organizacion` (
   `tlf_movil` VARCHAR(12) NULL,
   `email` VARCHAR(45) NULL,
   PRIMARY KEY (`organizacion_id`),
-  CONSTRAINT `fk_provincia_organizacion` FOREIGN KEY(`provincia_id`) REFERENCES `CuadernoDeCampoDB`.`provincia`(`provincia_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `fk_municipio_organizacion` FOREIGN KEY(`municipio_id`) REFERENCES `CuadernoDeCampoDB`.`municipio`(`municipio_id`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `fk_municipio_organizacion` FOREIGN KEY(`municipio_id`, `provincia_id`) REFERENCES `CuadernoDeCampoDB`.`municipio`(`municipio_id`, `provincia_id`) ON DELETE RESTRICT ON UPDATE CASCADE
   );
   
 -- -----------------------------------------------------
@@ -125,8 +125,7 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`parcela`(
 `nombre` VARCHAR(20) NOT NULL,
 `superficie` DOUBLE,
 CONSTRAINT `fk_explotacion_parcela` FOREIGN KEY(`explotacion_id`) REFERENCES `CuadernoDeCampoDB`.`explotacion`(`explotacion_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-CONSTRAINT `fk_provincia_parcela` FOREIGN KEY(`provincia_id`) REFERENCES `CuadernoDeCampoDB`.`provincia`(`provincia_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-CONSTRAINT `fk_municipio_parcela` FOREIGN KEY(`municipio_id`) REFERENCES `CuadernoDeCampoDB`.`municipio`(`municipio_id`) ON DELETE RESTRICT ON UPDATE CASCADE
+CONSTRAINT `fk_municipio_parcela` FOREIGN KEY(`municipio_id`, `provincia_id`) REFERENCES `CuadernoDeCampoDB`.`municipio`(`municipio_id`, `provincia_id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- -----------------------------------------------------
@@ -229,11 +228,7 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`personal` (
 `municipio_id` INT NOT NULL,
 `provincia_id` INT NOT NULL,
 CONSTRAINT `fk_municipio_personal` 
-  FOREIGN KEY(`municipio_id`) REFERENCES `CuadernoDeCampoDB`.`municipio`(`municipio_id`) 
-  ON DELETE CASCADE 
-  ON UPDATE CASCADE,
-CONSTRAINT `fk_provincia_personal` 
-  FOREIGN KEY(`provincia_id`) REFERENCES `CuadernoDeCampoDB`.`provincia`(`provincia_id`) 
+  FOREIGN KEY(`municipio_id`, `provincia_id`) REFERENCES `CuadernoDeCampoDB`.`municipio`(`municipio_id`, `provincia_id`) 
   ON DELETE CASCADE 
   ON UPDATE CASCADE
 );
