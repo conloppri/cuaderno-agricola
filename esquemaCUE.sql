@@ -39,8 +39,8 @@ CONSTRAINT `fk_provincia_municipio` FOREIGN KEY(`provincia_id`) REFERENCES `Cuad
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`usuarios` (
   `id` INT auto_increment NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NULL,
+  `email` VARCHAR(50) NOT NULL,
+  `password_hash` VARCHAR(255) NULL,
   `fecha_creacion` DATETIME,
   PRIMARY KEY (`id`));
 
@@ -53,9 +53,6 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`organizacion` (
   `nif` VARCHAR(9) NOT NULL,
   `nombre_razon_social` VARCHAR(45) NULL,
   `nombre_organizacion` VARCHAR(45) NULL,
-  `nreg_exp_nacional` VARCHAR(45) NULL,
-  `nreg_exp_autonomico` VARCHAR(45) NULL,
-  `regepa` VARCHAR(15) NULL,
   `direccion` VARCHAR(45) NULL,
   `municipio_id` INT NULL,
   `cod_postal` VARCHAR(5) NULL,
@@ -75,6 +72,8 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`explotacion` (
   `explotacion_id` INT auto_increment NOT NULL,
   `nombre` VARCHAR(45) NULL,
   `alias` VARCHAR(45) NULL,
+  `codigo_siex` VARCHAR(14) NULL,
+  `codigo_rea` VARCHAR(40) NULL,
   `comunidad` VARCHAR(45) NULL,
   `organizacion_id` INT NOT NULL,
   PRIMARY KEY (`explotacion_id`),
