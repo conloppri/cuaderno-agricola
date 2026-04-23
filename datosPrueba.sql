@@ -1,4 +1,6 @@
+-- -----------------------------------------------------
 -- Script de inserción de datos de prueba para la base de datos CuadernoDeCampoDB
+-- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`organizacion`
@@ -11,7 +13,6 @@ INSERT INTO `CuadernoDeCampoDB`.`organizacion` (nif, nombre_razon_social, nombre
 ('E55667788', 'Frutas y Verduras del Sur', 'Frutas y Verduras del Sur', 'Paseo del Sur 654', 5, '29080', 29, 'Andalucía', '952345678', '656789012', 'frutasyverdurasdel sur@example.com'),
 ('F99887766', 'Agropecuaria El Campo', 'Agropecuaria El Campo', 'Avenida del Campo 987', 6, '33080', 33, 'Asturias', '985678901', '667890123', 'agropecuariaelcampo@example.com');
 
-
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`explotacion`
 -- -----------------------------------------------------
@@ -23,7 +24,6 @@ INSERT INTO `CuadernoDeCampoDB`.`explotacion` (nombre, alias, codigo_siex, codig
 ('Explotación La Frutera', 'La Frutera', 'ES003456789123', 'ES003456789123', 'Andalucía', 5),
 ('Explotación El Prado', 'El Prado', 'ES007654321098', 'ES007654321098', 'Asturias', 6);
 
-
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`usuarios`
 -- -----------------------------------------------------
@@ -32,3 +32,23 @@ INSERT INTO `CuadernoDeCampoDB`.`usuarios` (email, password_hash, fecha_creacion
 ('user2@example.com', '$2b$12$...', '2023-01-01 00:00:00'),
 ('user3@example.com', '$2b$12$...', '2023-01-01 00:00:00'),
 ('user4@example.com', '$2b$12$...', '2023-01-01 00:00:00');
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`usuarios_explotacion`
+-- -----------------------------------------------------
+INSERT INTO `CuadernoDeCampoDB`.`usuarios_explotacion` (usuario_id, explotacion_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`municipio`
+-- -----------------------------------------------------
+INSERT INTO `CuadernoDeCampoDB`.`municipio` (nombre, municipio_id, provincia_id) VALUES
+('Madrid', 28, 28),
+('Barcelona', 8, 8),
+('Sevilla', 41, 41),
+('A Coruña', 15, 15),
+('Málaga', 29, 29),
+('Oviedo', 33, 33);
