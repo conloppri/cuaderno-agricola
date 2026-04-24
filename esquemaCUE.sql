@@ -27,9 +27,10 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`provincia`(
 -- Tabla `CuadernoDeCampoDB`.`municipio`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`municipio`(
-`municipio_id` INT NOT NULL PRIMARY KEY,
+`municipio_id` INT NOT NULL,
 `provincia_id` INT NOT NULL,
 `nombre` VARCHAR(50) NOT NULL,
+PRIMARY KEY(`provincia_id`, `municipio_id`),
 CONSTRAINT `fk_provincia_municipio` FOREIGN KEY(`provincia_id`) REFERENCES `CuadernoDeCampoDB`.`provincia`(`provincia_id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
