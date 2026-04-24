@@ -16,13 +16,13 @@ INSERT INTO `CuadernoDeCampoDB`.`organizacion` (nif, nombre_razon_social, nombre
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`explotacion`
 -- -----------------------------------------------------
-INSERT INTO `CuadernoDeCampoDB`.`explotacion` (nombre, alias, codigo_siex, codigo_rea, comunidad, organizacion_id) VALUES
-('Explotación La Verde', 'La Verde', 'ES001234567891', 'ES001234567891', 'Madrid', 1),
-('Explotación El Trigal', 'El Trigal', 'ES009876543210', 'ES009876543210', 'Cataluña', 2),
-('Explotación La Huerta', 'La Huerta', 'ES002345678912', 'ES002345678912', 'Andalucía', 3),
-('Explotación El Bosque', 'El Bosque', 'ES008765432109', 'ES008765432109', 'Galicia', 4),
-('Explotación La Frutera', 'La Frutera', 'ES003456789123', 'ES003456789123', 'Andalucía', 5),
-('Explotación El Prado', 'El Prado', 'ES007654321098', 'ES007654321098', 'Asturias', 6);
+INSERT INTO `CuadernoDeCampoDB`.`explotacion` (nombre, alias, codigo_siex, codigo_rea, provincia_id, municipio_id, comunidad, organizacion_id) VALUES
+('Explotación La Verde', 'La Verde', 'ES001234567891', 'ES001234567891', 28, 1, 'Madrid', 1),
+('Explotación El Trigal', 'El Trigal', 'ES009876543210', 'ES009876543210', 8, 2, 'Cataluña', 2),
+('Explotación La Huerta', 'La Huerta', 'ES002345678912', 'ES002345678912', 41, 3, 'Andalucía', 3),
+('Explotación El Bosque', 'El Bosque', 'ES008765432109', 'ES008765432109', 15, 4, 'Galicia', 4),
+('Explotación La Frutera', 'La Frutera', 'ES003456789123', 'ES003456789123', 29, 5, 'Andalucía', 5),
+('Explotación El Prado', 'El Prado', 'ES007654321098', 'ES007654321098', 33, 6, 'Asturias', 6);
 
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`usuarios`
@@ -52,3 +52,14 @@ INSERT INTO `CuadernoDeCampoDB`.`municipio` (nombre, municipio_id, provincia_id)
 ('A Coruña', 15, 15),
 ('Málaga', 29, 29),
 ('Oviedo', 33, 33);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`parcela`
+-- -----------------------------------------------------
+INSERT INTO `CuadernoDeCampoDB`.`parcela` (explotacion_id, provincia_id, municipio_id, agregado, zona, poligono, parcela, nombre, superficie) VALUES
+(1, 28, 1, 0, 0, 14, 2, 'Parcela 1', 10.5),
+(2, 8, 2, 0, 0, 15, 3, 'Parcela 2', 20.0),
+(3, 41, 3, 0, 0, 16, 4, 'Parcela 3', 15.0),
+(4, 15, 4, 0, 0, 17, 5, 'Parcela 4', 25.0),
+(5, 29, 5, 0, 0, 18, 6, 'Parcela 5', 12.0),
+(6, 33, 6, 0, 0, 19, 7, 'Parcela 6', 18.0);

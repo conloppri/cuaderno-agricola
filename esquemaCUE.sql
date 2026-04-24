@@ -74,14 +74,19 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`explotacion` (
   `alias` VARCHAR(45) NULL,
   `codigo_siex` VARCHAR(14) NULL,
   `codigo_rea` VARCHAR(40) NULL,
+  `provincia_id` INT NOT NULL,
+  `municipio_id` INT NOT NULL,
   `comunidad` VARCHAR(45) NULL,
   `organizacion_id` INT NOT NULL,
   PRIMARY KEY (`explotacion_id`),
   CONSTRAINT `fk_explotacion_organizacion`
-    FOREIGN KEY (`organizacion_id`)
-    REFERENCES `CuadernoDeCampoDB`.`organizacion` (`organizacion_id`)
+    FOREIGN KEY (`organizacion_id`) REFERENCES `CuadernoDeCampoDB`.`organizacion` (`organizacion_id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE),
+  CONSTRAINT `fk_municipio_explotacion` 
+    FOREIGN KEY(`municipio_id`, `provincia_id`) REFERENCES `CuadernoDeCampoDB`.`municipio`(`municipio_id`, `provincia_id`) 
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE;
     
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`usuarios_explotacion`
@@ -120,8 +125,11 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`parcela`(
 `explotacion_id` INT NOT NULL,
 `provincia_id` INT NOT NULL,
 `municipio_id` INT NOT NULL,
-`ref_sigpac` VARCHAR(20) NOT NULL,
-`nombre` VARCHAR(20) NOT NULL,
+`agregado` INT NOT NULL,
+`zona` INT NOT NULL,
+`poligono` INT NOT NULL,
+`parcela` INT NOT NULL,
+`nombre` VARCHAR(20) NULL,
 `superficie` DOUBLE,
 CONSTRAINT `fk_explotacion_parcela` FOREIGN KEY(`explotacion_id`) REFERENCES `CuadernoDeCampoDB`.`explotacion`(`explotacion_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
 CONSTRAINT `fk_municipio_parcela` FOREIGN KEY(`municipio_id`, `provincia_id`) REFERENCES `CuadernoDeCampoDB`.`municipio`(`municipio_id`, `provincia_id`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -170,7 +178,8 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`plantacion`(
 `parcela_id` INT NOT NULL,
 `unidad_gestion_id` INT,
 `cultivo_id` INT NOT NULL,
-`densidad_unidad` INT, 
+`densidad_unidad` INT,
+`recinto` INT NOT NULL,
 `fecha_inicio` DATE NOT NULL,
 `fecha_fin` DATE,
 `sistema_cultivo` ENUM("intensivo", "extensivo", "tradicional", "superintensivo"),
