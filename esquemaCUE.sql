@@ -11,7 +11,6 @@ SET character_set_connection = utf8;
 -- -----------------------------------------------------
 -- Creación de la base de datos si no existe.
 -- -----------------------------------------------------
-
 CREATE SCHEMA IF NOT EXISTS `CuadernoDeCampoDB` DEFAULT CHARACTER SET utf8 ;
 USE `CuadernoDeCampoDB` ;
 
@@ -110,7 +109,6 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`usuarios_explotacion` (
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`unidad`
 -- -----------------------------------------------------
-    
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`unidad`(
 `unidad_id` INT auto_increment PRIMARY KEY,
 `unidad` VARCHAR(10),
@@ -143,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`unidad_gestion`(
 `parcela_id` INT NOT NULL, 
 `nombre` VARCHAR(20),
 `superficie` DOUBLE,
-`uso` ENUM("agricola", "en_descanso", "ganadero", "forestal", "otros"),
+`uso` ENUM("agricola", "en descanso", "ganadero", "forestal", "otros"),
  CONSTRAINT `fk_parcela_unidadgestion` FOREIGN KEY(`parcela_id`) REFERENCES `CuadernoDeCampoDB`.`parcela`(`parcela_id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -197,7 +195,6 @@ CONSTRAINT `fk_unidad_densidad` FOREIGN KEY(`densidad_unidad`) REFERENCES `Cuade
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`ecorregimen_plantacion`
 -- -----------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`ecorregimen_plantacion`(
 `ecorregimen_id` VARCHAR(4) NOT NULL,
 `plantacion_id` INT NOT NULL,
@@ -209,9 +206,8 @@ CONSTRAINT `fk_plantacion_ecorregimen` FOREIGN KEY(`plantacion_id`) REFERENCES `
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`fenologia`
 -- -----------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fenologia` (
-`fenologia_id` INT NOT NULL PRIMARY KEY,
+`fenologia_id` INT auto_increment PRIMARY KEY, 
 `plantacion_id` INT NOT NULL,
 `fecha_deteccion` DATE NOT NULL,
 `estado` ENUM("germinacion", "desarrollo_hojas", "desarrollo_brotes", "crecimiento_tallo", "desarrollo_organos_reproductivos", "inflorescencia", "floracion", "desarrollo_fruto", "maduracion", "senescencia"),
@@ -222,7 +218,6 @@ CONSTRAINT `fk_plantacion_fenologia` FOREIGN KEY(`plantacion_id`) REFERENCES `Cu
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`personal`
 -- -----------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`personal` (
 `personal_id` INT auto_increment PRIMARY KEY,
 `dni` VARCHAR(9) NOT NULL,
@@ -246,6 +241,7 @@ CONSTRAINT `fk_municipio_personal`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fertilizante`(
 `fertilizante_id` INT auto_increment PRIMARY KEY,
+`num_registro` VARCHAR(20) NOT NULL,
 `nombre` VARCHAR(30) NOT NULL,
 `tipo` ENUM("propio", "comercial") NOT NULL,
 `descripcion` VARCHAR(200),
@@ -311,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`maquinaria`(
 `ultima_inspeccion` DATE NULL,
 `caducidad_itv` DATE NULL,
 `observaciones` VARCHAR(200) NULL,
-`tipo_maquina` ENUM('tractor','arado','subsolador','cultivador','grada','sembradora','plantadora','pulverizador','atomizador','cosechadora','vibrador','remolque','desbrozadora','trituradora','otros') NOT NULL,
+`tipo_maquina` ENUM('Tractor','Arado','Subsolador','Cultivador','Grada','Sembradora','Plantadora','Pulverizadora','Atomizador','Cosechadora','Vibradora','Remolque','Desbrozadora','Trituradora','Otros') NOT NULL,
 `explotacion_id` INT NOT NULL,
 CONSTRAINT `fk_explotacion_maquinaria` 
   FOREIGN KEY(`explotacion_id`) REFERENCES `CuadernoDeCampoDB`.`explotacion`(`explotacion_id`) 
@@ -333,6 +329,8 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`cosecha`(
 `producto` VARCHAR(30) NOT NULL,
 `cantidad` DOUBLE NOT NULL,
 `superficie` DOUBLE,
+`fecha_inicio` DATE,
+`fecha_fin` DATE,
 CONSTRAINT `fk_plantacion_cosecha` FOREIGN KEY(`plantacion_id`) REFERENCES `CuadernoDeCampoDB`.`plantacion`(`plantacion_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
 CONSTRAINT `fk_maquinaria_cosecha` FOREIGN KEY(`maquinaria_id`) REFERENCES `CuadernoDeCampoDB`.`maquinaria`(`maquinaria_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
 CONSTRAINT `fk_personal_cosecha` FOREIGN KEY(`personal_id`) REFERENCES `CuadernoDeCampoDB`.`personal`(`personal_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -342,7 +340,6 @@ CONSTRAINT `fk_uni_cantidad_cosecha` FOREIGN KEY(`cantidad_unidad_id`) REFERENCE
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`cliente`
 -- -----------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`cliente`(
 `cliente_id` INT auto_increment PRIMARY KEY,
 `nif` VARCHAR(15) NOT NULL,
@@ -354,7 +351,6 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`cliente`(
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`comercial`
 -- -----------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`comercial`(
 `transaccion_id` INT auto_increment PRIMARY KEY,
 `cosecha_id` INT NOT NULL,
@@ -380,7 +376,6 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fitosanitario`(
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`tratamientos`
 -- -----------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`tratamientos`(
 `tratamientos_id` INT auto_increment PRIMARY KEY,
 `fecha` DATETIME,
