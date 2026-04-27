@@ -53,6 +53,15 @@ INSERT INTO `CuadernoDeCampoDB`.`municipio` (nombre, municipio_id, provincia_id)
 ('Málaga', 29, 29),
 ('Oviedo', 33, 33);
 
+-- Para poder usar bien los datos para la los datos de prueba:
+
+-- Con XAMPP, desde phpMyAdmin puedes gestionar la base de datos y puedes importar el csv. Para importar el csv, sigue estos pasos:
+-- 1. Abre phpMyAdmin y selecciona la base de datos `CuadernoDeCampoDB`.
+-- 2. Busca la tabla de municipios y haz clic en la pestaña "Importar".
+-- 3. Selecciona el archivo CSV que contiene los datos de los municipios.
+-- 4. En importación parcial, omitir 1 fila (para omitir la fila de encabezado).
+-- 5. Importas y te cargan todos los datos.
+
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`parcela`
 -- -----------------------------------------------------
