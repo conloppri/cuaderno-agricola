@@ -214,3 +214,47 @@ INSERT INTO `CuadernoDeCampoDB`.`comercial` (cosecha_id, cantidad_unidad_id, cli
 (4, 4, 4, 25.0, 'ALB004'),
 (5, 5, 5, 12.0, 'ALB005'),
 (6, 6, 6, 18.0, 'ALB006');
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`fitosanitario`
+-- -----------------------------------------------------
+INSERT INTO `CuadernoDeCampoDB`.`fitosanitario` (num_registro, nombre, descripcion, stock) VALUES
+('FS001', 'Fitosanitario A', 'Descripción del fitosanitario A', 100),
+('FS002', 'Fitosanitario B', 'Descripción del fitosanitario B', 200),
+('FS003', 'Fitosanitario C', 'Descripción del fitosanitario C', 150),
+('FS004', 'Fitosanitario D', 'Descripción del fitosanitario D', 250),
+('FS005', 'Fitosanitario E', 'Descripción del fitosanitario E', 120),
+('FS006', 'Fitosanitario F', 'Descripción del fitosanitario F', 180);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`tratamientos`
+-- -----------------------------------------------------
+INSERT INTO `CuadernoDeCampoDB`.`tratamientos` (plantacion_id, fitosanitario_id, dosis_unidad_id, fecha, descripcion, modo_aplicacion, dosis, caldo, superficie_tratada) VALUES
+(1, 1, 1, '2026-07-01', 'Tratamiento 1', 'foliar', 10.0, 100.0, 50.0),
+(2, 2, 2, '2026-08-01', 'Tratamiento 2', 'localizada', 20.0, 200.0, 100.0),
+(3, 3, 3, '2026-09-01', 'Tratamiento 3', 'fondo', 15.0, 150.0, 75.0),
+(4, 4, 4, '2026-10-01', 'Tratamiento 4', 'foliar', 25.0, 250.0, 125.0),
+(5, 5, 5, '2026-11-01', 'Tratamiento 5', 'localizada', 12.0, 120.0, 60.0),
+(6, 6, 6, '2026-12-01', 'Tratamiento 6', 'fondo', 18.0, 180.0, 90.0);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`analitica`
+-- -----------------------------------------------------
+INSERT INTO `CuadernoDeCampoDB`.`analitica` (plantacion_id, fecha, tipo_analisis, material, nombre_laboratiorio, nif_laboratorio, parametros_suelo, n_boletin_analisis, anotaciones) VALUES
+(1, '2026-07-15', 'suelo', 'muestra de suelo', 'Laboratorio A', 'LAB001', 'pH: 6.5, N: 10.0, P: 5.0, K: 15.0', 'BA001', 'Anotaciones 1'),
+(2, '2026-08-15', 'agua', 'muestra de agua', 'Laboratorio B', 'LAB002', 'pH: 7.0, N: 8.0, P: 4.0, K: 12.0', 'BA002', 'Anotaciones 2'),
+(3, '2026-09-15', 'planta', 'muestra de planta', 'Laboratorio C', 'LAB003', 'pH: 6.8, N: 9.0, P: 4.5, K: 13.5', 'BA003', 'Anotaciones 3'),
+(4, '2026-10-15', 'suelo', 'muestra de suelo', 'Laboratorio D', 'LAB004', 'pH: 6.2, N: 11.0, P: 5.5, K: 16.0', 'BA004', 'Anotaciones 4'),
+(5, '2026-11-15', 'agua', 'muestra de agua', 'Laboratorio E', 'LAB005', 'pH: 7.2, N: 7.0, P: 3.5, K: 10.0', 'BA005', 'Anotaciones 5'),
+(6, '2026-12-15', 'planta', 'muestra de planta', 'Laboratorio F', 'LAB006', 'pH: 6.9, N: 10.5, P: 5.2, K: 14.0', 'BA006', 'Anotaciones 6');
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`instalacion`
+-- -----------------------------------------------------
+INSERT INTO `CuadernoDeCampoDB`.`instalacion` (nombre, tipo, superficie, estado, explotacion_id) VALUES
+('Instalación de Riego 1', 'riego', 500.0, 'activa', 1),
+('Instalación de Riego 2', 'riego', 750.0, 'activa', 2),
+('Instalación de Riego 3', 'riego', 1000.0, 'activa', 3),
+('Instalación de Riego 4', 'riego', 1250.0, 'activa', 4),
+('Instalación de Riego 5', 'riego', 1500.0, 'activa', 5),
+('Instalación de Riego 6', 'riego', 1750.0, 'activa', 6);

@@ -368,6 +368,7 @@ CONSTRAINT `fk_uni_cantidad_comercial` FOREIGN KEY(`cantidad_unidad_id`) REFEREN
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fitosanitario`(
 `fitosanitario_id` INT auto_increment PRIMARY KEY,
+`num_registro` VARCHAR(20) NOT NULL,
 `nombre` VARCHAR(20) NOT NULL,
 `descripcion` VARCHAR(100),
 `stock` INT
