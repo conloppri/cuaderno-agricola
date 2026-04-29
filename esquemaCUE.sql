@@ -26,10 +26,10 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`provincia`(
 -- Tabla `CuadernoDeCampoDB`.`municipio`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`municipio`(
-`provincia_id` INT NOT NULL,
 `municipio_id` INT NOT NULL,
+`provincia_id` INT NOT NULL,
 `nombre` VARCHAR(50) NOT NULL,
-CONSTRAINT `pk_municipio` PRIMARY KEY(`provincia_id`, `municipio_id`),
+CONSTRAINT `pk_municipio` PRIMARY KEY(`municipio_id`, `provincia_id`),
 CONSTRAINT `fk_provincia_municipio` FOREIGN KEY(`provincia_id`) REFERENCES `CuadernoDeCampoDB`.`provincia`(`provincia_id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -53,15 +53,19 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`organizacion` (
   `nombre_razon_social` VARCHAR(45) NULL,
   `nombre_organizacion` VARCHAR(45) NULL,
   `direccion` VARCHAR(45) NULL,
-  `municipio_id` INT NULL,
+  `municipio_id` INT NOT NULL,
   `cod_postal` VARCHAR(5) NULL,
-  `provincia_id` INT NULL, 
+  `provincia_id` INT NOT NULL, 
   `comunidad` VARCHAR(45) NULL,
   `tlf_fijo` VARCHAR(12) NULL,
   `tlf_movil` VARCHAR(12) NULL,
   `email` VARCHAR(45) NULL,
   PRIMARY KEY (`organizacion_id`),
-  CONSTRAINT `fk_municipio_organizacion` FOREIGN KEY(`municipio_id`, `provincia_id`) REFERENCES `CuadernoDeCampoDB`.`municipio`(`municipio_id`, `provincia_id`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `fk_municipio_organizacion` 
+    FOREIGN KEY(`municipio_id`, `provincia_id`) 
+    REFERENCES `CuadernoDeCampoDB`.`municipio`(`municipio_id`, `provincia_id`) 
+    ON DELETE RESTRICT 
+    ON UPDATE CASCADE
   );
   
 -- -----------------------------------------------------
@@ -73,19 +77,19 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`explotacion` (
   `alias` VARCHAR(45) NULL,
   `codigo_siex` VARCHAR(14) NULL,
   `codigo_rea` VARCHAR(40) NULL,
-  `provincia_id` INT NOT NULL,
   `municipio_id` INT NOT NULL,
+  `provincia_id` INT NOT NULL,
   `comunidad` VARCHAR(45) NULL,
   `organizacion_id` INT NOT NULL,
   PRIMARY KEY (`explotacion_id`),
   CONSTRAINT `fk_explotacion_organizacion`
     FOREIGN KEY (`organizacion_id`) REFERENCES `CuadernoDeCampoDB`.`organizacion` (`organizacion_id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE),
-  CONSTRAINT `fk_municipio_explotacion` 
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_municipio_explotacion`
     FOREIGN KEY(`municipio_id`, `provincia_id`) REFERENCES `CuadernoDeCampoDB`.`municipio`(`municipio_id`, `provincia_id`) 
     ON DELETE CASCADE 
-    ON UPDATE CASCADE;
+    ON UPDATE CASCADE);
     
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`usuarios_explotacion`
@@ -210,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`fenologia` (
 `fenologia_id` INT auto_increment PRIMARY KEY, 
 `plantacion_id` INT NOT NULL,
 `fecha_deteccion` DATE NOT NULL,
-`estado` ENUM("germinacion", "desarrollo_hojas", "desarrollo_brotes", "crecimiento_tallo", "desarrollo_organos_reproductivos", "inflorescencia", "floracion", "desarrollo_fruto", "maduracion", "senescencia"),
+`estado` ENUM("Germinación", "Desarrollo hojas", "Desarrollo brotes", "Crecimiento vegetativo", "Desarrollo órganos reproductivos", "Inflorescencia", "Floración", "Fructificación", "Maduración", "Senescencia", "Cosecha", "Emergencia"),
 `anotaciones` VARCHAR(200),
 CONSTRAINT `fk_plantacion_fenologia` FOREIGN KEY(`plantacion_id`) REFERENCES `CuadernoDeCampoDB`.`plantacion`(`plantacion_id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -301,8 +305,8 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`maquinaria`(
 `modelo` VARCHAR(45) NULL,
 `num_roma` VARCHAR(45) NULL,
 `num_reganip` VARCHAR(45) NULL,
-`matricula` VARCHAR(10) NULL,
-`estado` ENUM("operativa", "en_mantenimiento", "fuera_de_servicio") NULL,
+`matricula` VARCHAR(9) NULL,
+`estado` ENUM("Activa", "Mantenimiento", "Fuera de servicio") NULL,
 `fecha_adquisicion` DATE NULL,
 `ultima_inspeccion` DATE NULL,
 `caducidad_itv` DATE NULL,
@@ -385,8 +389,13 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`tratamientos`(
 `dosis` DOUBLE,
 `caldo` DOUBLE,
 `superficie_tratada` DOUBLE,
+`dosis_unidad_id` INT,
 `fitosanitario_id` INT NOT NULL,
 `plantacion_id` INT NOT NULL,
+CONSTRAINT `fk_uni_dosis_tratamientos` 
+  FOREIGN KEY(`dosis_unidad_id`) REFERENCES `CuadernoDeCampoDB`.`unidad`(`unidad_id`) 
+  ON DELETE SET NULL 
+  ON UPDATE CASCADE,
 CONSTRAINT `fk_fitosanitarios_tratamientos` 
   FOREIGN KEY(`fitosanitario_id`) REFERENCES `CuadernoDeCampoDB`.`fitosanitario`(`fitosanitario_id`) 
   ON DELETE CASCADE 
@@ -424,7 +433,7 @@ CONSTRAINT `fk_plantacion_analitica`
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`instalacion`(
 `instalacion_id` INT auto_increment PRIMARY KEY,
 `nombre` VARCHAR(45) NULL,
-`tipo` ENUM("nave", "almacen", "balsa", "silo") NULL,
+`tipo` ENUM("Nave", "Almacen", "Balsa", "Silo") NULL,
 `superficie` DOUBLE NULL,
 `estado` ENUM("Disponible", "No disponible", "En mantenimiento") NULL,
 `explotacion_id` INT NOT NULL,

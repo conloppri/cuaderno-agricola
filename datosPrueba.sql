@@ -3,46 +3,6 @@
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Tabla `CuadernoDeCampoDB`.`organizacion`
--- -----------------------------------------------------
-INSERT INTO `CuadernoDeCampoDB`.`organizacion` (nif, nombre_razon_social, nombre_organizacion, direccion, municipio_id, cod_postal, provincia_id, comunidad, tlf_fijo, tlf_movil, email) VALUES
-('A12345678', 'Agricultores Unidos S.A.', 'Agricultores Unidos', 'Calle Falsa 123', 1, '28080', 28, 'Madrid', '912345678', '612345678', 'agricultoresunidos@example.com'),
-('B87654321', 'Cooperativa Agrícola La Esperanza', 'Cooperativa La Esperanza', 'Avenida Siempre Viva 456', 2, '08080', 8, 'Cataluña', '934567890', '623456789', 'cooperativalaesperanza@example.com'),
-('C11223344', 'Granja El Sol', 'Granja El Sol', 'Carretera del Sol 789', 3, '41080', 41, 'Andalucía', '955678901', '634567890', 'granjaelsol@example.com'),
-('D44332211', 'Hortícolas del Norte', 'Hortícolas del Norte', 'Camino del Norte 321', 4, '15080', 15, 'Galicia', '981234567', '645678901', 'horticolasdelnorte@example.com'),
-('E55667788', 'Frutas y Verduras del Sur', 'Frutas y Verduras del Sur', 'Paseo del Sur 654', 5, '29080', 29, 'Andalucía', '952345678', '656789012', 'frutasyverdurasdel sur@example.com'),
-('F99887766', 'Agropecuaria El Campo', 'Agropecuaria El Campo', 'Avenida del Campo 987', 6, '33080', 33, 'Asturias', '985678901', '667890123', 'agropecuariaelcampo@example.com');
-
--- -----------------------------------------------------
--- Tabla `CuadernoDeCampoDB`.`explotacion`
--- -----------------------------------------------------
-INSERT INTO `CuadernoDeCampoDB`.`explotacion` (nombre, alias, codigo_siex, codigo_rea, provincia_id, municipio_id, comunidad, organizacion_id) VALUES
-('Explotación La Verde', 'La Verde', 'ES001234567891', 'ES001234567891', 28, 1, 'Madrid', 1),
-('Explotación El Trigal', 'El Trigal', 'ES009876543210', 'ES009876543210', 8, 2, 'Cataluña', 2),
-('Explotación La Huerta', 'La Huerta', 'ES002345678912', 'ES002345678912', 41, 3, 'Andalucía', 3),
-('Explotación El Bosque', 'El Bosque', 'ES008765432109', 'ES008765432109', 15, 4, 'Galicia', 4),
-('Explotación La Frutera', 'La Frutera', 'ES003456789123', 'ES003456789123', 29, 5, 'Andalucía', 5),
-('Explotación El Prado', 'El Prado', 'ES007654321098', 'ES007654321098', 33, 6, 'Asturias', 6);
-
--- -----------------------------------------------------
--- Tabla `CuadernoDeCampoDB`.`usuarios`
--- -----------------------------------------------------
-INSERT INTO `CuadernoDeCampoDB`.`usuarios` (email, password_hash, fecha_creacion) VALUES
-('user1@example.com', '$2b$12$...', '2023-01-01 00:00:00'),
-('user2@example.com', '$2b$12$...', '2023-01-01 00:00:00'),
-('user3@example.com', '$2b$12$...', '2023-01-01 00:00:00'),
-('user4@example.com', '$2b$12$...', '2023-01-01 00:00:00');
-
--- -----------------------------------------------------
--- Tabla `CuadernoDeCampoDB`.`usuarios_explotacion`
--- -----------------------------------------------------
-INSERT INTO `CuadernoDeCampoDB`.`usuarios_explotacion` (usuario_id, explotacion_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4);
-
--- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`municipio`
 -- -----------------------------------------------------
 INSERT INTO `CuadernoDeCampoDB`.`municipio` (nombre, municipio_id, provincia_id) VALUES
@@ -63,15 +23,55 @@ INSERT INTO `CuadernoDeCampoDB`.`municipio` (nombre, municipio_id, provincia_id)
 -- 5. Importas y te cargan todos los datos.
 
 -- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`organizacion`
+-- -----------------------------------------------------
+INSERT INTO `CuadernoDeCampoDB`.`organizacion` (nif, nombre_razon_social, nombre_organizacion, direccion, municipio_id, cod_postal, provincia_id, comunidad, tlf_fijo, tlf_movil, email) VALUES
+('A12345678', 'Agricultores Unidos S.A.', 'Agricultores Unidos', 'Calle Falsa 123', 28, '28080', 28, 'Madrid', '912345678', '612345678', 'agricultoresunidos@example.com'),
+('B87654321', 'Cooperativa Agrícola La Esperanza', 'Cooperativa La Esperanza', 'Avenida Siempre Viva 456', 8, '08080', 8, 'Cataluña', '934567890', '623456789', 'cooperativalaesperanza@example.com'),
+('C11223344', 'Granja El Sol', 'Granja El Sol', 'Carretera del Sol 789', 41, '41080', 41, 'Andalucía', '955678901', '634567890', 'granjaelsol@example.com'),
+('D44332211', 'Hortícolas del Norte', 'Hortícolas del Norte', 'Camino del Norte 321', 15, '15080', 15, 'Galicia', '981234567', '645678901', 'horticolasdelnorte@example.com'),
+('E55667788', 'Frutas y Verduras del Sur', 'Frutas y Verduras del Sur', 'Paseo del Sur 654', 29, '29080', 29, 'Andalucía', '952345678', '656789012', 'frutasyverdurasdel sur@example.com'),
+('F99887766', 'Agropecuaria El Campo', 'Agropecuaria El Campo', 'Avenida del Campo 987', 33, '33080', 33, 'Asturias', '985678901', '667890123', 'agropecuariaelcampo@example.com');
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`explotacion`
+-- -----------------------------------------------------
+INSERT INTO `CuadernoDeCampoDB`.`explotacion` (nombre, alias, codigo_siex, codigo_rea, provincia_id, municipio_id, comunidad, organizacion_id) VALUES
+('Explotación La Verde', 'La Verde', 'ES001234567891', 'ES001234567891', 28, 28, 'Madrid', 1),
+('Explotación El Trigal', 'El Trigal', 'ES009876543210', 'ES009876543210', 8, 8, 'Cataluña', 2),
+('Explotación La Huerta', 'La Huerta', 'ES002345678912', 'ES002345678912', 41, 41, 'Andalucía', 3),
+('Explotación El Bosque', 'El Bosque', 'ES008765432109', 'ES008765432109', 15, 15, 'Galicia', 4),
+('Explotación La Frutera', 'La Frutera', 'ES003456789123', 'ES003456789123', 29, 29, 'Andalucía', 5),
+('Explotación El Prado', 'El Prado', 'ES007654321098', 'ES007654321098', 33, 33, 'Asturias', 6);
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`usuarios`
+-- -----------------------------------------------------
+INSERT INTO `CuadernoDeCampoDB`.`usuarios` (email, password_hash, fecha_creacion) VALUES
+('user1@example.com', '$2b$12$...', '2023-01-01 00:00:00'),
+('user2@example.com', '$2b$12$...', '2023-01-01 00:00:00'),
+('user3@example.com', '$2b$12$...', '2023-01-01 00:00:00'),
+('user4@example.com', '$2b$12$...', '2023-01-01 00:00:00');
+
+-- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`usuarios_explotacion`
+-- -----------------------------------------------------
+INSERT INTO `CuadernoDeCampoDB`.`usuarios_explotacion` (usuario_id, explotacion_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4);
+
+-- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`parcela`
 -- -----------------------------------------------------
 INSERT INTO `CuadernoDeCampoDB`.`parcela` (explotacion_id, provincia_id, municipio_id, agregado, zona, poligono, parcela, nombre, superficie) VALUES
-(1, 28, 1, 0, 0, 14, 2, 'Parcela 1', 10.5),
-(2, 8, 2, 0, 0, 15, 3, 'Parcela 2', 20.0),
-(3, 41, 3, 0, 0, 16, 4, 'Parcela 3', 15.0),
-(4, 15, 4, 0, 0, 17, 5, 'Parcela 4', 25.0),
-(5, 29, 5, 0, 0, 18, 6, 'Parcela 5', 12.0),
-(6, 33, 6, 0, 0, 19, 7, 'Parcela 6', 18.0);
+(1, 28, 28, 0, 0, 14, 2, 'Parcela 1', 10.5),
+(2, 8, 8, 0, 0, 15, 3, 'Parcela 2', 20.0),
+(3, 41, 41, 0, 0, 16, 4, 'Parcela 3', 15.0),
+(4, 15, 15, 0, 0, 17, 5, 'Parcela 4', 25.0),
+(5, 29, 29, 0, 0, 18, 6, 'Parcela 5', 12.0),
+(6, 33, 33, 0, 0, 19, 7, 'Parcela 6', 18.0);
 
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`unidad_gestion`
@@ -99,12 +99,12 @@ INSERT INTO `CuadernoDeCampoDB`.`cultivo` (nombre, variedad, descripcion, tipo, 
 -- Tabla `CuadernoDeCampoDB`.`plantacion`
 -- -----------------------------------------------------
 INSERT INTO `CuadernoDeCampoDB`.`plantacion` (parcela_id, unidad_gestion_id, cultivo_id, densidad_unidad, recinto, fecha_inicio, fecha_fin, sistema_cultivo, sistema_riego, finalidad, manejo, valor_densidad, anotaciones) VALUES
-(1, 1, 1, 100, 1, '2026-01-01', NULL, 'intensivo', 'goteo', 'produccion_agricola', 'convencional', 1.5, 'Anotaciones 1'),
-(2, 2, 2, 150, 2, '2026-02-01', NULL, 'extensivo', 'aspersion', 'autoconsumo', 'produccion_integrada', 2.0, 'Anotaciones 2'),
-(3, 3, 3, 200, 3, '2026-03-01', NULL, 'tradicional', 'gravedad', 'ganadera', 'ecologico', 2.5, 'Anotaciones 3'),
-(4, 4, 4, 250, 4, '2026-04-01', NULL, 'superintensivo', 'goteo', 'conservacion', 'regenerativo', 3.0, 'Anotaciones 4'),
-(5, 5, 5, 300, 5, '2026-05-01', NULL, 'intensivo', 'aspersion', 'energetica', 'convencional', 3.5, 'Anotaciones 5'),
-(6, 6, 6, 350, 6, '2026-06-01', NULL, 'extensivo', 'gravedad', 'produccion_agricola', 'produccion_integrada', 4.0, 'Anotaciones 6');
+(1, 1, 1, 22, 1, '2026-01-01', NULL, 'intensivo', 'goteo', 'produccion_agricola', 'convencional', 1.5, 'Anotaciones 1'),
+(2, 2, 2, 22, 2, '2026-02-01', NULL, 'extensivo', 'aspersion', 'autoconsumo', 'produccion_integrada', 2.0, 'Anotaciones 2'),
+(3, 3, 3, 22, 3, '2026-03-01', NULL, 'tradicional', 'gravedad', 'ganadera', 'ecologico', 2.5, 'Anotaciones 3'),
+(4, 4, 4, 22, 4, '2026-04-01', NULL, 'superintensivo', 'goteo', 'conservacion', 'regenerativo', 3.0, 'Anotaciones 4'),
+(5, 5, 5, 22, 5, '2026-05-01', NULL, 'intensivo', 'aspersion', 'energetica', 'convencional', 3.5, 'Anotaciones 5'),
+(6, 6, 6, 22, 6, '2026-06-01', NULL, 'extensivo', 'gravedad', 'produccion_agricola', 'produccion_integrada', 4.0, 'Anotaciones 6');
 
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`ecorregimen_plantacion`
@@ -132,12 +132,12 @@ INSERT INTO `CuadernoDeCampoDB`.`fenologia` (plantacion_id, fecha_deteccion, est
 -- Tabla `CuadernoDeCampoDB`.`personal`
 -- -----------------------------------------------------
 INSERT INTO `CuadernoDeCampoDB`.`personal` (dni, nombre, apellidos, telefono, email, direccion, nacionalidad, rol, municipio_id, provincia_id) VALUES
-('12345678A', 'Juan', 'Pérez', '123456789', 'juan.perez@example.com', 'Dirección 1', 'Nacionalidad 1', 'propietario', 1, 1),
-('87654321B', 'María', 'García', '987654321', 'maria.garcia@example.com', 'Dirección 2', 'Nacionalidad 2', 'tecnico', 2, 2),
-('11223344C', 'Carlos', 'López', '555555555', 'carlos.lopez@example.com', 'Dirección 3', 'Nacionalidad 3', 'trabajador', 3, 3),
-('44332211D', 'Ana', 'Martínez', '666666666', 'ana.martinez@example.com', 'Dirección 4', 'Nacionalidad 4', 'administrativo', 4, 4),
-('55667788E', 'Luis', 'Gómez', '777777777', 'luis.gomez@example.com', 'Dirección 5', 'Nacionalidad 5', 'propietario', 5, 5),
-('99887766F', 'Sofía', 'Díaz', '888888888', 'sofia.diaz@example.com', 'Dirección 6', 'Nacionalidad 6', 'tecnico', 6, 6);
+('12345678A', 'Juan', 'Pérez', '123456789', 'juan.perez@example.com', 'Dirección 1', 'Nacionalidad 1', 'propietario', 28, 28),
+('87654321B', 'María', 'García', '987654321', 'maria.garcia@example.com', 'Dirección 2', 'Nacionalidad 2', 'tecnico', 8, 8),
+('11223344C', 'Carlos', 'López', '555555555', 'carlos.lopez@example.com', 'Dirección 3', 'Nacionalidad 3', 'trabajador', 41, 41),
+('44332211D', 'Ana', 'Martínez', '666666666', 'ana.martinez@example.com', 'Dirección 4', 'Nacionalidad 4', 'administrativo', 15, 15),
+('55667788E', 'Luis', 'Gómez', '777777777', 'luis.gomez@example.com', 'Dirección 5', 'Nacionalidad 5', 'propietario', 29, 29),
+('99887766F', 'Sofía', 'Díaz', '888888888', 'sofia.diaz@example.com', 'Dirección 6', 'Nacionalidad 6', 'tecnico', 33, 33);
 
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`fertilizante`
@@ -176,11 +176,12 @@ INSERT INTO `CuadernoDeCampoDB`.`riego` (plantacion_id, cantidad_unidad_id, fech
 -- Tabla `CuadernoDeCampoDB`.`maquinaria`
 -- -----------------------------------------------------
 INSERT INTO `CuadernoDeCampoDB`.`maquinaria` (alias, titular, marca, modelo, num_roma, num_reganip, matricula, estado, fecha_adquisicion, ultima_inspeccion, caducidad_itv, observaciones, tipo_maquina, explotacion_id) VALUES
-('Tractor A', '', 'Marca A', 'Modelo A', '', '', 'Matricula A', 'Activa', '2026-01-01', '2026-01-01', '2027-01-01', 'Observaciones 1', 'Tractor', 1),
-('Cosechadora B', '', 'Marca B', 'Modelo B', '', '', 'Matricula B', 'Activa', '2026-02-01', '2026-02-01', '2027-02-01', 'Observaciones 2', 'Cosechadora', 2),
-('Sembradora C', '', 'Marca C', 'Modelo C', '', '', 'Matricula C', 'Activa', '2026-03-01', '2026-03-01', '2027-03-01', 'Observaciones 3', 'Sembradora', 3),
-('Pulverizadora D', '', 'Marca D', 'Modelo D', '', '', 'Matricula D', 'Activa', '2026-04-01', '2026-04-01', '2027-04-01', 'Observaciones 4', 'Pulverizadora', 4),
-('Fertilizadora F', '', 'Marca F', 'Modelo F', '', '', 'Matricula F', 'Activa', '2026-06-01', '2026-06-01', '2027-06-01', 'Observaciones 6', 'Desbrozadora', 6);
+('Tractor A', '', 'Marca A', 'Modelo A', '', '', 'E 2020MAT', 'Activa', '2026-01-01', '2026-01-01', '2027-01-01', 'Observaciones 1', 'Tractor', 1),
+('Cosechadora B', '', 'Marca B', 'Modelo B', '', '', 'E 2020MMB', 'Activa', '2026-02-01', '2026-02-01', '2027-02-01', 'Observaciones 2', 'Cosechadora', 2),
+('Sembradora C', '', 'Marca C', 'Modelo C', '', '', 'E 2020TMC', 'Activa', '2026-03-01', '2026-03-01', '2027-03-01', 'Observaciones 3', 'Sembradora', 3),
+('Pulverizadora D', '', 'Marca D', 'Modelo D', '', '', 'E 2020VMD', 'Activa', '2026-04-01', '2026-04-01', '2027-04-01', 'Observaciones 4', 'Pulverizadora', 4),
+('Fertilizadora F', '', 'Marca F', 'Modelo F', '', '', 'E 2020RMF', 'Activa', '2026-06-01', '2026-06-01', '2027-06-01', 'Observaciones 6', 'Desbrozadora', 6),
+('Desbrozadora E', '', 'Marca E', 'Modelo E', '', '', 'E 2020RME', 'Activa', '2026-05-01', '2026-05-01', '2027-05-01', 'Observaciones 5', 'Arado', 5);
 
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`cosecha`
@@ -230,12 +231,12 @@ INSERT INTO `CuadernoDeCampoDB`.`fitosanitario` (num_registro, nombre, descripci
 -- Tabla `CuadernoDeCampoDB`.`tratamientos`
 -- -----------------------------------------------------
 INSERT INTO `CuadernoDeCampoDB`.`tratamientos` (plantacion_id, fitosanitario_id, dosis_unidad_id, fecha, descripcion, modo_aplicacion, dosis, caldo, superficie_tratada) VALUES
-(1, 1, 1, '2026-07-01', 'Tratamiento 1', 'foliar', 10.0, 100.0, 50.0),
-(2, 2, 2, '2026-08-01', 'Tratamiento 2', 'localizada', 20.0, 200.0, 100.0),
-(3, 3, 3, '2026-09-01', 'Tratamiento 3', 'fondo', 15.0, 150.0, 75.0),
-(4, 4, 4, '2026-10-01', 'Tratamiento 4', 'foliar', 25.0, 250.0, 125.0),
+(1, 1, 5, '2026-07-01', 'Tratamiento 1', 'foliar', 10.0, 100.0, 50.0),
+(2, 2, 5, '2026-08-01', 'Tratamiento 2', 'localizada', 20.0, 200.0, 100.0),
+(3, 3, 5, '2026-09-01', 'Tratamiento 3', 'fondo', 15.0, 150.0, 75.0),
+(4, 4, 5, '2026-10-01', 'Tratamiento 4', 'foliar', 25.0, 250.0, 125.0),
 (5, 5, 5, '2026-11-01', 'Tratamiento 5', 'localizada', 12.0, 120.0, 60.0),
-(6, 6, 6, '2026-12-01', 'Tratamiento 6', 'fondo', 18.0, 180.0, 90.0);
+(6, 6, 5, '2026-12-01', 'Tratamiento 6', 'fondo', 18.0, 180.0, 90.0);
 
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`analitica`
@@ -252,9 +253,9 @@ INSERT INTO `CuadernoDeCampoDB`.`analitica` (plantacion_id, fecha, tipo_analisis
 -- Tabla `CuadernoDeCampoDB`.`instalacion`
 -- -----------------------------------------------------
 INSERT INTO `CuadernoDeCampoDB`.`instalacion` (nombre, tipo, superficie, estado, explotacion_id) VALUES
-('Instalación de Riego 1', 'riego', 500.0, 'activa', 1),
-('Instalación de Riego 2', 'riego', 750.0, 'activa', 2),
-('Instalación de Riego 3', 'riego', 1000.0, 'activa', 3),
-('Instalación de Riego 4', 'riego', 1250.0, 'activa', 4),
-('Instalación de Riego 5', 'riego', 1500.0, 'activa', 5),
-('Instalación de Riego 6', 'riego', 1750.0, 'activa', 6);
+('Instalación de Riego 1', 'Nave', 500.0, 'Disponible', 1),
+('Instalación de Riego 2', 'Nave', 750.0, 'Disponible', 2),
+('Instalación de Riego 3', 'Almacen', 1000.0, 'Disponible', 3),
+('Instalación de Riego 4', 'Almacen', 1250.0, 'Disponible', 4),
+('Instalación de Riego 5', 'Silo', 1500.0, 'Disponible', 5),
+('Instalación de Riego 6', 'Balsa', 1750.0, 'Disponible', 6);
