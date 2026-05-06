@@ -8,17 +8,56 @@
 
     <title>Cuaderno de campo</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
+
 </head>
 <body>
     <header>
         <p>Hola mundo</p>
     </header>
     <nav class="main_navbar">
-        <ul>
-            <li class="main_navbar_item"><a href="#">Inicio</a></li>
-            <li class="main_navbar_item"><a href="#">Contacto</a></li>
-            <li class="main_navbar_item" id="sesion"><a href="#">Inicio de sesión</a></li>
+        <ul class="nav-list">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Contacto</a></li>
+            <li id="itemSesion"><button id="btnSesion">Iniciar sesión</button></li>
         </ul>
     </nav>
+
+    <!-- Ventana modal de login -->
+    <dialog id="login-modal">
+        <div class="modal-content">
+            <h2>Iniciar sesión</h2>
+            <form method="dialog" id="login-form">
+                <div class="grupo-form">
+                    <label for="username">Usuario:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="grupo-form">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+            <button type="submit">Iniciar sesión</button>
+            <button type="button" id="cerrar-sesion">Cerrar</button>
+            </form>
+        </div>
+    </dialog>
+
+    <script>
+        // JavaScript para controlar la ventana modal de login
+        const btnAbrirModal = document.getElementById('btnSesion');
+        const btnCerrarModal = document.getElementById('cerrar-sesion');
+        const modal = document.getElementById('login-modal');
+        const formulario = document.getElementById('login-form');
+
+        btnAbrirModal.addEventListener('click', () => {
+            formulario.reset(); // Limpiar el formulario cada vez que se abre
+            modal.showModal();
+        });
+
+        btnCerrarModal.addEventListener('click', () => {
+            modal.close();
+        });
+
+    </script>
+
 </body>
 </html>

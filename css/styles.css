@@ -1,40 +1,72 @@
-@charset="UTF-8";
+@charset "UTF-8";
 /* CSS Document */
 
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
-    /*background-color: #CCDBF5;*/
     min-height: 100vh;
     background-repeat: no-repeat;
     background: linear-gradient(to bottom, #CCDBF5, #D0F1D9);
-    margin: 10px;
+    margin: 30px;
     padding: 0;
 }
 
+/* Estilos para la barra de navegación */
 .main_navbar {
+    display: flex;
     background-color: #DEECD6;
     padding: 10px 0;
 }
 
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.nav-list {
+    list-style: none;
     display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
-.main_navbar_item {
-    display: flex;
+nav ul li {
+    /* display: flex; */
     padding: 10px 20px;
     background-color: #CBE8BA;
     border-radius: 10px;
 }
 
-#sesion {
-    margin-left: auto;
+/* Estilos para el modal de inicio de sesión */
+#login-modal {
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+#login-modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    margin: 50px;
+}
+
+.grupo-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.grupo-form label {
+    flex: 1;                /* El label ocupa el espacio necesario */
+    min-width: 100px;       /* Ajusta esto para que todos los labels midan lo mismo */
+}
+
+.grupo-form input {
+    flex: 2;                /* El input ocupa el resto del espacio */
+    padding: 5px;
+}
+
+/* Estilos para los enlaces */
 a {
     color: #000000;
     text-decoration: none;
