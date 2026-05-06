@@ -4,8 +4,38 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
-    color: #333;
-    background-color: #f4f4f4;
+    /*background-color: #CCDBF5;*/
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background: linear-gradient(to bottom, #CCDBF5, #D0F1D9);
+    margin: 10px;
+    padding: 0;
+}
+
+.main_navbar {
+    background-color: #DEECD6;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style-type: none;
     margin: 0;
     padding: 0;
+    display: flex;
+}
+
+.main_navbar_item {
+    display: flex;
+    padding: 10px 20px;
+    background-color: #CBE8BA;
+    border-radius: 10px;
+}
+
+#sesion {
+    margin-left: auto;
+}
+
+a {
+    color: #000000;
+    text-decoration: none;
 }
