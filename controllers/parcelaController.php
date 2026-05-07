@@ -1,10 +1,36 @@
 <?php 
 include "../models/parcelaModel.php";
+include "../models/globalModel.php";
+include "../config/db.php";
 
-$infoParcelas = obtenerParcelas($connection);
+function obtenerInfoParcelas(PDO $connection) {
+    $parcelasDetails = [];
+    $infoParcelas = obtenerParcelas($connection);
+    foreach ($infoParcelas as &$parcela) {
+        $provincia = obtenerProvincia($connection, $parcela['provincia_id']);
+        $municipio = obtenerMunicipio($connection, $parcela['municipio_id']);
+        $sigpac = str_pad($parcela['provincia_id'], 2, "0", STR_PAD_LEFT) . ':' . str_pad($parcela['municipio_id'], 3, "0", STR_PAD_LEFT) . ':' . $parcela['agregado'] . ':' . $parcela['zona'] . ':' . str_pad($parcela['poligono'], 5, "0", STR_PAD_LEFT) . ":" . str_pad($parcela['parcela'], 5, "0", STR_PAD_LEFT);
+        array_push($parcelasDetails,[
+            'id' => $parcela['parcela_id'],
+            'nombre' => $parcela['nombre'],
+            'sigpac' => $sigpac,
+            'superficie' => $parcela['superficie'] . ' ha',
+            'provincia' => $provincia,
+            'municipio' => $municipio
+        ]);
+    }
+    return $parcelasDetails;
+}
 
-//Aquí podríamos agregar lógica adicional, como procesamiento de datos o manejo de errores, antes de pasar la información a la vista.
-//En este caso, simplemente obtenemos las parcelas y las dejamos listas para que la vista las muestre, no hay más procesamiento.
-
-?>
-
+function obtenerInfoUnidadesGestion(PDO $connection, int $idParcela) {
+    $unidadesGestion = obtenerUnidadesGestion($connection, $idParcela);
+    $resultado = [];
+    foreach ($unidadesGestion as &$unidad) {
+        array_push($resultado, [
+            'nombre' => $unidad['nombre'],
+            'superficie' => $unidad['superficie'] . ' ha',
+            'uso' => $unidad['uso']
+        ]);
+    }
+    return $resultado;
+}
