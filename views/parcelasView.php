@@ -1,27 +1,79 @@
-<?php include "../controllers/parcelaController.php";?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejemplo</title>
-</head>
-<body>
-    <h1>Lista de Parcelas</h1>
-    <?php if(empty($infoParcelas)) {
-        echo "<p>No hay parcelas registradas.</p>";
+
+<!-- Cabecera -->
+<?php include "../templates/cabecera_explotacion.php";?>
+
+<!-- Contenido principal -->
+<?php include "../controllers/parcelaController.php";
+
+$parcelas = obtenerInfoParcelas($connection);
+?>
+
+<div class="cabecera_parcelas">
+    <h1>Parcelas y unidades de gestión</h1>
+    <button class="add_button">+ Añadir parcela</button>
+</div>
+
+
+<div class="table_exp">
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>SIGPAC</th>
+                <th>Provincia</th>
+                <th>Municipio</th>
+                <th>Superficie (ha)</th>
+                <th>Unidades de gestión</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($parcelas as $parcela): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($parcela['nombre']); ?></td>
+                    <td><?php echo htmlspecialchars($parcela['sigpac']); ?></td>
+                    <td><?php echo htmlspecialchars($parcela['provincia']); ?></td>
+                    <td><?php echo htmlspecialchars($parcela['municipio']); ?></td>
+                    <td><?php echo htmlspecialchars($parcela['superficie']); ?></td>
+                    <td><button onclick="toggleFila(<?php echo $parcela['id']; ?>)"> + </button></td>
+                </tr>
+                <tr id="fila-<?php echo $parcela['id']; ?>" style="display: none;">
+                    <td colspan="6">
+                        <h4>Unidades de gestión</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Superficie (ha)</th>
+                                    <th>Uso</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                $unidadesGestion = obtenerInfoUnidadesGestion($connection, $parcela['id']);
+                                foreach ($unidadesGestion as $unidad): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($unidad['nombre']); ?></td>
+                                        <td><?php echo htmlspecialchars($unidad['superficie']); ?></td>
+                                        <td><?php echo htmlspecialchars($unidad['uso']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </td>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<script>
+function toggleFila(id) {
+    var fila = document.getElementById("fila-" + id);
+    if (fila.style.display === "none") {
+        fila.style.display = "table-row";
     } else {
-        echo "<ul>";
-        foreach ($infoParcelas as $parcela) {
-            echo "<li>";
-            echo "ID: " . $parcela['parcela_id'] . "<br>";
-            echo "Nombre: " . $parcela['nombre'] . "<br>";
-            echo "Tamaño: " . $parcela['superficie'] . " ha <br>";
-            echo "</li>";
-        }
-        echo "</ul>";
+        fila.style.display = "none";
     }
-    ?>
-</body>
-</html>
+}
+</script>
+<!-- Pie de página -->
+<?php include "../templates/footer.php";?>
