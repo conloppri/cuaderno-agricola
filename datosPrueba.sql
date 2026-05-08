@@ -48,10 +48,10 @@ INSERT INTO `CuadernoDeCampoDB`.`explotacion` (nombre, alias, codigo_siex, codig
 -- Tabla `CuadernoDeCampoDB`.`usuarios`
 -- -----------------------------------------------------
 INSERT INTO `CuadernoDeCampoDB`.`usuarios` (email, password_hash, fecha_creacion) VALUES
-('user1@example.com', '$2b$12$...', '2023-01-01 00:00:00'),
-('user2@example.com', '$2b$12$...', '2023-01-01 00:00:00'),
-('user3@example.com', '$2b$12$...', '2023-01-01 00:00:00'),
-('user4@example.com', '$2b$12$...', '2023-01-01 00:00:00');
+('user1@example.com', '$argon2id$v=19$m=16,t=2,p=1$NUhsS0NUM0VnQVFPWm1zeA$75RMOYkuAzGYF1hMtjen/g', '2023-01-01 00:00:00'),
+('user2@example.com', '$argon2id$v=19$m=16,t=2,p=1$NUhsS0NUM0VnQVFPWm1zeA$75RMOYkuAzGYF1hMtjen/g', '2023-01-01 00:00:00'),
+('user3@example.com', '$argon2id$v=19$m=16,t=2,p=1$NUhsS0NUM0VnQVFPWm1zeA$75RMOYkuAzGYF1hMtjen/g', '2023-01-01 00:00:00'),
+('user4@example.com', '$argon2id$v=19$m=16,t=2,p=1$NUhsS0NUM0VnQVFPWm1zeA$75RMOYkuAzGYF1hMtjen/g', '2023-01-01 00:00:00');
 
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`usuarios_explotacion`
