@@ -21,7 +21,7 @@ $usuarioID = $_SESSION['usuario_id'];
 <body>
     <header>
         <h1>Cuaderno Agrícola</h1>
-        <p>Bienvenido, <?php echo $usuarioID; ?>!</p>
+        <p>Bienvenido123, <?php echo $usuarioID; ?>!</p>
     </header>
     <main>
         <h2>Explotaciones</h2>
