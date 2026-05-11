@@ -1,97 +1,129 @@
-
 /* ESTILOS DE PRUEBA PARA MIS PANTALLAS */
 .cabecera_exp {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #f2f2f2;
-            padding: 10px 20px;
-        }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 10px 20px;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
-        nav {
-            width: fit-content;
-            margin: auto;
-            background-color: #2e7431;
-            overflow: hidden;
-            border-radius: 20px;
-        }
+.main_content {
+    padding: 20px;
+    min-height: 600px;
+}
 
-        nav li {
-            float: left;
-            list-style-type: none;
-        }
+label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+input[type="text"],
+input[type="number"]{
+    margin-right: 10px;
+    font-size: 15px;
+}
 
-        nav li a {
-            display: flex;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 20px;
-        }
+select {
+    margin-right: 10px;
+    padding: 5px;
+}
 
-        nav li a:hover {
-            background-color: #45a049;
-        }
+nav {
+    width: fit-content;
+    margin: auto;
+    background-color: #2e7431;
+    overflow: hidden;
+    border-radius: 20px;
+}
 
-        .user_button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+nav li {
+    float: left;
+    list-style-type: none;
+}
 
-        .user_button:hover {
-            background-color: #45a049;
-        }
+nav li a {
+    display: flex;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+}
 
-        table {
-            width: 66%;
-            margin: auto;
-            align-items: center;
-            border-collapse: collapse;
-            text-align: center;
-        }
+nav li a:hover {
+    background-color: #45a049;
+}
 
-        .table_exp th,
-        .table_exp td {
-            border: 1px solid #2e7431;
-            padding: 16px;
-            align-items: center;
-        }
+.user_button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-        .table_exp th {
-            background-color: #2e7431;
-            color: white;
-            padding: 10px;
-        }
+.user_button:hover {
+    background-color: #45a049;
+}
 
-        .cabecera_parcelas {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-        }
+table {
+    width: 66%;
+    margin: auto;
+    align-items: center;
+    border-collapse: collapse;
+    text-align: center;
+}
 
-        .add_button {
-            background-color: #4CAF50;
-            font-size: 20px;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px 50px;
-        }
+.table_exp th,
+.table_exp td {
+    border: 1px solid #2e7431;
+    padding: 16px;
+    align-items: center;
+}
 
-        .add_button:hover {
-            background-color: #45a049;
-        }
+.table_exp th {
+    background-color: #2e7431;
+    color: white;
+    padding: 10px;
+}
+
+.cabecera_parcelas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.add_button {
+    background-color: #4CAF50;
+    font-size: 20px;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 50px;
+}
+
+.add_button:hover {
+    background-color: #45a049;
+}
+
+
+.modal_formulario {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background: rgb(222, 241, 205);
+    border: #45a049 solid 2px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    margin: 20px auto;
+}

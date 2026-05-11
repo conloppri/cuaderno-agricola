@@ -3,9 +3,9 @@ include "../models/parcelaModel.php";
 include "../models/globalModel.php";
 include "../config/db.php";
 
-function obtenerInfoParcelas(PDO $connection) {
+function obtenerInfoParcelas(PDO $connection, int $idExplotacion) {
     $parcelasDetails = [];
-    $infoParcelas = obtenerParcelas($connection);
+    $infoParcelas = obtenerParcelas($connection, $idExplotacion);
     foreach ($infoParcelas as &$parcela) {
         $provincia = obtenerProvincia($connection, $parcela['provincia_id']);
         $municipio = obtenerMunicipio($connection, $parcela['municipio_id']);

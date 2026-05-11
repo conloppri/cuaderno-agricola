@@ -15,7 +15,7 @@
             <h3>Cuaderno de Campo</h3>
         </div>
         <nav>
-            <li><a href="#">Parcelas</a></li>
+            <li><a href="../views/parcelasView.php">Parcelas</a></li>
             <li><a href="#">Campañas</a></li>
             <li><a href="#">Personal</a></li>
             <li><a href="#">Maquinaria</a></li>
