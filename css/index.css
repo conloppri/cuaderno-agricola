@@ -1,0 +1,88 @@
+@charset "UTF-8";
+/* CSS Document */
+/* Documento CSS para los estilos de la página principal "index.php" */
+
+/* Estilos para la barra de navegación */
+.cabecera-index {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 10px 20px;
+}
+
+nav {
+    width: fit-content;
+    margin: auto;
+    background-color: #2e7431;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+nav li {
+    float: left;
+    list-style-type: none;
+}
+
+nav li a {
+    display: flex;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+nav li a:hover {
+    background-color: #45a049;
+}
+
+/* Estilos para el modal de inicio de sesión */
+#login-modal {
+    border: none;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px #00000033;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+#login-modal form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    margin: 50px;
+}
+
+.grupo-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.grupo-form label {
+    flex: 1;                /* El label ocupa el espacio necesario */
+    min-width: 100px;       /* Ajuste para que todos los labels midan lo mismo */
+}
+
+.grupo-form input {
+    flex: 2;                /* El input ocupa el resto del espacio */
+    padding: 5px;
+}
+
+#btn-form-sesion {
+    margin-top: 10px;
+}
+
+/* Estilos para los los mensajes de error */
+.error-msg {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}

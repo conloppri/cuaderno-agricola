@@ -8,6 +8,7 @@
 
     <title>Cuaderno de campo</title>
     <link rel="stylesheet" type="text/css" href="css/global.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
 
 </head>
 <body>
@@ -22,17 +23,22 @@
                 <li><a href="#">Contacto</a></li>
             </nav>
             <div>
-                <button id="btnSesion" type="button">Iniciar sesión</button>
+                <button id="btnSesion" class="boton-nav"type="button">Iniciar sesión</button>
             </div>
         </div>
     </header>
 
+    <main>
+        <div class="contenido-index">
+            <h1>Bienvenido a Cuaderno de Campo</h1>
+            <p>Tu herramienta para gestionar tus explotaciones agrícolas de manera eficiente.</p>
+        </div>
+    </main>
 
     <!-- Ventana modal de login -->
     <dialog id="login-modal">
         <div class="modal-content">
             <h2>Iniciar sesión</h2>
-            <!-- <form id="login-form" method="POST" action="../controllers/login.php"> -->
             <form id="login-form">
                 <div class="grupo-form">
                     <label for="username">Usuario:</label>
@@ -42,11 +48,12 @@
                     <label for="password">Contraseña:</label>
                     <input type="password" id="password" name="password" placeholder="Contraseña" required>
                 </div>
-            <button type="submit">Iniciar sesión</button>
-            <button type="button" id="cerrar-sesion">Cerrar</button>
+                    <button type="submit" id="btn-form-sesion">Iniciar sesión</button>
+                    <button type="button" id="btn-form-cerrar">Cerrar</button>
+                <!-- Mensaje de errores -->
+                <div id="mensaje" class="error-msg"></div>
             </form>
-            <!-- Mensaje de errores. -->
-            <div id="mensaje" class="error-msg"></div>
+            
         </div>
     </dialog>
 
@@ -54,12 +61,13 @@
 
         // JavaScript para controlar la ventana modal de login
         const btnAbrirModal = document.getElementById('btnSesion');
-        const btnCerrarModal = document.getElementById('cerrar-sesion');
+        const btnCerrarModal = document.getElementById('btn-form-cerrar');
         const modal = document.getElementById('login-modal');
         const formulario = document.getElementById('login-form');
 
         btnAbrirModal.addEventListener('click', () => {
             formulario.reset(); // Limpiar el formulario cada vez que se abre
+            document.getElementById('mensaje').textContent = '';
             modal.showModal();
         });
 
@@ -93,7 +101,7 @@
                         // Redirigir a la página de inicio o mostrar un mensaje de éxito
                         window.location.href = '../views/explotacionesView.php'; // Cambia esto a tu página de inicio
                     }else{
-                        document.getElementById('mensaje').textContent = result.message + 'Credenciales incorrectas';
+                        document.getElementById('mensaje').textContent = result.message;
                         event.target.reset(); // Limpiar el formulario después de un error
                     }
                 } else {
