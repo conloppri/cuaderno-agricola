@@ -16,12 +16,12 @@ $usuarioID = $_SESSION['usuario_id'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Cuaderno Agrícola - Explotaciones">
     <title>Cuaderno Agrícola - Explotaciones</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../css/global.css">
 </head>
 <body>
     <header>
         <h1>Cuaderno Agrícola</h1>
-        <p>Bienvenido123, <?php echo $usuarioID; ?>!</p>
+        <p>Bienvenido, <?php echo $usuarioID; ?>!</p>
     </header>
     <main>
         <h2>Explotaciones</h2>
