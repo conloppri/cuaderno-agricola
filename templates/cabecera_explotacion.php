@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuaderno agrícola</title>
-    <link rel="stylesheet" href="/app/cuaderno-agricola/css/estilos_pruebas.css">
+    <!--  He puesto el enlace a global.css para que se apliquen los estilos generales -->
+    <!-- <link rel="stylesheet" href="../css/global.css"> -->
+    <link rel="stylesheet" href="../css/estilos_pruebas.css">
 </head>
 
 <body>
