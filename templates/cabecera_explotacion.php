@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuaderno agrícola</title>
-    <link rel="stylesheet" href="../css/estilos_pruebas.css">
+    <link rel="stylesheet" href="/app/cuaderno-agricola/css/estilos_pruebas.css">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
         <nav>
             <li><a href="../views/parcelasView.php">Parcelas</a></li>
             <li><a href="#">Campañas</a></li>
-            <li><a href="#">Personal</a></li>
+            <li><a href="../views/personalView.php">Personal</a></li>
             <li><a href="#">Maquinaria</a></li>
             <li><a href="#">Instalaciones</a></li>
             <li><a href="#">Fertilizantes</a></li>

@@ -131,13 +131,13 @@ INSERT INTO `CuadernoDeCampoDB`.`fenologia` (plantacion_id, fecha_deteccion, est
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`personal`
 -- -----------------------------------------------------
-INSERT INTO `CuadernoDeCampoDB`.`personal` (dni, nombre, apellidos, telefono, email, direccion, nacionalidad, rol, municipio_id, provincia_id) VALUES
-('12345678A', 'Juan', 'Pérez', '123456789', 'juan.perez@example.com', 'Dirección 1', 'Nacionalidad 1', 'propietario', 28, 28),
-('87654321B', 'María', 'García', '987654321', 'maria.garcia@example.com', 'Dirección 2', 'Nacionalidad 2', 'tecnico', 8, 8),
-('11223344C', 'Carlos', 'López', '555555555', 'carlos.lopez@example.com', 'Dirección 3', 'Nacionalidad 3', 'trabajador', 41, 41),
-('44332211D', 'Ana', 'Martínez', '666666666', 'ana.martinez@example.com', 'Dirección 4', 'Nacionalidad 4', 'administrativo', 15, 15),
-('55667788E', 'Luis', 'Gómez', '777777777', 'luis.gomez@example.com', 'Dirección 5', 'Nacionalidad 5', 'propietario', 29, 29),
-('99887766F', 'Sofía', 'Díaz', '888888888', 'sofia.diaz@example.com', 'Dirección 6', 'Nacionalidad 6', 'tecnico', 33, 33);
+INSERT INTO `CuadernoDeCampoDB`.`personal` (explotacion_id, dni, nombre, apellidos, telefono, email, direccion, nacionalidad, rol, municipio_id, provincia_id) VALUES
+(1, '12345678A', 'Juan', 'Pérez', '123456789', 'juan.perez@example.com', 'Dirección 1', 'Nacionalidad 1', 'propietario', 28, 28),
+(1, '87654321B', 'María', 'García', '987654321', 'maria.garcia@example.com', 'Dirección 2', 'Nacionalidad 2', 'tecnico', 8, 8),
+(2, '11223344C', 'Carlos', 'López', '555555555', 'carlos.lopez@example.com', 'Dirección 3', 'Nacionalidad 3', 'trabajador', 41, 41),
+(2, '44332211D', 'Ana', 'Martínez', '666666666', 'ana.martinez@example.com', 'Dirección 4', 'Nacionalidad 4', 'administrativo', 15, 15),
+(3, '55667788E', 'Luis', 'Gómez', '777777777', 'luis.gomez@example.com', 'Dirección 5', 'Nacionalidad 5', 'propietario', 29, 29),
+(3, '99887766F', 'Sofía', 'Díaz', '888888888', 'sofia.diaz@example.com', 'Dirección 6', 'Nacionalidad 6', 'tecnico', 33, 33);
 
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`fertilizante`
