@@ -73,7 +73,7 @@ nav li a:hover {
 }
 
 table {
-    width: 66%;
+    width: 75%;
     margin: auto;
     align-items: center;
     border-collapse: collapse;
@@ -115,15 +115,37 @@ table {
     background-color: #45a049;
 }
 
+.cancel_button {
+    background-color: #f44336;
+    font-size: 20px;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 50px;
+}
+
+.cancel_button:hover {
+    background-color: #d32f2f;
+}
 
 .modal_formulario {
-    display: none;
     flex-direction: column;
+    position: center;
     align-items: center;
     background: rgb(222, 241, 205);
     border: #45a049 solid 2px;
     padding: 20px;
     border-radius: 10px;
-    width: 50%;
-    margin: 20px auto;
+    width: 33%;
+}
+
+.grupo-form {
+    display: grid;
+    grid-template-columns: 33% 66%;
+    text-align: left;
+    gap: 12px;
+    margin: 20px;
+    font-size: 18px;
 }

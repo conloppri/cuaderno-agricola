@@ -19,7 +19,7 @@
         <nav>
             <li><a href="../views/parcelasView.php">Parcelas</a></li>
             <li><a href="#">Campañas</a></li>
-            <li><a href="#">Personal</a></li>
+            <li><a href="../views/personalView.php">Personal</a></li>
             <li><a href="#">Maquinaria</a></li>
             <li><a href="#">Instalaciones</a></li>
             <li><a href="#">Fertilizantes</a></li>
