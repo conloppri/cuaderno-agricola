@@ -39,4 +39,35 @@ function obtenerMunicipiosPorProvincia(PDO $connection, int $provinciaId) {
     }
     return $municipiosLista;
 }
+
+// Función para obtener la lista de explotaciones.
+function obtenerExplotaciones(PDO $connection, $username) {
+    $sql = "select e.* from explotacion e JOIN usuarios_explotacion ue ON e.explotacion_id = ue.explotacion_id JOIN usuarios u ON ue.usuario_id = u.id WHERE u.email = :email";
+    $stmt = $connection->prepare($sql);
+    $stmt->execute(['email' => $username]);
+    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultado;
+}
+
+// Función para obtener la lista de provincias.
+function obtenerListaProvincias(PDO $connection) {
+    $stmt = $connection->prepare("SELECT provincia_id, nombre FROM provincia");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Función para obtener la lista de municipios.
+function obtenerListaMunicipios(PDO $connection) {
+    $stmt = $connection->prepare("SELECT municipio_id, provincia_id, nombre FROM municipio");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Función para obtener una organización por su ID.
+function obtenerOrganizacion(PDO $connection, int $idOrganizacion) {
+    $stmt = $connection->prepare("SELECT * FROM organizacion WHERE organizacion_id = :id");
+    $stmt->execute(['id' => $idOrganizacion]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result; 
+}
 ?>

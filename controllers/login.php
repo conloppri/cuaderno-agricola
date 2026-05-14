@@ -20,13 +20,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Consultar la base de datos para verificar las credenciales del usuario
     $stmt = $connection->prepare("SELECT * FROM usuarios WHERE email = :email");
-    $stmt->execute([':email' => $username]);
+    $stmt->execute(['email' => $username]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result && password_verify($password, $result['password_hash'])) {
             // Credenciales válidas. Se envía a JavaScript una respuesta de éxito.
             session_regenerate_id(true);    // Regenerar el ID de sesión para mayor seguridad
-            $_SESSION['username'] = $username;
+            $_SESSION['username'] = $username;  // Almacenar el nombre de usuario en la sesión. Nombre de usuario = email
             $_SESSION['usuario_id'] = $result['id'];
             echo json_encode(['success' => true, 'message' => 'Inicio de sesión exitoso.']);
         } else {
