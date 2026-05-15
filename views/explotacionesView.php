@@ -1,9 +1,6 @@
 <?php
-include '../controllers/comprobarSesion.php';
 include '../controllers/explotacionesController.php';
 include '../templates/cabecera_explotacion.php';
-
-$usuarioID = $_SESSION['usuario_id'];
 ?>
 
     <main>
@@ -12,7 +9,7 @@ $usuarioID = $_SESSION['usuario_id'];
             <p>Gestiona tus explotaciones agrícolas de manera eficiente.</p>
         </div>
 
-        <div>
+        <div class="table_exp">
             <table>
                 <thead>
                     <tr>

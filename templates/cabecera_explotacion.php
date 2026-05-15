@@ -1,3 +1,7 @@
+<?php
+include '../controllers/comprobarSesion.php';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -25,6 +29,12 @@
             <li><a href="#">Fertilizantes</a></li>
         </nav>
         <div>
-            <button type="button" class="user_button">Nombre de usuario</button>
+            <button type="button" class="user_button"><?php echo "(" . $_SESSION['username'] . ")"; ?></br>Cerrar sesión</button>
         </div>
     </div>
+
+    <script>
+        document.querySelector('.user_button').addEventListener('click', function() {
+            window.location.href = '../controllers/logout.php';
+        });
+    </script>
