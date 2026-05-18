@@ -69,6 +69,24 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`organizacion` (
   );
   
 -- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`usuarios_organizacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`usuarios_organizacion` (
+  `organizacion_id` INT NOT NULL,
+  `usuario_id` INT NOT NULL,
+  PRIMARY KEY (`organizacion_id`, `usuario_id`),
+  CONSTRAINT `fk_usuarios_organizacion`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `CuadernoDeCampoDB`.`usuarios` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+ CONSTRAINT `fk_organizacion_usuarios`
+    FOREIGN KEY (`organizacion_id`)
+    REFERENCES `CuadernoDeCampoDB`.`organizacion` (`organizacion_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+-- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`explotacion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`explotacion` (

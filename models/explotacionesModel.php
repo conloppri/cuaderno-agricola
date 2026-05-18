@@ -11,4 +11,40 @@ function obtenerExplotaciones(PDO $connection, $username) {
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $resultado;
 }
+
+function addExplotacion(PDO $connection, $nombre, $alias, $organizacion_id, $provincia_id, $municipio_id, $comunidad, $rea, $siex) {
+    try {
+        // Insertar nueva explotación en la base de datos
+        $sql = "INSERT INTO explotacion (nombre, alias, organizacion_id, provincia_id, municipio_id, comunidad, rea, siex) VALUES (:nombre, :alias, :organizacion_id, :provincia_id, :municipio_id, :comunidad, :rea, :siex)";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([
+            'nombre' => $nombre,
+            'alias' => $alias,
+            'organizacion_id' => $organizacion_id,
+            'provincia_id' => $provincia_id,
+            'municipio_id' => $municipio_id,
+            'comunidad' => $comunidad,
+            'rea' => $rea,
+            'siex' => $siex
+        ]);
+
+        // Obtener el ID de la explotación recién creada
+        return $connection->lastInsertId();
+    } catch (PDOException $e) {
+        throw new Exception('Error al guardar la explotación: ' . $e->getMessage());
+    }
+}
+
+function addUsuarioExplotacion(PDO $connection, $usuario_id, $explotacion_id) {
+    try {
+        $sql = "INSERT INTO usuarios_explotacion (usuario_id, explotacion_id) VALUES (:usuario_id, :explotacion_id)";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([
+            'usuario_id' => $usuario_id,
+            'explotacion_id' => $explotacion_id
+        ]);
+    } catch (PDOException $e) {
+        throw new Exception('Error al asociar la explotación con el usuario: ' . $e->getMessage());
+    }
+}
 ?>

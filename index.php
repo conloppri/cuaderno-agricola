@@ -36,7 +36,7 @@
     </main>
 
     <!-- Ventana modal de login -->
-    <dialog id="login-modal">
+    <dialog id="login-modal" class="ventana-modal">
         <div class="modal-content">
             <h2>Iniciar sesión</h2>
             <form id="login-form">

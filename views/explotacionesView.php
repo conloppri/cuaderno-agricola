@@ -1,12 +1,14 @@
 <?php
 include '../controllers/explotacionesController.php';
-include '../templates/cabecera_explotacion.php';
+include '../templates/cabecera_explotacion_principal.php';
 ?>
-
     <main>
         <div class="contenido">
-            <h1>Bienvenido, <?php echo $_SESSION['username']; ?>!</h1>
-            <p>Gestiona tus explotaciones agrícolas de manera eficiente.</p>
+            <div>
+                <h1>Bienvenido, <?php echo $_SESSION['username']; ?>!</h1>
+                <p>Gestiona tus explotaciones agrícolas de manera eficiente.</p>
+            </div>
+            <button type="button" id="btnAddExp" class="btn_agregar_exp">+ Añadir explotación</button>
         </div>
 
         <div class="table_exp">
@@ -21,6 +23,7 @@ include '../templates/cabecera_explotacion.php';
                         <th>Comunidad</th>
                         <th>Código REA</th>
                         <th>Código SIEX</th>
+                        <th>Cuaderno de campo</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,11 +38,20 @@ include '../templates/cabecera_explotacion.php';
                         <td><?php echo htmlspecialchars($explotacion['comunidad']); ?></td>
                         <td><?php echo htmlspecialchars($explotacion['rea']); ?></td>
                         <td><?php echo htmlspecialchars($explotacion['siex']); ?></td>
+                        <td><a href="../views/parcelasView.php?explotacion_id=<?php echo $explotacion['id']; ?>">Acceder</a></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
     </main>
-    
+
+    <script>
+        // Botón para añadir nueva explotación
+        const btnAddExp = document.getElementById('btnAddExp');
+        btnAddExp.addEventListener('click', () => {
+            window.location.href = '../views/nuevaExplotacion.php';
+        });
+    </script>
+
 <?php include '../templates/footer.php';?>

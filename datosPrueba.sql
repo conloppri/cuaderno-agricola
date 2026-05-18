@@ -63,6 +63,15 @@ INSERT INTO `CuadernoDeCampoDB`.`usuarios_explotacion` (usuario_id, explotacion_
 (4, 4);
 
 -- -----------------------------------------------------
+-- Tabla `CuadernoDeCampoDB`.`usuarios_organizacion`
+-- -----------------------------------------------------
+INSERT INTO `CuadernoDeCampoDB`.`usuarios_organizacion` (organizacion_id,usuario_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4);
+
+-- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`parcela`
 -- -----------------------------------------------------
 INSERT INTO `CuadernoDeCampoDB`.`parcela` (explotacion_id, provincia_id, municipio_id, agregado, zona, poligono, parcela, nombre, superficie) VALUES

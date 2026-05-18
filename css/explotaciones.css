@@ -1,0 +1,11 @@
+/* Estilos para la vista de explotaciones */
+/* Ocultar el menú de navegación */
+.contenido {
+    display: flex;
+    margin: 10px 20px;
+}
+
+.btn_agregar_exp {
+    margin-left: auto;
+    padding: 10px 20px;
+}

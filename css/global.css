@@ -41,6 +41,14 @@ button:hover {
     font-size: 20px;    /* Tamaño de fuente para los botones de la barra de navegación */
 }
 
+/* Estilos para la ventana modal */
+.ventana-modal {
+    border: none;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px #00000033;
+}
+
 /* Estilos para los enlaces */
 a {
     color: #000000;
