@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../models/explotacionesModel.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -9,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $provincia_id = $_POST['provincia'] ?? null;
     $municipio_id = $_POST['municipio'] ?? null;
     $comunidad = $_POST['comunidad'] ?? '';
-    $rea = $_POST['rea'] ?? '';
-    $siex = $_POST['siex'] ?? '';
+    $codigo_rea = $_POST['codigo_rea'] ?? '';
+    $codigo_siex = $_POST['codigo_siex'] ?? '';
 
     // Validar datos (puedes agregar validaciones más robustas)
     if (empty($nombre) || empty($organizacion_id) || empty($provincia_id) || empty($municipio_id) || empty($comunidad)) {
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Insertar nueva explotación en la base de datos
     try {
-        $explotacion_id = addExplotacion($connection, $nombre, $alias, $organizacion_id, $provincia_id, $municipio_id, $comunidad, $rea, $siex);
+        $explotacion_id = addExplotacion($connection, $nombre, $alias, $organizacion_id, $provincia_id, $municipio_id, $comunidad, $codigo_rea, $codigo_siex);
 
         // Asociar la explotación con el usuario actual
         addUsuarioExplotacion($connection, $_SESSION['usuario_id'], $explotacion_id);
@@ -32,5 +33,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo json_encode(['success' => false, 'message' => 'Método de solicitud no válido']);
 }
-
 ?>

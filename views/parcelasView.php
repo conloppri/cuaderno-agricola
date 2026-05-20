@@ -4,9 +4,12 @@
 <!-- Contenido principal -->
 <?php
 
+include "../controllers/comprobarUsuarioExp.php";
+
 //Desde la pantalla de explotaciones, se envía el id de la explotación para mostrar solo las parcelas de esa explotación. 
 
 $explotacion_id = $_GET['explotacion_id'];
+comprobarUsuarioExp($connection, $explotacion_id); // Comprobar que el usuario tiene permiso para acceder a esta explotación
 include_once "../controllers/parcelaController.php";
 $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id);
 ?>

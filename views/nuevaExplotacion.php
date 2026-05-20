@@ -51,12 +51,12 @@
                 <input type="text" id="comunidad" name="comunidad" placeholder="Comunidad autónoma" required>
             </div>
             <div class="grupo-form">
-                <label for="rea">Código REA:</label>
-                <input type="text" id="rea" name="rea" placeholder="Código REA">
+                <label for="codigo_rea">Código REA:</label>
+                <input type="text" id="codigo_rea" name="codigo_rea" placeholder="Código REA">
             </div>
             <div class="grupo-form">
-                <label for="siex">Código SIEX:</label>
-                <input type="text" id="siex" name="siex" placeholder="Código SIEX">
+                <label for="codigo_siex">Código SIEX:</label>
+                <input type="text" id="codigo_siex" name="codigo_siex" placeholder="Código SIEX">
             </div>
             <div class="grupo-form">
                 <button type="submit" class="btn_guardar_exp">Guardar explotación</button>
@@ -109,6 +109,7 @@
             })
             .then(response => response.json())
             .then(data => {
+                console.log('Respuesta del servidor:', data);
                 if(data.success) {
                     alert('Explotación guardada exitosamente');
                     window.location.href = '../views/explotacionesView.php';

@@ -82,7 +82,7 @@
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch('../controllers/login.php', {
+                const response = await fetch('/controllers/login.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -92,9 +92,9 @@
 
                 const result = await response.json();
 
-                console.log("Contenido de resultado:", result);
-                console.log("Tipo de success:", typeof result.success);
-                console.log("Contenido de resultado:", username, password);
+                //console.log("Contenido de resultado:", result);
+                //console.log("Tipo de success:", typeof result.success);
+                //console.log("Contenido de resultado:", username, password);
 
                 if (response.ok) {
                     if(result.success === true){
