@@ -92,9 +92,9 @@
 
                 const result = await response.json();
 
-                console.log("Contenido de resultado:", result);
-                console.log("Tipo de success:", typeof result.success);
-                console.log("Contenido de resultado:", username, password);
+                //console.log("Contenido de resultado:", result);
+                //console.log("Tipo de success:", typeof result.success);
+                //console.log("Contenido de resultado:", username, password);
 
                 if (response.ok) {
                     if(result.success === true){

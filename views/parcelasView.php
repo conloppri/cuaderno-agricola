@@ -4,9 +4,12 @@
 <!-- Contenido principal -->
 <?php include "../controllers/parcelaController.php";
 
+include "../controllers/comprobarUsuarioExp.php";
+
 //Desde la pantalla de explotaciones, se envía el id de la explotación para mostrar solo las parcelas de esa explotación. 
 
 $explotacion_id = $_GET['explotacion_id'] ?? 1; //Como aun no sta implementado el paso de información, se asigna un id por defecto para mostrar las parcelas de la explotación con id 1.
+comprobarUsuarioExp($connection, $explotacion_id); // Comprobar que el usuario tiene permiso para acceder a esta explotación
 $parcelas = obtenerInfoParcelas($connection, $explotacion_id);
 ?>
 <div class="main_content">
