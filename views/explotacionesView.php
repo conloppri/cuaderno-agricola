@@ -36,9 +36,9 @@ include '../templates/cabecera_explotacion_principal.php';
                         <td><?php echo htmlspecialchars($explotacion['provincia']); ?></td>
                         <td><?php echo htmlspecialchars($explotacion['municipio']); ?></td>
                         <td><?php echo htmlspecialchars($explotacion['comunidad']); ?></td>
-                        <td><?php echo htmlspecialchars($explotacion['rea']); ?></td>
-                        <td><?php echo htmlspecialchars($explotacion['siex']); ?></td>
-                        <td><a href="../views/parcelasView.php?explotacion_id=<?php echo $explotacion['id']; ?>">Acceder</a></td>
+                        <td><?php echo htmlspecialchars($explotacion['codigo_rea']); ?></td>
+                        <td><?php echo htmlspecialchars($explotacion['codigo_siex']); ?></td>
+                        <td><a href="../views/parcelasView.php?explotacion_id=<?php echo $explotacion['id']; ?>">Acceder a <?php echo htmlspecialchars($explotacion['id']); ?></a></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>

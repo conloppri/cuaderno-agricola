@@ -6,7 +6,7 @@
 
 //Desde la pantalla de explotaciones, se envía el id de la explotación para mostrar solo las parcelas de esa explotación. 
 
-$explotacion_id = $_POST['id'] ?? 1; //Como aun no sta implementado el paso de información, se asigna un id por defecto para mostrar las parcelas de la explotación con id 1.
+$explotacion_id = $_GET['explotacion_id'] ?? 1; //Como aun no sta implementado el paso de información, se asigna un id por defecto para mostrar las parcelas de la explotación con id 1.
 $parcelas = obtenerInfoParcelas($connection, $explotacion_id);
 ?>
 <div class="main_content">
