@@ -49,6 +49,14 @@ function obtenerExplotaciones(PDO $connection, $username) {
     return $resultado;
 }
 
+// Función para obtener una explotación por su ID.
+function obtenerExplotacionPorId(PDO $connection, int $idExplotacion) {
+    $sql = "SELECT * FROM explotacion WHERE explotacion_id = :id";
+    $stmt = $connection->prepare($sql);
+    $stmt->execute(['id' => $idExplotacion]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 // Función para obtener la lista de provincias.
 function obtenerListaProvincias(PDO $connection) {
     $stmt = $connection->prepare("SELECT provincia_id, nombre FROM provincia");

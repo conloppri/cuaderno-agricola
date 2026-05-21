@@ -44,4 +44,41 @@ function addUsuarioExplotacion(PDO $connection, $usuario_id, $explotacion_id) {
         throw new Exception('Error al asociar la explotación con el usuario: ' . $e->getMessage());
     }
 }
+
+function modificarExplotacion(PDO $connection, $explotacion_id, $nombre, $alias, $organizacion_id, $provincia_id, $municipio_id, $comunidad, $codigo_rea, $codigo_siex) {
+    try {
+        // Actualizar la explotación en la base de datos
+        $sql = "UPDATE explotacion SET nombre = :nombre, alias = :alias, organizacion_id = :organizacion_id, provincia_id = :provincia_id, municipio_id = :municipio_id, comunidad = :comunidad, codigo_rea = :codigo_rea, codigo_siex = :codigo_siex WHERE explotacion_id = :explotacion_id";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([
+            'nombre' => $nombre,
+            'alias' => $alias,
+            'organizacion_id' => $organizacion_id,
+            'provincia_id' => $provincia_id,
+            'municipio_id' => $municipio_id,
+            'comunidad' => $comunidad,
+            'codigo_rea' => $codigo_rea,
+            'codigo_siex' => $codigo_siex,
+            'explotacion_id' => $explotacion_id
+        ]);
+    } catch (PDOException $e) {
+        throw new Exception('Error al modificar la explotación: ' . $e->getMessage());
+    }
+}
+
+function eliminarExplotacion(PDO $connection, $explotacion_id) {
+    try {
+        // Eliminar la explotación de la base de datos
+        $sql = "DELETE FROM explotacion WHERE explotacion_id = :explotacion_id";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute(['explotacion_id' => $explotacion_id]);
+
+        // Eliminar las asociaciones con los usuarios
+        $sqlUsuariosExplotacion = "DELETE FROM usuarios_explotacion WHERE explotacion_id = :explotacion_id";
+        $stmtUsuariosExplotacion = $connection->prepare($sqlUsuariosExplotacion);
+        $stmtUsuariosExplotacion->execute(['explotacion_id' => $explotacion_id]);
+    } catch (PDOException $e) {
+        throw new Exception('Error al eliminar la explotación: ' . $e->getMessage());
+    }
+}
 ?>

@@ -26,15 +26,15 @@ function obtenerExplotacionesUsuario(PDO $connection, $username) {
         $organizacion = obtenerOrganizacion($connection, $explotacion['organizacion_id']);
 
         array_push($resultado, [
-            'id' => $explotacion['explotacion_id'],
+            'explotacion_id' => $explotacion['explotacion_id'],
             'nombre' => $explotacion['nombre'],
             'alias' => $explotacion['alias'],
             'organizacion' => $organizacion['nombre_organizacion'] ?? 'Desconocida',
             'provincia' => $provincia,
             'municipio' => $municipio,
             'comunidad' => $explotacion['comunidad'],
-            'rea' => $explotacion['codigo_rea'],
-            'siex' => $explotacion['codigo_siex']
+            'codigo_rea' => $explotacion['codigo_rea'],
+            'codigo_siex' => $explotacion['codigo_siex']
         ]);
     }
     return $resultado;
