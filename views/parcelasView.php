@@ -2,15 +2,16 @@
 <?php include "../templates/cabecera_explotacion.php"; ?>
 
 <!-- Contenido principal -->
-<?php include "../controllers/parcelaController.php";
+<?php
 
 include "../controllers/comprobarUsuarioExp.php";
 
 //Desde la pantalla de explotaciones, se envía el id de la explotación para mostrar solo las parcelas de esa explotación. 
 
-$explotacion_id = $_GET['explotacion_id'] ?? 1; //Como aun no sta implementado el paso de información, se asigna un id por defecto para mostrar las parcelas de la explotación con id 1.
+$explotacion_id = $_GET['explotacion_id'];
 comprobarUsuarioExp($connection, $explotacion_id); // Comprobar que el usuario tiene permiso para acceder a esta explotación
-$parcelas = obtenerInfoParcelas($connection, $explotacion_id);
+include_once "../controllers/parcelaController.php";
+$parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id);
 ?>
 <div class="main_content">
     <div class="cabecera_parcelas">
@@ -22,32 +23,21 @@ $parcelas = obtenerInfoParcelas($connection, $explotacion_id);
     <dialog id="parcela_modal" class= "modal_formulario">
         <div>
             <h2 style="text-align: center;">Nueva parcela</h2>
-            <form action="guardar.php" method="POST">
+            <form id="form_parcela" method="POST">
                 <div class="grupo-form">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" name="nombre" placeholder="Nombre">
-                    <label for="provincia">Provincia:</label>
-                    <select name="provincia" id="provincia">
-                        <option value="" selected disabled>Selecciona provincia</option>
-                        <?php
-                        $provincias = obtenerProvincias($connection);
-                        foreach ($provincias as $provincia) {
-                            echo "<option value='" . $provincia['provincia_id'] . "'>" . htmlspecialchars($provincia['nombre']) . "</option>";
-                        }
-                        ?>
-                    </select>
-                    <label for="municipio">Municipio:</label>
-                    <select name="municipio" id="municipio">
-                        <option value="" selected disabled>Selecciona municipio</option>
-                    </select>
-                    <label for="superficie">Superficie (ha):</label>
-                    <input type="number" step="0.1" name="superficie" placeholder="Superficie">
+                    <input id = "accionParcela" type="hidden" name="accion" value="crearParcela">
+                    <input id = "idExplotacion" type="hidden" name="idExplotacion" value="<?php echo $explotacion_id; ?>">
+                    <label for="nombreParcela">Nombre:</label>
+                    <input id = "nombreParcela" type="text" name="nombreParcela" placeholder="Nombre" maxlength="20" required>
+                    <label for="superficieParcela">Superficie (ha):</label>
+                    <input id = "superficieParcela" type="number" step="0.1" name="superficieParcela" placeholder="Superficie" required>
                     <label for="sigpac">SIGPAC:</label>
-                    <input type="text" name="sigpac" placeholder="SIGPAC">
+                    <input id = "sigpac" type="text" name="sigpac" placeholder="SIGPAC" maxlength="22" required>
                 </div>
+                <p id="mensaje_error" style="color: red;"></p>
                 <div style="display: flex; justify-content: space-around; margin-top: 20px;">
-                    <button class="add_button" type="submit">Guardar</button>
                     <button  class="cancel_button" type="button" onclick="cerrarFormularioParcela()">Cancelar</button>
+                    <button class="add_button" type="submit">Guardar</button>
                 </div>
             </form>
         </div>
@@ -73,7 +63,7 @@ $parcelas = obtenerInfoParcelas($connection, $explotacion_id);
                         <td><?php echo htmlspecialchars($parcela['sigpac']); ?></td>
                         <td><?php echo htmlspecialchars($parcela['provincia']); ?></td>
                         <td><?php echo htmlspecialchars($parcela['municipio']); ?></td>
-                        <td><?php echo htmlspecialchars($parcela['superficie']); ?></td>
+                        <td><?php echo htmlspecialchars($parcela['superficie'] . ' ha'); ?></td>
                         <td><button type="button" onclick="toggleFila(<?php echo $parcela['id']; ?>)"> + </button></td>
                     </tr>
                     <tr id="fila-<?php echo $parcela['id']; ?>" style="display: none;">
@@ -90,7 +80,7 @@ $parcelas = obtenerInfoParcelas($connection, $explotacion_id);
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $unidadesGestion = obtenerInfoUnidadesGestion($connection, $parcela['id']);
+                                    $unidadesGestion = ParcelaController::obtenerInfoUnidadesGestion($connection, $parcela['id']);
                                     foreach ($unidadesGestion as $unidad): ?>
                                         <tr>
                                             <td><?php echo htmlspecialchars($unidad['nombre']); ?></td>
@@ -104,21 +94,26 @@ $parcelas = obtenerInfoParcelas($connection, $explotacion_id);
                             <dialog class="modal_formulario" id="uniGestion_modal">
                                 <div>
                                     <h2 style="text-align: center;">Nueva unidad de gestión</h2>
-                                    <div class="grupo-form">
-                                        <label for="nombre">Nombre:</label>
-                                        <input type="text" name="nombre" placeholder="Nombre">
-                                        <label for="superficie">Superficie (ha):</label>
-                                        <input type="number" step="0.1" name="superficie" placeholder="Superficie">
-                                        <label for="uso">Uso:</label>
-                                        <select name="uso" id="uso">
-                                            <option value="" selected disabled>Selecciona uso</option>
-                                            <option value="agrícola">Agrícola</option>
-                                            <option value="ganadero">Ganadero</option>
-                                            <option value="forestal">Forestal</option>
-                                            <option value="en descanso">En descanso</option>
-                                            <option value="otro">Otro</option>
-                                        </select>
-                                    </div>
+                                    <form id="form_uniGestion" method="POST">
+                                        <input type="hidden" name="accion" value="crearUniGestion">
+                                        <input type="hidden" name="idParcela" value="<?php echo $parcela['id']; ?>">
+                                        <input type="hidden" name="parcelaSuperficie" value="<?php echo $parcela['superficie']; ?>">
+                                        <div class="grupo-form">
+                                            <label for="nombreUnidad">Nombre:</label>
+                                            <input type="text" name="nombreUnidad" maxlength="20" placeholder="Nombre" required>
+                                            <label for="superficieUnidad">Superficie (ha):</label>
+                                            <input type="number" step="0.1"  name="superficieUnidad" placeholder="Superficie" required>
+                                            <label for="uso">Uso:</label>
+                                            <select name="uso" id="uso">
+                                                <option value="" selected disabled>Selecciona uso</option>
+                                                <option value="agrícola">Agrícola</option>
+                                                <option value="ganadero">Ganadero</option>
+                                                <option value="forestal">Forestal</option>
+                                                <option value="en descanso">En descanso</option>
+                                                <option value="otro">Otro</option>
+                                            </select>
+                                        </div>
+                                        <p id="mensaje_error_uniGest" style="color: red;"></p>
                                         <button type="submit" class="add_button">Guardar</button>
                                         <button type="button" class="cancel_button" onclick="cerrarFormularioUniGest()">Cancelar</button>
                                     </form>
@@ -157,6 +152,7 @@ $parcelas = obtenerInfoParcelas($connection, $explotacion_id);
     }
 
     //Municpios por provincia
+    /*
     document.getElementById("provincia").addEventListener("change", function() {
         const provinciaId = this.value;
 
@@ -169,6 +165,64 @@ $parcelas = obtenerInfoParcelas($connection, $explotacion_id);
                     selectMunicipio.innerHTML += `<option value="${m.id}">${m.nombre}</option>`;
                 });
             });
+    });
+    */
+
+    //Guardar parcela
+    document.getElementById("form_parcela").addEventListener("submit", async function(event) {
+        event.preventDefault(); // Evitar el envío tradicional del formulario
+        const mensajeError = document.getElementById("mensaje_error");
+        mensajeError.textContent = ""; // Limpiar mensaje de error previo
+
+        const formData = new FormData(event.target); // Obtener los datos del formulario
+        
+        try{
+            const respuesta = await fetch("../controllers/parcelaController.php", {
+                method: "POST",
+                body: formData,
+            });
+            
+            const resultado = await respuesta.json();
+            if(resultado.ok){
+                //Si se ha podido guardar correctamente, recargamos la página para mostrar la nueva parcela en la tabla
+                location.reload();
+                alert("Parcela guardada correctamente"); //
+            } else {
+                mensajeError.textContent = resultado.mensaje; // Mostrar mensaje de error devuelto por el servidor
+            }
+        } catch (error) {
+            console.error("Error al guardar la parcela:", error);
+            mensajeError.textContent = "Error con la conexión. Por favor, inténtalo de nuevo."; // Mensaje de error genérico
+        }
+        
+    });
+
+    //Guardar unidad de gestión
+    document.getElementById("form_uniGestion").addEventListener("submit", async function(event) {
+        event.preventDefault(); // Evitar el envío tradicional del formulario
+        const mensajeError = document.getElementById("mensaje_error_uniGest");
+        mensajeError.textContent = ""; // Limpiar mensaje de error previo
+
+        const formData = new FormData(event.target); // Obtener los datos del formulario
+
+        try{
+            const respuesta = await fetch("../controllers/parcelaController.php", {
+                method: "POST",
+                body: formData,
+            });
+
+            const resultado = await respuesta.json();
+            if(resultado.ok){
+                //Si se ha podido guardar correctamente, recargamos la página para mostrar la nueva unidad de gestión en la tabla
+                location.reload();
+                alert("Unidad de gestión guardada correctamente"); //Notificación de éxito
+            } else {
+                mensajeError.textContent = resultado.mensaje; // Mostrar mensaje de error devuelto por el servidor
+            }
+        } catch (error) {
+            console.error("Error al guardar la unidad de gestión:", error);
+            mensajeError.textContent = "Error con la conexión. Por favor, inténtalo de nuevo."; // Mensaje de error genérico
+        }
     });
 </script>
 <!-- Pie de página -->

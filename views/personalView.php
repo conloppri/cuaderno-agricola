@@ -1,10 +1,10 @@
 <?php include '../templates/cabecera_explotacion.php';?>
 
 <?php include '../config/db.php';
-include '../controllers/personalController.php';
 
-$idExplotacion = $_POST['idExplotacion'] ?? 1; // ID de explotación para pruebas
-$infoPersonal = obtenerInfoPersonal($connection, $idExplotacion);
+$idExplotacion = $_GET['explotacion_id']; // Obtener el ID de la explotación de la URL
+include_once '../controllers/personalController.php';
+$infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotacion);
 ?>
 
 <main class="main_content">
@@ -17,6 +17,7 @@ $infoPersonal = obtenerInfoPersonal($connection, $idExplotacion);
             <thead>
                 <tr>
                     <th>Nombre</th>
+                    <th>DNI</th>
                     <th>Teléfono</th>
                     <th>Correo electrónico</th>
                     <th>Dirección</th>
@@ -31,6 +32,7 @@ $infoPersonal = obtenerInfoPersonal($connection, $idExplotacion);
                     <?php foreach ($infoPersonal as $personal): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($personal['nombre']); ?></td>
+                        <td><?php echo htmlspecialchars($personal['dni']); ?></td>
                         <td><?php echo htmlspecialchars($personal['telefono']); ?></td>
                         <td><?php echo htmlspecialchars($personal['correo_electronico']); ?></td>
                         <td><?php echo htmlspecialchars($personal['direccion']); ?></td>
@@ -49,17 +51,21 @@ $infoPersonal = obtenerInfoPersonal($connection, $idExplotacion);
     <div class="modal_content">
         <h2 style="text-align: center;">Agregar Personal</h2>
         <form id="personal-form">
+            <input type="hidden" name="idExplotacion" value="<?php echo $idExplotacion; ?>">
+            <input type="hidden" name="accion" value="crearPersonal">
             <div class="grupo-form">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+                <input type="text" id="nombre" name="nombre" maxlength="45" placeholder="Nombre" required>
                 <label for="apellidos">Apellidos:</label>
-                <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required>
+                <input type="text" id="apellidos" name="apellidos" maxlength="45" placeholder="Apellidos" required>
+                <label for="dni">DNI:</label>
+                <input type="text" id="dni" name="dni" maxlength="9" placeholder="DNI" required>
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" pattern="[0-9]" inputmode="numeric" maxlength="9" id="telefono" name="telefono" placeholder="Número de teléfono" required>
+                <input type="text" inputmode="numeric" maxlength="15" id="telefono" name="telefono" placeholder="Número de teléfono" required>
                 <label for="correo">Email:</label>
-                <input type="email" id="email" name="correo" placeholder="Email" required>
+                <input type="email" id="email" name="correo" maxlength="45" placeholder="Email" required>
                 <label for="direccion">Dirección:</label>
-                <input type="text" id="direccion" name="direccion" placeholder="Dirección" required>
+                <input type="text" id="direccion" name="direccion" maxlength="45" placeholder="Dirección" required>
                 <label for="provincia">Provincia:</label>
                 <select name="provincia" id="provincia">
                     <option value="" selected disabled>Selecciona provincia</option>
@@ -75,7 +81,7 @@ $infoPersonal = obtenerInfoPersonal($connection, $idExplotacion);
                     <option value="" selected disabled>Selecciona municipio</option>
                 </select>
                 <label for="nacionalidad">Nacionalidad:</label>
-                <input type="text" id="nacionalidad" name="nacionalidad" placeholder="Nacionalidad" required>
+                <input type="text" id="nacionalidad" name="nacionalidad" maxlength="45" placeholder="Nacionalidad" required>
                 <label for="rol">Rol:</label>
                 <select name="rol" id="rol">
                     <option value="" selected disabled>Selecciona rol</option>
@@ -85,6 +91,7 @@ $infoPersonal = obtenerInfoPersonal($connection, $idExplotacion);
                     <option value="administrativo">Administrativo</option>
                 </select>
             </div>
+            <p id="mensaje-error" style="color: red; text-align: center;"></p>
             <div style="display: flex; justify-content: space-around; margin-top: 20px;">
                 <button type="submit" class="add_button">Guardar</button>
                 <button type="button" class="cancel_button" onclick="cerrarFormulario()">Cancelar</button>
@@ -121,6 +128,35 @@ $infoPersonal = obtenerInfoPersonal($connection, $idExplotacion);
                     selectMunicipio.innerHTML += `<option value="${m.id}">${m.nombre}</option>`;
                 });
             });
+    });
+
+    //Guardar personal
+    document.getElementById("personal-form").addEventListener("submit", async function(e) {
+        e.preventDefault();
+        const mensajeError = document.getElementById("mensaje-error");
+        mensajeError.textContent = ""; // Limpiar mensaje de error previo
+        const formData = new FormData(this);
+        try{
+            console.log("enviando datos...");
+            const respuesta = await fetch("../controllers/personalController.php", {
+                method: "POST",
+                body: formData
+            });
+
+            const resultado = await respuesta.json();
+            
+            if(resultado.ok){ 
+                alert(resultado.mensaje);
+                location.reload();
+            } else {
+                mensajeError.textContent = resultado.mensaje;
+                console.error(resultado.mensaje);
+            }
+        } catch (error) {
+            mensajeError.textContent = "Error en la conexión con el servidor. Por favor, inténtalo de nuevo.";
+            console.error("Error al guardar el personal:", error);
+        }
+    
     });
 
 </script>
