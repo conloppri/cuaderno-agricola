@@ -26,7 +26,7 @@ $explotacion_id = $_GET['explotacion_id']; //Como aun no esta implementado el pa
             <li><a href="../views/parcelasView.php?explotacion_id=<?php echo $explotacion_id; ?>">Parcelas</a></li>
             <li><a href="#">Campañas</a></li>
             <li><a href="../views/personalView.php?explotacion_id=<?php echo $explotacion_id; ?>">Personal</a></li>
-            <li><a href="#">Maquinaria</a></li>
+            <li><a href="../views/maquinariaView.php?explotacion_id=<?php echo $explotacion_id; ?>">Maquinaria</a></li>
             <li><a href="#">Instalaciones</a></li>
             <li><a href="#">Fertilizantes</a></li>
         </nav>
