@@ -8,7 +8,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
 ?>
 
 <main class="main_content">
-    <div class="cabecera_parcelas">
+    <div class="cabecera_main">
         <h1>Personal</h1>
         <button class="add_button" onclick="abrirFormulario()">+ Agregar Personal</button>
     </div>

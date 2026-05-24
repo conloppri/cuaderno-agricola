@@ -14,7 +14,7 @@ include_once "../controllers/parcelaController.php";
 $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id);
 ?>
 <div class="main_content">
-    <div class="cabecera_parcelas">
+    <div class="cabecera_main">
         <h1>Parcelas y unidades de gestión</h1>
         <button type="button" class="add_button" onclick="abrirFormularioParcela()">+ Añadir parcela</button>
     </div>

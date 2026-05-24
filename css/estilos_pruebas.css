@@ -93,7 +93,7 @@ table {
     padding: 10px;
 }
 
-.cabecera_parcelas {
+.cabecera_main {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -148,4 +148,41 @@ table {
     gap: 12px;
     margin: 20px;
     font-size: 18px;
+}
+
+.lista-maquinaria{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
+    gap: 20px;
+    padding: 20px;
+}
+
+.card-maquina{
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+}
+
+.tags{
+    display: flex; 
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.tag{
+    display: inline-block;
+    background-color: rgb(216, 211, 211);
+    color: grey;
+    padding: 5px 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.card-text{
+    font-size: 16px;
+    margin:  10px 20px;
+    text-align: left;
 }
