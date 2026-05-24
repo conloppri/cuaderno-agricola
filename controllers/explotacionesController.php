@@ -38,4 +38,5 @@ function obtenerExplotacionesUsuario(PDO $connection, $username) {
         ]);
     }
     return $resultado;
-}?>
+}
+?>

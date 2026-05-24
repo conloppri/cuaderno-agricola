@@ -81,7 +81,7 @@ function obtenerOrganizacion(PDO $connection, int $idOrganizacion) {
 
 // Función para obtener la lista de organizaciones de un usuario.
 function obtenerOrganizaciones(PDO $connection, int $usuarioId) {
-    $stmt = $connection->prepare("SELECT organizacion_id, nombre_organizacion, nif FROM organizacion WHERE organizacion_id IN (SELECT organizacion_id FROM usuarios_organizacion WHERE usuario_id = :usuarioId)");
+    $stmt = $connection->prepare("SELECT * FROM organizacion WHERE organizacion_id IN (SELECT organizacion_id FROM usuarios_organizacion WHERE usuario_id = :usuarioId)");
     $stmt->execute(['usuarioId' => $usuarioId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
