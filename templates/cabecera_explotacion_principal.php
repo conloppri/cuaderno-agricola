@@ -23,12 +23,12 @@ include '../controllers/comprobarSesion.php';
             <h3>Cuaderno de Campo</h3>
         </div>
         <div>
-            <button type="button" class="user_button"><?php echo "(" . $_SESSION['username'] . ")"; ?></br>Cerrar sesión</button>
+            <button type="button" id="btnCerrarSesion" class="user_button"><?php echo "(" . $_SESSION['username'] . ")"; ?></br>Cerrar sesión</button>
         </div>
     </div>
 
     <script>
-        document.querySelector('.user_button').addEventListener('click', function() {
+        document.getElementById('btnCerrarSesion').addEventListener('click', function() {
             window.location.href = '../controllers/logout.php';
         });
     </script>

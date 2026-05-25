@@ -5,7 +5,10 @@
     margin: 10px 20px;
 }
 
-.btn_agregar_exp {
+.acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin-left: auto;
     padding: 10px 20px;
 }

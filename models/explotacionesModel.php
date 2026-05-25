@@ -1,6 +1,7 @@
 <?php
 include "../config/db.php";
 
+/* Repetido en globalModel?
 function obtenerExplotaciones(PDO $connection, $username) {
     $sql = "select e.* from explotacion e JOIN usuarios_explotacion ue ON e.explotacion_id = ue.explotacion_id JOIN usuarios u ON ue.usuario_id = u.id WHERE u.email = :email";
     $stmt = $connection->prepare($sql);
@@ -8,7 +9,7 @@ function obtenerExplotaciones(PDO $connection, $username) {
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $resultado;
 }
-
+*/
 function addExplotacion(PDO $connection, $nombre, $alias, $organizacion_id, $provincia_id, $municipio_id, $comunidad, $codigo_rea, $codigo_siex) {
     try {
         // Insertar nueva explotación en la base de datos

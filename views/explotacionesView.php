@@ -8,7 +8,10 @@ include '../templates/cabecera_explotacion_principal.php';
                 <h1>Bienvenido, <?php echo $_SESSION['username']; ?>!</h1>
                 <p>Gestiona tus explotaciones agrícolas de manera eficiente.</p>
             </div>
-            <button type="button" id="btnAddExp" class="btn_agregar_exp">+ Añadir explotación</button>
+            <div class="acciones">
+                <button type="button" id="btnGestionarOrg" class="btn_gestionar_org">Gestionar Organizaciones</button>
+                <button type="button" id="btnAddExp" class="btn_agregar_exp">+ Añadir explotación</button>
+            </div>
         </div>
 
         <div class="table_exp">
@@ -39,7 +42,6 @@ include '../templates/cabecera_explotacion_principal.php';
                         <td><?php echo htmlspecialchars($explotacion['comunidad']); ?></td>
                         <td><?php echo htmlspecialchars($explotacion['codigo_rea']); ?></td>
                         <td><?php echo htmlspecialchars($explotacion['codigo_siex']); ?></td>
-                        <!-- <td><a href="../views/parcelasView.php?explotacion_id=<?php echo $explotacion['explotacion_id']; ?>">Acceder a <?php echo htmlspecialchars($explotacion['explotacion_id']); ?></a></td> -->
                         <td><button class="btnAccederExp" data-id="<?php echo $explotacion['explotacion_id']; ?>">Acceder</button></td>
                         <td>
                             <button class="btnModificarExp" data-id="<?php echo $explotacion['explotacion_id']; ?>">Modificar</button>
@@ -95,6 +97,12 @@ include '../templates/cabecera_explotacion_principal.php';
                         });
                 }
             });
+        });
+
+        // Botón para gestionar organizaciones
+        const btnGestionarOrg = document.getElementById('btnGestionarOrg');
+        btnGestionarOrg.addEventListener('click', () => {
+            window.location.href = '../views/organizacionesView.php';
         });
     </script>
 
