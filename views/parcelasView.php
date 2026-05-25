@@ -44,7 +44,7 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
     </dialog>
 
 
-    <div class="table_exp">
+    <div class="table_exp_parcelas">
         <table>
             <thead>
                 <tr>
@@ -57,8 +57,9 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($parcelas as $parcela): ?>
-                    <tr>
+                <?php foreach ($parcelas as $index => $parcela): 
+                    $claseFila = $index % 2 === 0 ? 'tr-odd' : 'tr-even'; ?>
+                    <tr class="<?php echo $claseFila; ?>">
                         <td><?php echo htmlspecialchars($parcela['nombre']); ?></td>
                         <td><?php echo htmlspecialchars($parcela['sigpac']); ?></td>
                         <td><?php echo htmlspecialchars($parcela['provincia']); ?></td>
@@ -66,30 +67,23 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
                         <td><?php echo htmlspecialchars($parcela['superficie'] . ' ha'); ?></td>
                         <td><button type="button" onclick="toggleFila(<?php echo $parcela['id']; ?>)"> + </button></td>
                     </tr>
-                    <tr id="fila-<?php echo $parcela['id']; ?>" style="display: none;">
+                    <tr id="fila-<?php echo $parcela['id']; ?>" class="<?php echo $claseFila; ?>" style="display: none;">
                         <td colspan="6" class="celda_detalle">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th colspan="3">Unidades de gestión</th>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Superficie (ha)</th>
-                                        <th>Uso</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $unidadesGestion = ParcelaController::obtenerInfoUnidadesGestion($connection, $parcela['id']);
-                                    foreach ($unidadesGestion as $unidad): ?>
-                                        <tr>
-                                            <td><?php echo htmlspecialchars($unidad['nombre']); ?></td>
-                                            <td><?php echo htmlspecialchars($unidad['superficie']); ?></td>
-                                            <td><?php echo htmlspecialchars($unidad['uso']); ?></td>
-                                        </tr>
+                            <?php $unidadesGestion = ParcelaController::obtenerInfoUnidadesGestion($connection, $parcela['id']); ?>
+                            <h3>Unidades de gestión</h3>
+                            <?php if(count($unidadesGestion) == 0): ?>
+                                <p>No hay unidades de gestión para esta parcela.</p>
+                            <?php else: ?>
+                                <ul style="list-style-type: none; padding-left: 0;">
+                                    <?php foreach($unidadesGestion as $unidad): ?>
+                                        <li>
+                                            <strong><?php echo htmlspecialchars($unidad['nombre']); ?></strong> - 
+                                            Superficie: <?php echo htmlspecialchars($unidad['superficie'] ); ?> - 
+                                            Uso <?php echo htmlspecialchars($unidad['uso']); ?>
+                                        </li>
                                     <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                                </ul>
+                            <?php endif; ?>
                             <button type="button" class="add_button" onclick="abrirFormularioUniGest()">+ Añadir unidad de gestión</button>
                             <dialog class="modal_formulario" id="uniGestion_modal">
                                 <div>

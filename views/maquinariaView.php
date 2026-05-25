@@ -14,7 +14,7 @@ $maquinaria = maquinariaController::obtenerMaquinariaPorExplotacion($connection,
     </div>
     <div class="lista-maquinaria">
         <?php foreach($maquinaria as $maquina): ?>
-            <div class="card-maquina">
+            <div class="card-maquina" onclick="mostrarDetallesMaquina(<?php echo $maquina['id']; ?>)">
                 <div class="card-body">
                     <div class="tags">
                         <div class="tag"><?php echo $maquina['tipo']; ?></div>
@@ -31,8 +31,42 @@ $maquinaria = maquinariaController::obtenerMaquinariaPorExplotacion($connection,
             </div>
         <?php endforeach; ?>
     </div>
+
+    <dialog id= "maquinaria_modal" class = "info_modal">
+        <div class="modal_content">
+            <span class="close_button" onclick="document.getElementById('maquinaria_modal').close();">&times;</span>
+            <div class="modal_body">
+                <h2 style="text-align: center;">Detalles de <span id="maq_alias"></span></h2>
+                <p id="maq_detalles" class="info_text"></p>
+            </div>
+        </div>
+    </dialog>
 </div>
 
+<script>
+function mostrarDetallesMaquina(id){
+    fetch(`../controllers/maquinariaController.php?accion=obtenerDetallesMaquina&id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('maq_alias').textContent = data.alias;
+            document.getElementById('maq_detalles').innerHTML = `
+                <strong>Tipo:</strong> ${data.tipo}<br>
+                <strong>Marca:</strong> ${data.marca}<br>
+                <strong>Modelo:</strong> ${data.modelo}<br>
+                <strong>Matrícula:</strong> ${data.matricula}<br>
+                <strong>Estado:</strong> ${data.estado}<br>
+                <strong>Titular:</strong> ${data.titular}<br>
+                <strong>Número ROMA:</strong> ${data.num_roma}<br>
+                <strong>Número REGANIP:</strong> ${data.num_reganip}<br>
+                <strong>Fecha de adquisición:</strong> ${data.fecha_adquisicion}<br>
+                <strong>Última inspección:</strong> ${data.ultima_inspeccion}<br>
+                <strong>Caducidad ITV:</strong> ${data.caducidad_itv}<br>
+                <strong>Observaciones:</strong> ${data.observaciones}
+            `;
+            document.getElementById('maquinaria_modal').showModal();
+        })
+}
+</script>
 <?php
 include "../templates/footer.php";
 ?>
