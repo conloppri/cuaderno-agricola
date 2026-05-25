@@ -70,6 +70,35 @@ include '../controllers/organizacionesController.php';
         btnAddExp.addEventListener('click', () => {
             window.location.href = '../views/nuevaOrganizacion.php';
         });
+
+        // Botones para modificar organización
+        const btnModificarOrg = document.querySelectorAll('.btnModificarOrg');
+        btnModificarOrg.forEach(button => {
+            button.addEventListener('click', () => {
+                const organizacionId = button.getAttribute('data-id');
+                window.location.href = `../views/modificarOrganizacion.php?organizacion_id=${organizacionId}`;
+            });
+        });
+
+        // Botones para eliminar organización
+        const btnEliminarOrg = document.querySelectorAll('.btnEliminarOrg');
+        btnEliminarOrg.forEach(button => {
+            button.addEventListener('click', () => {
+                const organizacionId = button.getAttribute('data-id');
+                if (confirm('¿Estás seguro de que deseas eliminar esta organización? Esta acción no se puede deshacer.')) {
+                    fetch(`../controllers/eliminarOrganizacionController.php?organizacion_id=${organizacionId}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        alert('Organización eliminada correctamente.');
+                        location.reload(); // Recargar la página para reflejar los cambios
+                    })
+                    .catch(error => {
+                        console.error('Error al eliminar la organización:', error);
+                        alert('Hubo un error al eliminar la organización. Por favor, inténtalo de nuevo.');
+                    });
+                }
+            });
+        });
     </script>
 
 <?php include '../templates/footer.php';?>

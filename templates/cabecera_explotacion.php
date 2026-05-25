@@ -31,12 +31,17 @@ $explotacion_id = $_GET['explotacion_id']; //Como aun no esta implementado el pa
             <li><a href="#">Fertilizantes</a></li>
         </nav>
         <div>
-            <button type="button" class="user_button"><?php echo "(" . $_SESSION['username'] . ")"; ?></br>Cerrar sesión</button>
+            <button id="btnVolverInicio" class="user_button">Explotaciones</button>
+            <button type="button" id="btnCerrarSesion" class="user_button"><?php echo "(" . $_SESSION['username'] . ")"; ?></br>Cerrar sesión</button>
         </div>
     </div>
 
     <script>
-        document.querySelector('.user_button').addEventListener('click', function() {
+        document.getElementById('btnCerrarSesion').addEventListener('click', function() {
             window.location.href = '../controllers/logout.php';
+        });
+
+        document.getElementById('btnVolverInicio').addEventListener('click', function() {
+            window.location.href = '../views/explotacionesView.php';
         });
     </script>

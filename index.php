@@ -115,6 +115,8 @@
                 document.getElementById('mensaje').textContent = 'Error en la conexión. Inténtalo de nuevo.';
             }
         });
+
+
     </script>
 
     <!-- Pie de página -->
