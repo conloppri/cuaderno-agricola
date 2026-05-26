@@ -1,9 +1,25 @@
 :root {
-    --color-primario: #75b678;
-    --color-secundario: #fbfe98;
-
+    /*--color-primario: #75b678;
+    --color-secundario: #fef4c5;
+    
+    --color-background: #fafbe1;
+    
     --color-table-even: #c7f8c9;
     --color-table-odd: white;
+    */
+
+    --color-primario: #5E8B4A;
+    --color-primario-hover: #4D743D;
+    --color-secundario: #A7C4A0;
+
+    --color-background: #F6F4EE;
+    
+    --color-font: white;
+
+    --color-table-even: #E7B95A;
+    --color-table-odd: white;
+
+    --color-card: #FFFFFF;
 }
 
 /* ESTILOS DE PRUEBA PARA MIS PANTALLAS */
@@ -11,17 +27,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 30px 20px;
+    border-bottom: 2px solid var(--color-primario);
 }
 
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background: var(--color-secundario);
+}
 
-    background: radial-gradient(
-        var(--color-secundario), rgb(255, 207, 179)
-    );
+footer{
+    color: var(--color-primario);
+    padding: 20px;
+    border-top: 2px solid var(--color-primario);
 }
 
 dialog {
@@ -51,7 +71,88 @@ dialog[open]::backdrop {
 .main_content {
     padding: 20px;
     min-height: 600px;
+    position: relative;
+    isolation: isolate;
+    background: var(--color-background);
+    /*background: radial-gradient(
+        var(--color-secundario), rgb(255, 207, 179)
+    );*/
+}
 
+.main_content::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("../assets/background.png");
+    background-size: cover;
+
+    opacity: 2;
+    z-index: -1;
+}
+
+.titulo_principal {
+    background:var(--color-primario);
+    font-size: 32px;
+    text-align: center;
+    color: var(--color-font);
+    padding: 10px 20px;
+    border: 2px solid var(--color-secundario);
+    border-radius: 10px;
+    text-transform: uppercase;
+    width: 85%;
+}
+
+.fab-container {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    display: flex;
+    flex-direction: r;
+    align-items: center;
+    gap: 10px;
+}
+
+.fab-etiqueta{
+    background: var(--color-secundario);
+    color: var(--color-primario);
+
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 2px solid var(--color-background);
+
+    font-size: 24px;
+    white-space: nowrap;
+
+    opacity: 0;
+    transform: translateX(10px);
+    transition: 0.2s;
+}
+
+.fab-container:hover .fab-etiqueta {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fab {
+    height: 80px;
+    width: 80px;
+    background-color: var(--color-primario);
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+
+    transition: 0.2s;
+}
+
+.fab:hover {
+    transform: scale(1.1);
+    background-color: var(--color-primario-hover);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
 }
 
 label {
@@ -85,20 +186,27 @@ nav li {
 
 nav li a {
     display: flex;
-    color: var(--color-secundario);
+    color: var(--color-font);
     text-align: center;
-    padding: 14px 16px;
+    padding: 18px 20px;
     text-decoration: none;
     font-size: 20px;
 }
 
+nav a.active{
+    background-color: var(--color-primario-hover);
+    color: var(--color-secundario);
+    font-weight: bold;
+    border-radius: 20px;
+}
+
 nav li a:hover {
-    background-color: #45a049;
+    background-color: var(--color-primario-hover);
     border-radius: 20px;
 }
 
 .user_button {
-    background-color: #4CAF50;
+    background-color: var(--color-primario);
     color: white;
     padding: 10px 20px;
     border: none;
@@ -107,7 +215,7 @@ nav li a:hover {
 }
 
 .user_button:hover {
-    background-color: #45a049;
+    background-color: var(--color-primario-hover);
 }
 
 table {
@@ -137,7 +245,7 @@ table {
 }
 
 .table_exp tr:nth-child(even) {
-    background-color: var(--color-table-even);
+    background-color: var(--color-secundario);
 }
 
 .table_exp tr:nth-child(odd) {
@@ -145,7 +253,7 @@ table {
 }
 
 .table_exp_parcelas .tr-even {
-    background-color: var(--color-table-even);
+    background-color: var(--color-secundario);
 }
 
 .table_exp_parcelas .tr-odd {
@@ -154,7 +262,7 @@ table {
 
 .cabecera_main {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     padding: 10px 20px;
 }
@@ -216,14 +324,24 @@ table {
     align-items: center;
     padding: 20px;
     margin: auto;
+    justify-content: center;
 }
 
 .card-maquina {
-    background-color: #f2f2f2;
-    border: 1px solid #ccc;
+    background-color: var(--color-card);
+    border: 1px solid var(--color-primario);
     border-radius: 10px;
     padding: 20px;
     text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.295);
+
+    transition: 0.2s;
+}
+
+.card-maquina:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
 }
 
 .tags {
@@ -234,7 +352,7 @@ table {
 
 .tag {
     display: inline-block;
-    background-color: rgb(216, 211, 211);
+    background-color: rgb(226, 225, 225);
     color: grey;
     padding: 5px 10px;
     border-radius: 12px;
@@ -262,8 +380,8 @@ table {
     width: 50%;
     padding: 10px 30px;
     border-radius: 10px;
-    background: rgb(230, 230, 229);
-    border: #45a049 solid 2px;
+    background: var(--color-card);
+    border: var(--color-primario) solid 2px;
 }
 
 .modal_content {

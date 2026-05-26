@@ -15,8 +15,7 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
 ?>
 <div class="main_content">
     <div class="cabecera_main">
-        <h1>Parcelas y unidades de gestión</h1>
-        <button type="button" class="add_button" onclick="abrirFormularioParcela()">+ Añadir parcela</button>
+        <h1 class="titulo_principal">Parcelas y unidades de gestión</h1>
     </div>
 
     <!-- Formulario para añadir nueva parcela -->
@@ -117,6 +116,10 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
                     <?php endforeach; ?>
             </tbody>
         </table>
+    </div>
+    <div class="fab-container">
+        <span class="fab-etiqueta">Agregar parcela</span>
+        <button class="fab" onclick="abrirFormularioParcela()">+</button>
     </div>
 </div>
 <script>

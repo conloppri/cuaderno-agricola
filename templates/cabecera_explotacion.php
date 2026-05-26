@@ -2,6 +2,9 @@
 include '../controllers/comprobarSesion.php';
 
 $explotacion_id = $_GET['explotacion_id']; //Como aun no esta implementado el paso de información, se asigna un id por defecto para mostrar las parcelas de la explotación con id 1.
+
+$paginaActual = basename($_SERVER['PHP_SELF']);
+
 ?>
 
 <!DOCTYPE html>
@@ -23,10 +26,10 @@ $explotacion_id = $_GET['explotacion_id']; //Como aun no esta implementado el pa
             <h3>Cuaderno de Campo</h3>
         </div>
         <nav>
-            <li><a href="../views/parcelasView.php?explotacion_id=<?php echo $explotacion_id; ?>">Parcelas</a></li>
+            <li><a class="<?php echo $paginaActual=='parcelasView.php' ? 'active': ''?>" href="../views/parcelasView.php?explotacion_id=<?php echo $explotacion_id; ?>">Parcelas</a></li>
             <li><a href="#">Campañas</a></li>
-            <li><a href="../views/personalView.php?explotacion_id=<?php echo $explotacion_id; ?>">Personal</a></li>
-            <li><a href="../views/maquinariaView.php?explotacion_id=<?php echo $explotacion_id; ?>">Maquinaria</a></li>
+            <li><a class="<?php echo $paginaActual=='personalView.php' ? 'active': ''?>" href="../views/personalView.php?explotacion_id=<?php echo $explotacion_id; ?>">Personal</a></li>
+            <li><a class="<?php echo $paginaActual=='maquinariaView.php' ? 'active': ''?>" href="../views/maquinariaView.php?explotacion_id=<?php echo $explotacion_id; ?>">Maquinaria</a></li>
             <li><a href="#">Instalaciones</a></li>
             <li><a href="#">Fertilizantes</a></li>
         </nav>

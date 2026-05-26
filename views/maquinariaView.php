@@ -9,8 +9,7 @@ $maquinaria = maquinariaController::obtenerMaquinariaPorExplotacion($connection,
 
 <div class= "main_content">
     <div class="cabecera_main">
-        <h1>Maquinaria</h1>
-        <button class="add_button" onclick="window.location.href='maquinariaAdd.php?explotacion_id=<?php echo $explotacion_id; ?>'">+ Agregar Maquinaria</button>
+        <h1 class="titulo_principal">Maquinaria</h1>
     </div>
     <div class="lista-maquinaria">
         <?php foreach($maquinaria as $maquina): ?>
@@ -41,6 +40,12 @@ $maquinaria = maquinariaController::obtenerMaquinariaPorExplotacion($connection,
             </div>
         </div>
     </dialog>
+
+    <div class="fab-container">
+        <span class="fab-etiqueta">Agregar maquinaria</span>
+        <button class="fab" onclick="window.location.href='maquinariaAdd.php?explotacion_id=<?php echo $explotacion_id; ?>'">+</button>
+    </div>
+
 </div>
 
 <script>
