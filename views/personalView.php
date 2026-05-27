@@ -9,8 +9,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
 
 <main class="main_content">
     <div class="cabecera_main">
-        <h1>Personal</h1>
-        <button class="add_button" onclick="abrirFormulario()">+ Agregar Personal</button>
+        <h1 class="titulo_principal">Personal</h1>
     </div>
     <div class="table_exp">
         <table>
@@ -44,6 +43,10 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                     <?php endforeach; ?>
             </tbody>
         </table>
+    </div>
+    <div class="fab-container">
+        <span class="fab-etiqueta">Agregar personal</span>
+        <button class="fab" onclick="abrirFormulario()">+</button>
     </div>
 </main>
 

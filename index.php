@@ -88,7 +88,7 @@
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch('/controllers/login.php', {
+                const response = await fetch('controllers/login.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -105,7 +105,7 @@
                 if (response.ok) {
                     if(result.success === true){
                         // Redirigir a la página de inicio o mostrar un mensaje de éxito
-                        window.location.href = '../views/explotacionesView.php'; // Cambia esto a tu página de inicio
+                        window.location.href = 'views/explotacionesView.php'; // Cambia esto a tu página de inicio
                     }else{
                         document.getElementById('mensaje').textContent = result.message;
                         event.target.reset(); // Limpiar el formulario después de un error
