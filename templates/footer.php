@@ -6,7 +6,7 @@
         <li>Términos de servicio</li>
     </div>
         <!--Esto ha sido autogenerado por IA, después lo adaptaremos a nuestro proyecto-->
-    <p>&copy; 2023 Cuaderno de Campo. Todos los derechos reservados.</p>
+    <p>&copy; 2026 Cuaderno de Campo. Todos los derechos reservados.</p>
 </footer>
 </body>
 

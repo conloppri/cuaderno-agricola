@@ -23,7 +23,8 @@
                 <li><a href="#">Contacto</a></li>
             </nav>
             <div>
-                <button id="btnSesion" class="boton-nav"type="button">Iniciar sesión</button>
+                <button id="btnRegistro" class="boton-nav" type="button">Registrarse</button>
+                <button id="btnSesion" class="boton-nav" type="button">Iniciar sesión</button>
             </div>
         </div>
     </header>
@@ -61,6 +62,7 @@
 
         // JavaScript para controlar la ventana modal de login
         const btnAbrirModal = document.getElementById('btnSesion');
+        const btnRegistro = document.getElementById('btnRegistro');
         const btnCerrarModal = document.getElementById('btn-form-cerrar');
         const modal = document.getElementById('login-modal');
         const formulario = document.getElementById('login-form');
@@ -73,6 +75,10 @@
 
         btnCerrarModal.addEventListener('click', () => {
             modal.close();
+        });
+
+        btnRegistro.addEventListener('click', () => {
+            window.location.href = 'views/nuevoUsuario.php';
         });
 
         document.getElementById('login-form').addEventListener('submit', async(event) => {
