@@ -42,7 +42,7 @@ function obtenerMunicipiosPorProvincia(PDO $connection, int $provinciaId) {
 
 // Función para obtener la lista de explotaciones.
 function obtenerExplotaciones(PDO $connection, $username) {
-    $sql = "select e.* from explotacion e JOIN usuarios_explotacion ue ON e.explotacion_id = ue.explotacion_id JOIN usuarios u ON ue.usuario_id = u.id WHERE u.email = :email";
+    $sql = "select e.*, ue.rol from explotacion e JOIN usuarios_explotacion ue ON e.explotacion_id = ue.explotacion_id JOIN usuarios u ON ue.usuario_id = u.id WHERE u.email = :email";
     $stmt = $connection->prepare($sql);
     $stmt->execute(['email' => $username]);
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);

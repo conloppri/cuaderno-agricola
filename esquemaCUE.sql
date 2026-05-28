@@ -115,6 +115,7 @@ CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`explotacion` (
 CREATE TABLE IF NOT EXISTS `CuadernoDeCampoDB`.`usuarios_explotacion` (
   `explotacion_id` INT NOT NULL,
   `usuario_id` INT NOT NULL,
+  `rol` ENUM("administrador", "propietario", "tecnico", "trabajador", "administrativo", "mecanico") NOT NULL,
   PRIMARY KEY (`explotacion_id`, `usuario_id`),
   CONSTRAINT `fk_usuarios`
     FOREIGN KEY (`usuario_id`)

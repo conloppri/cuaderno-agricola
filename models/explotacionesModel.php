@@ -33,13 +33,14 @@ function addExplotacion(PDO $connection, $nombre, $alias, $organizacion_id, $pro
     }
 }
 
-function addUsuarioExplotacion(PDO $connection, $usuario_id, $explotacion_id) {
+function addUsuarioExplotacion(PDO $connection, $usuario_id, $explotacion_id, $rol) {
     try {
-        $sql = "INSERT INTO usuarios_explotacion (usuario_id, explotacion_id) VALUES (:usuario_id, :explotacion_id)";
+        $sql = "INSERT INTO usuarios_explotacion (usuario_id, explotacion_id, rol) VALUES (:usuario_id, :explotacion_id, :rol)";
         $stmt = $connection->prepare($sql);
         $stmt->execute([
             'usuario_id' => $usuario_id,
-            'explotacion_id' => $explotacion_id
+            'explotacion_id' => $explotacion_id,
+            'rol' => $rol
         ]);
     } catch (PDOException $e) {
         throw new Exception('Error al asociar la explotación con el usuario: ' . $e->getMessage());
