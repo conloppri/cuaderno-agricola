@@ -1,7 +1,10 @@
 <?php
 include "../templates/cabecera_explotacion.php";
 
+include "../controllers/globalController.php";
+
 $explotacion_id = $_GET['explotacion_id'];
+$nombre_explotacion = obtenerNombreExplotacion($explotacion_id);
 
 include_once "../controllers/maquinariaController.php";
 $maquinaria = maquinariaController::obtenerMaquinariaPorExplotacion($connection, $explotacion_id);
@@ -9,7 +12,9 @@ $maquinaria = maquinariaController::obtenerMaquinariaPorExplotacion($connection,
 
 <div class= "main_content">
     <div class="cabecera_main">
-        <h1 class="titulo_principal">Maquinaria</h1>
+        <h1><?php echo $nombre_explotacion?> </h1>
+        <i class="ti ti-tractor"></i>
+        <h2 class="titulo_principal">Maquinaria</h2>
     </div>
     <div class="lista-maquinaria">
         <?php foreach($maquinaria as $maquina): ?>

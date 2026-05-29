@@ -5,17 +5,21 @@
 <?php
 
 include "../controllers/comprobarUsuarioExp.php";
+include "../controllers/globalController.php";
 
 //Desde la pantalla de explotaciones, se envía el id de la explotación para mostrar solo las parcelas de esa explotación. 
 
 $explotacion_id = $_GET['explotacion_id'];
+$nombre_explotacion = obtenerNombreExplotacion($explotacion_id);
 comprobarUsuarioExp($connection, $explotacion_id); // Comprobar que el usuario tiene permiso para acceder a esta explotación
 include_once "../controllers/parcelaController.php";
 $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id);
 ?>
 <div class="main_content">
     <div class="cabecera_main">
-        <h1 class="titulo_principal">Parcelas y unidades de gestión</h1>
+        <h1><?php echo $nombre_explotacion ?></h1>
+        <i class="ti ti-fence"></i>
+        <h2 class="titulo_principal">Parcelas y unidades de gestión</h2>
     </div>
 
     <!-- Formulario para añadir nueva parcela -->
@@ -64,7 +68,7 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
                         <td><?php echo htmlspecialchars($parcela['provincia']); ?></td>
                         <td><?php echo htmlspecialchars($parcela['municipio']); ?></td>
                         <td><?php echo htmlspecialchars($parcela['superficie'] . ' ha'); ?></td>
-                        <td><button type="button" onclick="toggleFila(<?php echo $parcela['id']; ?>)"> + </button></td>
+                        <td><button class="boton-detalles" type="button" onclick="toggleFila(<?php echo $parcela['id']; ?>)"> <i id="bt-flecha-<?php echo $parcela['id']; ?>" class="ti ti-plus"></i> </button></td>
                     </tr>
                     <tr id="fila-<?php echo $parcela['id']; ?>" class="<?php echo $claseFila; ?>" style="display: none;">
                         <td colspan="6" class="celda_detalle">
@@ -83,7 +87,7 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
                                     <?php endforeach; ?>
                                 </ul>
                             <?php endif; ?>
-                            <button type="button" class="add_button" onclick="abrirFormularioUniGest()">+ Añadir unidad de gestión</button>
+                            <button type="button" class="add_button" onclick="abrirFormularioUniGest()">+ Nueva unidad</button>
                             <dialog class="modal_formulario" id="uniGestion_modal">
                                 <div>
                                     <h2 style="text-align: center;">Nueva unidad de gestión</h2>
@@ -126,10 +130,14 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
     //Función para que aparezcan las unidades de gestión ocmo una fila extra de tabla
     function toggleFila(id) {
         var fila = document.getElementById("fila-" + id);
+        var bt_flecha = document.getElementById("bt-flecha-"+id);
         if (fila.style.display === "none") {
             fila.style.display = "table-row";
+            bt_flecha.classList.replace("ti-plus", "ti-minus");
+
         } else {
             fila.style.display = "none";
+            bt_flecha.classList.replace("ti-minus", "ti-plus");
         }
     }
     function abrirFormularioParcela() {

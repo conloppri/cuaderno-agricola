@@ -90,6 +90,28 @@ dialog[open]::backdrop {
     z-index: -1;
 }
 
+.cabecera_main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cabecera_main h1{
+    margin-right: 20px;
+}
+
+.cabecera_main .ti{
+    background-color: var(--color-primario);
+    color: var(--color-font);
+    border-radius: 50%;
+    font-size: 60px;
+    padding: 10px;
+}
+
+.cabecera_main .apartado-exp{
+    display: flex;
+}
+
 .titulo_principal {
     background:var(--color-primario);
     font-size: 32px;
@@ -99,7 +121,7 @@ dialog[open]::backdrop {
     border: 2px solid var(--color-secundario);
     border-radius: 10px;
     text-transform: uppercase;
-    width: 85%;
+    width: 50%;
 }
 
 .fab-container {
@@ -190,7 +212,7 @@ nav li a {
     text-align: center;
     padding: 18px 20px;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 nav a.active{
@@ -198,6 +220,33 @@ nav a.active{
     color: var(--color-secundario);
     font-weight: bold;
     border-radius: 20px;
+}
+
+
+.nav-explotacion a span{
+    opacity: 0;
+
+    transform: translateX(-10px);
+
+    max-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        max-width 0.3s ease;
+}
+
+.nav-explotacion a.active span,
+.nav-explotacion a:hover span{
+    opacity: 1;
+
+    transform: translateX(0);
+
+    max-width: 200px;
 }
 
 nav li a:hover {
@@ -260,26 +309,36 @@ table {
     background-color: var(--color-table-odd);
 }
 
-.cabecera_main {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 20px;
+.boton-detalles{
+    font-size: 30px;
+    background-color: var(--color-primario);
+    border: none;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--color-font);
+    transition: 0.2s;
 }
 
+.boton-detalles:hover{
+    color: var(--color-primario-hover);
+    transform: scale(1.1);
+}
+
+
+
 .add_button {
-    background-color: #4CAF50;
+    background-color: var(--color-primario);
     font-size: 20px;
-    color: white;
+    color: var(--color-font);
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
     margin: 10px 50px;
 }
 
 .add_button:hover {
-    background-color: #45a049;
+    background-color: var(--color-primario-hover);
 }
 
 .cancel_button {

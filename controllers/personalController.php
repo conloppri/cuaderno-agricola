@@ -1,7 +1,7 @@
 <?php
 
 include '../models/personalModel.php';
-include '../models/globalModel.php';
+include_once '../models/globalModel.php';
 
 $accion = $_POST['accion'] ?? null; // Acción a realizar (crearPersonal, etc.)
 
