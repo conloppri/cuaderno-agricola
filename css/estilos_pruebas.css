@@ -70,7 +70,7 @@ dialog[open]::backdrop {
 
 .main_content {
     padding: 20px;
-    min-height: 600px;
+    min-height: 750px;
     position: relative;
     isolation: isolate;
     background: var(--color-background);
@@ -293,13 +293,31 @@ table {
     padding: 10px;
 }
 
-.table_exp tr:nth-child(even) {
+.table_exp tr:nth-child(even),
+.table_exp_inst tr:nth-child(even) {
     background-color: var(--color-secundario);
 }
 
-.table_exp tr:nth-child(odd) {
+.table_exp tr:nth-child(odd),
+.table_exp_inst tr:nth-child(odd) {
     background-color: var(--color-table-odd);
 }
+
+.table_exp_inst {
+    width: 50%;
+    justify-content: center;
+    
+}
+
+.table_exp_inst tr{
+    border: 2px solid var(--color-primario);
+}
+
+.table_exp_inst td{
+    text-align: start;
+    padding: 0px 20px;
+}
+
 
 .table_exp_parcelas .tr-even {
     background-color: var(--color-secundario);
