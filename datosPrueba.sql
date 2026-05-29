@@ -56,11 +56,11 @@ INSERT INTO `CuadernoDeCampoDB`.`usuarios` (email, password_hash, fecha_creacion
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`usuarios_explotacion`
 -- -----------------------------------------------------
-INSERT INTO `CuadernoDeCampoDB`.`usuarios_explotacion` (usuario_id, explotacion_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4);
+INSERT INTO `CuadernoDeCampoDB`.`usuarios_explotacion` (usuario_id, explotacion_id, rol) VALUES
+(1, 1, 'administrador'),
+(2, 2, 'administrador'),
+(3, 3, 'administrador'),
+(4, 4, 'administrador');
 
 -- -----------------------------------------------------
 -- Tabla `CuadernoDeCampoDB`.`usuarios_organizacion`

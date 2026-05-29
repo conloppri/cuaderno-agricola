@@ -44,8 +44,12 @@ include '../templates/cabecera_explotacion_principal.php';
                         <td><?php echo htmlspecialchars($explotacion['codigo_siex']); ?></td>
                         <td><button class="btnAccederExp" data-id="<?php echo $explotacion['explotacion_id']; ?>">Acceder</button></td>
                         <td>
-                            <button class="btnModificarExp" data-id="<?php echo $explotacion['explotacion_id']; ?>">Modificar</button>
-                            <button class="btnEliminarExp" data-id="<?php echo $explotacion['explotacion_id']; ?>">Eliminar</button>
+                            <?php if ($explotacion['rol'] === 'administrador'): // Solo el administrador puede modificar o eliminar ?>
+                                <button class="btnModificarExp" data-id="<?php echo $explotacion['explotacion_id']; ?>">Modificar</button>
+                                <button class="btnEliminarExp" data-id="<?php echo $explotacion['explotacion_id']; ?>">Eliminar</button>
+                            <?php else: ?>
+                                <span>Sin acciones</span>
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <?php endforeach; ?>

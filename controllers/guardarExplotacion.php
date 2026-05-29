@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $explotacion_id = addExplotacion($connection, $nombre, $alias, $organizacion_id, $provincia_id, $municipio_id, $comunidad, $codigo_rea, $codigo_siex);
 
         // Asociar la explotación con el usuario actual
-        addUsuarioExplotacion($connection, $_SESSION['usuario_id'], $explotacion_id);
+        addUsuarioExplotacion($connection, $_SESSION['usuario_id'], $explotacion_id, 'administrador'); // Asignar rol de administrador al usuario que creó la explotación
 
         echo json_encode(['success' => true, 'message' => 'Explotación guardada exitosamente']);
     } catch (PDOException $e) {

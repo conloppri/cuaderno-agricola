@@ -34,7 +34,8 @@ function obtenerExplotacionesUsuario(PDO $connection, $username) {
             'municipio' => $municipio,
             'comunidad' => $explotacion['comunidad'],
             'codigo_rea' => $explotacion['codigo_rea'],
-            'codigo_siex' => $explotacion['codigo_siex']
+            'codigo_siex' => $explotacion['codigo_siex'],
+            'rol' => $explotacion['rol']
         ]);
     }
     return $resultado;
