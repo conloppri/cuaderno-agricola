@@ -9,7 +9,7 @@ include '../controllers/comprobarSesion.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuaderno agrícola</title>
+    <title>Panel de usuario</title>
     <!--  He puesto el enlace a global.css para que se apliquen los estilos generales -->
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/estilos_pruebas.css">
@@ -23,7 +23,7 @@ include '../controllers/comprobarSesion.php';
             <h3>Cuaderno de Campo</h3>
         </div>
         <div>
-            <button type="button" id="btnInicio" class="user_button">Panel de Usuario</button>
+            <button type="button" id="btnVolver" class="user_button">Volver</button>
             <button type="button" id="btnCerrarSesion" class="user_button"><?php echo "(" . $_SESSION['username'] . ")"; ?></br>Cerrar sesión</button>
         </div>
     </div>
@@ -33,7 +33,7 @@ include '../controllers/comprobarSesion.php';
             window.location.href = '../controllers/logout.php';
         });
 
-        document.getElementById('btnInicio').addEventListener('click', function() {
-            window.location.href = '../views/panelUsuario.php';
+        document.getElementById('btnVolver').addEventListener('click', function() {
+            window.location.href = '../views/explotacionesView.php';
         });
     </script>

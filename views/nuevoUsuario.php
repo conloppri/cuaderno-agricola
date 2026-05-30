@@ -56,9 +56,8 @@ include '../templates/cabecera_explotacion_SinSesion.php';
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    mensajeDiv.textContent = 'Registro exitoso. Puedes iniciar sesión ahora.';
-                    mensajeDiv.style.color = 'green';
-                    this.reset(); // Limpiar el formulario
+                    alert('Usuario creado exitosamente');
+                    window.location.href = '../index.php';
                 } else {
                     mensajeDiv.textContent = data.message || 'Error al registrar. Inténtalo de nuevo.';
                     mensajeDiv.style.color = 'red';

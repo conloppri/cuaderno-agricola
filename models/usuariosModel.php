@@ -3,7 +3,7 @@ include "../config/db.php";
 
 function obtenerUsuarioPorEmail(PDO $connection, $email) {
     try {
-        $sql = "SELECT * FROM usuario WHERE email = :email";
+        $sql = "SELECT * FROM usuarios WHERE email = :email";
         $stmt = $connection->prepare($sql);
         $stmt->execute(['email' => $email]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -18,7 +18,7 @@ function addUsuario(PDO $connection, $email, $password) {
         $hashedPassword = password_hash($password, PASSWORD_ARGON2ID);
 
         // Insertar nuevo usuario en la base de datos
-        $sql = "INSERT INTO usuarios (email, password_hash, fecha_creacion) VALUES (:email, :password, :fecha_creacion)";
+        $sql = "INSERT INTO usuarios (email, password_hash, fecha_creacion) VALUES (:email, :password_hash, :fecha_creacion)";
         $stmt = $connection->prepare($sql);
         $stmt->execute([
             'email' => $email,
