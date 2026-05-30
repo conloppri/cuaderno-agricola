@@ -1,6 +1,6 @@
 <?php 
 include "../models/parcelaModel.php";
-include "../models/globalModel.php";
+include_once "../models/globalModel.php";
 include "../config/db.php";
 
 

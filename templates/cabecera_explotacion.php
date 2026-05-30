@@ -17,6 +17,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
     <!--  He puesto el enlace a global.css para que se apliquen los estilos generales -->
     <!-- <link rel="stylesheet" href="../css/global.css"> -->
     <link rel="stylesheet" href="../css/estilos_pruebas.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 </head>
 
 <body>
@@ -25,14 +26,14 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
             <img src="../assets/logo.png" alt="Logo" style="width: 50px; height: 50px;">
             <h3>Cuaderno de Campo</h3>
         </div>
-            <nav>
-                <li><a class="<?php echo $paginaActual=='parcelasView.php' ? 'active': ''?>" href="../views/parcelasView.php?explotacion_id=<?php echo $explotacion_id; ?>">Parcelas</a></li>
-                <li><a href="#">Campañas</a></li>
-                <li><a class="<?php echo $paginaActual=='personalView.php' ? 'active': ''?>" href="../views/personalView.php?explotacion_id=<?php echo $explotacion_id; ?>">Personal</a></li>
-                <li><a class="<?php echo $paginaActual=='maquinariaView.php' ? 'active': ''?>" href="../views/maquinariaView.php?explotacion_id=<?php echo $explotacion_id; ?>">Maquinaria</a></li>
-                <li><a href="#">Instalaciones</a></li>
-                <li><a href="#">Fertilizantes</a></li>
-            </nav>
+        <nav class="nav-explotacion">
+            <li><a class="<?php echo $paginaActual=='parcelasView.php' ? 'active': ''?>" href="../views/parcelasView.php?explotacion_id=<?php echo $explotacion_id; ?>"> <i class="ti ti-fence"></i> <span>Parcela</span></a></li>
+            <li><a href="#"><i class="ti ti-calendar-smile"></i><span>Campañas</span></a></li>
+            <li><a class="<?php echo $paginaActual=='personalView.php' ? 'active': ''?>" href="../views/personalView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-users"></i> <span>Personal</span></a></li>
+            <li><a class="<?php echo $paginaActual=='maquinariaView.php' ? 'active': ''?>" href="../views/maquinariaView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-tractor"></i><span>Maquinaria</span></a></li>
+            <li><a class="<?php echo $paginaActual=='instalacionesView.php' ? 'active': ''?>" href="../views/instalacionesView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-building-cottage"></i><span>Instalaciones</span></a></li>
+            <li><a href="#"><i class="ti ti-plant"></i><span>Fertilizantes</span></a></li>
+        </nav>
         <div>
             <button id="btnVolverInicio" class="user_button">Explotaciones</button>
             <button type="button" id="btnCerrarSesion" class="user_button"><?php echo "(" . $_SESSION['username'] . ")"; ?></br>Cerrar sesión</button>

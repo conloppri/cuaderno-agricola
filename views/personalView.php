@@ -1,15 +1,20 @@
 <?php include '../templates/cabecera_explotacion.php';?>
 
 <?php include '../config/db.php';
+include '../controllers/globalController.php';
 
 $idExplotacion = $_GET['explotacion_id']; // Obtener el ID de la explotación de la URL
+$nombre_explotacion = obtenerNombreExplotacion($idExplotacion);
+
 include_once '../controllers/personalController.php';
 $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotacion);
 ?>
 
 <main class="main_content">
     <div class="cabecera_main">
-        <h1 class="titulo_principal">Personal</h1>
+        <h1><?php echo $nombre_explotacion ?></h1>
+        <i class="ti ti-users"></i>
+        <h2 class="titulo_principal">Personal</h2>
     </div>
     <div class="table_exp">
         <table>
