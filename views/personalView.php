@@ -50,8 +50,14 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
         </table>
     </div>
     <div class="fab-container">
-        <span class="fab-etiqueta">Agregar personal</span>
-        <button class="fab" onclick="abrirFormulario()">+</button>
+        <div>
+            <span class="fab-usuario-etiqueta">Agregar usuario</span>
+            <button class="fab-usuario" onclick="abrirUsuario()">+</button>
+        </div>
+        <div>
+            <span class="fab-etiqueta">Agregar personal</span>
+            <button class="fab" onclick="abrirFormulario()">+</button>
+        </div>
     </div>
 </main>
 
@@ -108,6 +114,38 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
     </div>
 </dialog>
 
+<dialog id="addUsuario_modal" class="modal_formulario">
+    <div class="modal_content">
+        <h2 style="text-align: center;">Agregar Usuario</h2>
+        <form id="usuario-form">
+            <div class="grupo-form">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" maxlength="45" placeholder="Email" required>
+            </div>
+            <div class="grupo-form">
+                <label for="rol">Rol:</label>
+                <select name="rol" id="rol">
+                    <option value="" selected disabled>Selecciona rol</option>
+                    <option value="propietario">Propietario</option>
+                    <option value="tecnico">Técnico</option>
+                    <option value="trabajador">Trabajador</option>
+                    <option value="administrativo">Administrativo</option>
+                </select>
+            </div>
+            <div>
+                <p id="mensaje-error-usuario" style="color: red; text-align: center;"></p>
+            </div>
+            <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+                <button type="submit" class="add_button">Guardar</button>
+                <button type="button" class="cancel_button" onclick="cerrarUsuario()">Cancelar</button>
+            </div>
+            <div style="display: flex; justify-content: center; margin-top: 20px;">
+                <button type="button" class="gestionar_usuarios_button">Gestionar usuarios</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+
 <script>
     function abrirFormulario() {
         document.getElementById('personal_modal').showModal();
@@ -116,6 +154,18 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
     function cerrarFormulario() {
         document.getElementById('personal_modal').close();
     }
+
+    function abrirUsuario() {
+        document.getElementById('addUsuario_modal').showModal();
+    }
+
+    function cerrarUsuario() {
+        document.getElementById('addUsuario_modal').close();
+    }
+
+    document.querySelector(".gestionar_usuarios_button").addEventListener("click", function() {
+        window.location.href = "gestUsuariosExplotacion.php?explotacion_id=<?php echo $idExplotacion; ?>";
+    });
 
     //Limitar input teléfono a números y máximo 9 dígitos
     const telefono = document.getElementById("telefono");

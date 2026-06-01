@@ -125,13 +125,16 @@ dialog[open]::backdrop {
 }
 
 .fab-container {
+    display: flex; /* añadido */
+    flex-direction: column; /* añadido */
+    align-items: center; /* añadido */
     position: fixed;
     bottom: 40px;
     right: 40px;
     display: flex;
     flex-direction: r;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 .fab-etiqueta{
@@ -176,6 +179,54 @@ dialog[open]::backdrop {
     background-color: var(--color-primario-hover);
     box-shadow: 0 6px 12px rgba(0,0,0,0.4);
 }
+
+/* Boton de usuario ------------------------------------------*/
+.fab-usuario-etiqueta{
+    background: var(--color-secundario);
+    color: var(--color-primario);
+
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 2px solid var(--color-background);
+
+    font-size: 24px;
+    white-space: nowrap;
+
+    opacity: 0;
+    transform: translateX(10px);
+    transition: 0.2s;
+}
+
+.fab-container:hover .fab-usuario-etiqueta {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fab-usuario {
+    /*display: flex;*/
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    background-color: var(--color-primario);
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+
+    transition: 0.2s;
+}
+
+.fab-usuario:hover {
+    transform: scale(1.1);
+    background-color: var(--color-primario-hover);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+/* ----- Fin boton de usuario -------------------------------------------- */
 
 label {
     margin-right: 10px;
