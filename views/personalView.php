@@ -50,9 +50,9 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
         </table>
     </div>
     <div class="fab-container">
-        <div>
-            <span class="fab-usuario-etiqueta">Agregar usuario</span>
-            <button class="fab-usuario" onclick="abrirUsuario()">+</button>
+        <div class="fab-container fab-usuario-container">
+            <span class="fab-etiqueta">Agregar usuario</span>
+            <button class="fab" onclick="abrirUsuario()">+</button>
         </div>
         <div>
             <span class="fab-etiqueta">Agregar personal</span>
