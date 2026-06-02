@@ -41,7 +41,7 @@ $maquinaria = maquinariaController::obtenerMaquinariaPorExplotacion($connection,
             <span class="close_button" onclick="document.getElementById('maquinaria_modal').close();">&times;</span>
             <div class="modal_body">
                 <h2 style="text-align: center;">Detalles de <span id="maq_alias"></span></h2>
-                <p id="maq_detalles" class="info_text"></p>
+                <table id="maq_detalles" class="info_table"></table>
             </div>
         </div>
     </dialog>
@@ -60,18 +60,18 @@ function mostrarDetallesMaquina(id){
         .then(data => {
             document.getElementById('maq_alias').textContent = data.alias;
             document.getElementById('maq_detalles').innerHTML = `
-                <strong>Tipo:</strong> ${data.tipo}<br>
-                <strong>Marca:</strong> ${data.marca}<br>
-                <strong>Modelo:</strong> ${data.modelo}<br>
-                <strong>Matrícula:</strong> ${data.matricula}<br>
-                <strong>Estado:</strong> ${data.estado}<br>
-                <strong>Titular:</strong> ${data.titular}<br>
-                <strong>Número ROMA:</strong> ${data.num_roma}<br>
-                <strong>Número REGANIP:</strong> ${data.num_reganip}<br>
-                <strong>Fecha de adquisición:</strong> ${data.fecha_adquisicion}<br>
-                <strong>Última inspección:</strong> ${data.ultima_inspeccion}<br>
-                <strong>Caducidad ITV:</strong> ${data.caducidad_itv}<br>
-                <strong>Observaciones:</strong> ${data.observaciones}
+                <tr><td class="info_label"><strong>Tipo:</strong></td><td>${data.tipo}</td></tr>
+                <tr><td class="info_label"><strong>Marca:</strong></td><td>${data.marca}</td></tr>
+                <tr><td class="info_label"><strong>Modelo:</strong></td><td>${data.modelo}</td></tr>
+                <tr><td class="info_label"><strong>Matrícula:</strong></td><td>${data.matricula}</td></tr>
+                <tr><td class="info_label"><strong>Estado:</strong></td><td>${data.estado}</td></tr>
+                <tr><td class="info_label"><strong>Titular:</strong></td><td>${data.titular}</td></tr>
+                <tr><td class="info_label"><strong>Número de ROMA:</strong></td><td>${data.num_roma}</td></tr>
+                <tr><td class="info_label"><strong>Número de REGANIP:</strong></td><td>${data.num_reganip}</td></tr>
+                <tr><td class="info_label"><strong>Fecha de adquisición:</strong></td><td>${data.fecha_adquisicion}</td></tr>
+                <tr><td class="info_label"><strong>Última inspección:</strong></td><td>${data.ultima_inspeccion}</td></tr>
+                <tr><td class="info_label"><strong>Caducidad ITV:</strong></td><td>${data.caducidad_itv}</td></tr>
+                <tr><td class="info_label"><strong>Observaciones:</strong></td><td>${data.observaciones}</td></tr>
             `;
             document.getElementById('maquinaria_modal').showModal();
         })

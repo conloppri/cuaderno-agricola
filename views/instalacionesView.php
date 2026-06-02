@@ -44,6 +44,11 @@ $instalaciones = instalacionesController::obtenerInstalacionesPorExplotacion($ex
             <?php endforeach;?>
         </table>
     </div>
+
+    <div class="fab-container">
+        <span class="fab-etiqueta">Agregar instalación</span>
+        <button class="fab" onclick="">+</button>
+    </div>
 </div>
 
 <?php include '../templates/footer.php';?>
