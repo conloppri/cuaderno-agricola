@@ -72,7 +72,7 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
                     </tr>
                     <tr id="fila-<?php echo $parcela['id']; ?>" class="<?php echo $claseFila; ?>" style="display: none;">
                         <td colspan="6" class="celda_detalle">
-                            <?php $unidadesGestion = ParcelaController::obtenerInfoUnidadesGestion($connection, $parcela['id']); ?>
+                            <?php $unidadesGestion = ParcelaController::obtenerInfoUnidadesGestion($parcela['id']); ?>
                             <h3>Unidades de gestión</h3>
                             <?php if(count($unidadesGestion) == 0): ?>
                                 <p>No hay unidades de gestión para esta parcela.</p>

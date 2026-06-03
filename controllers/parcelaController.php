@@ -24,7 +24,7 @@ switch($accion) {
                 "mensaje" => "Formato de SIGPAC inválido"
             ]);
         }else{ // Si el formato del código SIGPAC es correcto, se guarda la parcela
-            $resultado = guardarParcela($connection, $idExplotacion, $nombreParcela, $superficieParcela, $subdivisionesSigpac);
+            $resultado = guardarParcela($idExplotacion, $nombreParcela, $superficieParcela, $subdivisionesSigpac);
             if($resultado){ // Si se ha guardado correctamente, se devuelve una respuesta de éxito
                 echo json_encode([
                     "ok" => true,
@@ -53,7 +53,7 @@ switch($accion) {
                 "mensaje" => "La superficie de la unidad de gestión (" . $superficieUniGestion . " ha) no puede ser mayor que la superficie de la parcela (" . $parcelaSuperficie . " ha)"
             ]);
         } else { // Si la validación es correcta, se guarda la unidad de gestión
-            $resultado = guardarUnidadGestion($connection, $idParcela, $nombreUniGestion, $superficieUniGestion, $uso);
+            $resultado = guardarUnidadGestion($idParcela, $nombreUniGestion, $superficieUniGestion, $uso);
             if($resultado){ // Si se ha guardado correctamente, se devuelve una respuesta de éxito
                 echo json_encode([
                     "ok" => true,
@@ -76,7 +76,7 @@ class ParcelaController{
     //Función para obtener la información de las parcelas de una explotación, con el formato necesario para mostrarlo en la vista.
     static function obtenerInfoParcelas(PDO $connection, int $idExplotacion) {
         $parcelasDetails = [];
-        $infoParcelas = obtenerParcelas($connection, $idExplotacion);
+        $infoParcelas = obtenerParcelas($idExplotacion);
         foreach ($infoParcelas as &$parcela) {
             $provincia = obtenerProvincia($connection, $parcela['provincia_id']);
             $municipio = obtenerMunicipio($connection, $parcela['municipio_id']);
@@ -94,8 +94,8 @@ class ParcelaController{
     }
 
     //Función para obtener la información de las unidades de gestión de una parcela, con el formato necesario para mostrarlo en la vista.
-    static function obtenerInfoUnidadesGestion(PDO $connection, int $idParcela) {
-        $unidadesGestion = obtenerUnidadesGestion($connection, $idParcela);
+    static function obtenerInfoUnidadesGestion(int $idParcela) {
+        $unidadesGestion = obtenerUnidadesGestion( $idParcela);
         $resultado = [];
         foreach ($unidadesGestion as &$unidad) {
             array_push($resultado, [
