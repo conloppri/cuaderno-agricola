@@ -130,6 +130,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                     <option value="tecnico">Técnico</option>
                     <option value="trabajador">Trabajador</option>
                     <option value="administrativo">Administrativo</option>
+                    <option value="mecanico">Mecánico</option>
                 </select>
             </div>
             <div>
@@ -156,11 +157,15 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
     }
 
     function abrirUsuario() {
+        document.getElementById('usuario-form').reset();
+        document.getElementById("mensaje-error-usuario").textContent = "";
         document.getElementById('addUsuario_modal').showModal();
     }
 
     function cerrarUsuario() {
         document.getElementById('addUsuario_modal').close();
+        document.getElementById("mensaje-error-usuario").textContent = "";
+        document.getElementById('usuario-form').reset();
     }
 
     document.querySelector(".gestionar_usuarios_button").addEventListener("click", function() {
@@ -173,7 +178,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
         this.value = this.value.replace(/\D/g, '').slice(0, 9);
     });
 
-    //Municpios por provincia
+    //Municipios por provincia
     document.getElementById("provincia").addEventListener("change", function() {
         const provinciaId = this.value;
 
@@ -215,6 +220,33 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
             console.error("Error al guardar el personal:", error);
         }
     
+    });
+
+    // Añadir usuario a explotación
+    document.getElementById("usuario-form").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const mensajeErrorUsuario = document.getElementById("mensaje-error-usuario");
+        const formData = new FormData(this);
+
+        fetch("../controllers/addUsuarioExp.php?explotacion_id=<?php echo $idExplotacion; ?>", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                cerrarUsuario();
+            } else {
+                mensajeErrorUsuario.textContent = data.message;
+                console.error(data.message);
+            }
+        })
+        .catch(error => {
+            mensajeErrorUsuario.textContent = "Error en la conexión con el servidor. Por favor, inténtalo de nuevo.";
+            console.error("Error al agregar usuario:", error);
+        });
     });
 
 </script>

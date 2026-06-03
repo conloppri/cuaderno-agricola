@@ -37,4 +37,105 @@ $roles = getRolesExplotacion($connection, $explotacionId);
         </div>
     </main>
 
+    <dialog id="modificarUsuario_modal">
+        <form id="modificarUsuario_form" method="dialog">
+            <h2>Modificar rol de usuario</h2>
+            <input type="hidden" id="usuarioIdRol" name="usuario_id">
+            <select id="nuevoRol" name="nuevoRol" required>
+                <option value="propietario">Propietario</option>
+                <option value="tecnico">Técnico</option>
+                <option value="trabajador">Trabajador</option>
+                <option value="administrativo">Administrativo</option>
+                <option value="mecanico">Mecánico</option>
+            </select>
+            <button type="submit">Aceptar</button>
+            <button type="button" id="cancelarModificarUsuario">Cancelar</button>
+        </form>
+    </dialog>
+
+    <script>
+        
+        const btnEliminarUsuario = document.querySelectorAll(".btnEliminarUsuario");
+        const btnModificarUsuario = document.querySelectorAll(".btnModificarUsuario");
+        const cancelarModificarUsuario = document.getElementById("cancelarModificarUsuario");
+
+        btnEliminarUsuario.forEach(button => {
+            button.addEventListener("click", function() {
+                const email = this.getAttribute("data-email");
+                const usuarioId = this.getAttribute("data-usuario-id");
+
+                if (confirm(`¿Estás seguro de que deseas eliminar al usuario con email ${email} de esta explotación?`)) {
+                    fetch(`../controllers/eliminarUsuarioExp.php?explotacion_id=<?php echo $explotacionId; ?>&usuario_id=${usuarioId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            location.reload();
+                        } else {
+                            alert("Error al eliminar el usuario: " + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error al eliminar el usuario:", error);
+                        alert("Error en la conexión con el servidor. Por favor, inténtalo de nuevo.");
+                    });
+                }
+            });
+        });
+
+        btnModificarUsuario.forEach(button => {
+            button.addEventListener("click", function() {
+                const email = this.getAttribute("data-email");
+                const usuarioId = this.getAttribute("data-usuario-id");
+                const modal = document.getElementById("modificarUsuario_modal");
+
+                fetch(`../controllers/obtenerRolUsuarioExp.php?usuario_id=${usuarioId}&explotacion_id=<?php echo $explotacionId; ?>`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById("nuevoRol").value = data.rol;
+                        document.getElementById("usuarioIdRol").value = usuarioId;
+                        modal.showModal();
+                    } else {
+                        alert("Error al obtener el rol: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al obtener el rol:", error);
+                    alert("Error en la conexión con el servidor. Por favor, inténtalo de nuevo.");
+                });
+            });
+        });
+
+        cancelarModificarUsuario.addEventListener("click", function() {
+            document.getElementById("modificarUsuario_modal").close();
+        });
+
+        document.getElementById("modificarUsuario_form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const nuevoRol = document.getElementById("nuevoRol").value;
+            const usuarioIdRol = document.getElementById("usuarioIdRol").value;
+
+            fetch(`../controllers/modificarRolUsuarioExp.php?explotacion_id=<?php echo $explotacionId; ?>&usuario_id=${usuarioIdRol}&nuevoRol=${nuevoRol}`, {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert("Error al modificar el rol: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error al modificar el rol:", error);
+                alert("Error en la conexión con el servidor. Por favor, inténtalo de nuevo.");
+            });
+        });
+
+    </script>
+
 <?php include "../templates/footer.php";?>
