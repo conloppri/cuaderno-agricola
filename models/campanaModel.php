@@ -45,6 +45,45 @@ function obtenerResumenCosechas(int $explotacion_id, int $ano) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function obtenerResumenTratamientos(int $explotacion_id, int $ano) {
+    global $connection;
+    $sql = "SELECT DATE_FORMAT(t.fecha, '%d/%m/%Y') AS fecha, f.nombre AS fitosanitario, p.nombre AS parcela, cu.nombre AS cultivo 
+                FROM tratamientos t 
+                JOIN plantacion pl ON pl.plantacion_id = t.plantacion_id 
+                JOIN parcela p ON p.parcela_id = pl.parcela_id 
+                JOIN fitosanitario f ON f.fitosanitario_id = t.fitosanitario_id
+                JOIN cultivo cu ON cu.cultivo_id = pl.cultivo_id
+                WHERE p.explotacion_id = :explotacion_id 
+                AND YEAR(t.fecha) = :ano 
+                ORDER BY t.fecha 
+                DESC LIMIT 1;";
+    $stmt = $connection->prepare($sql);
+    $stmt->execute([
+        'explotacion_id' => $explotacion_id,
+        'ano' => $ano
+    ]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function obtenerResumenFertilizaciones(int $explotacion_id, int $ano) {
+    global $connection;
+    $sql = "SELECT DATE_FORMAT(f.fecha_fin, '%d/%m/%Y') AS fecha, fer.nombre AS fertilizante, p.nombre AS parcela, cu.nombre AS cultivo 
+                FROM fertilizacion f 
+                JOIN fertilizante fer ON fer.fertilizante_id = f.fertilizacion_id 
+                JOIN plantacion pl ON pl.plantacion_id = f.plantacion_id 
+                JOIN parcela p ON p.parcela_id = pl.parcela_id
+                JOIN cultivo cu ON cu.cultivo_id = pl.cultivo_id
+                WHERE p.explotacion_id = :explotacion_id 
+                AND YEAR(f.fecha_fin) = :ano 
+                ORDER BY f.fecha_fin DESC LIMIT 1;";
+    $stmt = $connection->prepare($sql);
+    $stmt->execute([
+        'explotacion_id' => $explotacion_id,
+        'ano' => $ano
+    ]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 function obtenerPlantacionesPorCampana(int $explotacion_id, int $ano) {
     global $connection;
     $sql = "SELECT p.*, cu.nombre AS cultivo FROM plantacion p INNER JOIN parcela pa ON p.parcela_id = pa.parcela_id JOIN Cultivo cu ON p.cultivo_id = cu.cultivo_id WHERE pa.explotacion_id = :explotacion_id AND YEAR(p.fecha_inicio) = :ano";
@@ -56,4 +95,41 @@ function obtenerPlantacionesPorCampana(int $explotacion_id, int $ano) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function obtenerTratamientosPorCampana(int $explotacion_id, int $ano) {
+    global $connection;
+    $sql = "SELECT DATE_FORMAT(t.fecha, '%d/%m/%Y') AS fecha, f.nombre AS fitosanitario, p.nombre AS parcela, cu.nombre AS cultivo 
+                FROM tratamientos t 
+                JOIN plantacion pl ON pl.plantacion_id = t.plantacion_id 
+                JOIN parcela p ON p.parcela_id = pl.parcela_id 
+                JOIN fitosanitario f ON f.fitosanitario_id = t.fitosanitario_id
+                JOIN cultivo cu ON cu.cultivo_id = pl.cultivo_id
+                WHERE p.explotacion_id = :explotacion_id 
+                AND YEAR(t.fecha) = :ano 
+                ORDER BY t.fecha DESC";
+    $stmt = $connection->prepare($sql);
+    $stmt->execute([
+        'explotacion_id' => $explotacion_id,
+        'ano' => $ano
+    ]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function obtenerFertilizacionesPorCampana(int $explotacion_id, int $ano) {
+    global $connection;
+    $sql = "SELECT DATE_FORMAT(f.fecha_fin, '%d/%m/%Y') AS fecha, fer.nombre AS fertilizante, p.nombre AS parcela, cu.nombre AS cultivo 
+                FROM fertilizacion f 
+                JOIN fertilizante fer ON fer.fertilizante_id = f.fertilizacion_id 
+                JOIN plantacion pl ON pl.plantacion_id = f.plantacion_id 
+                JOIN parcela p ON p.parcela_id = pl.parcela_id
+                JOIN cultivo cu ON cu.cultivo_id = pl.cultivo_id
+                WHERE p.explotacion_id = :explotacion_id 
+                AND YEAR(f.fecha_fin) = :ano 
+                ORDER BY f.fecha_fin DESC";
+    $stmt = $connection->prepare($sql);
+    $stmt->execute([
+        'explotacion_id' => $explotacion_id,
+        'ano' => $ano
+    ]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
