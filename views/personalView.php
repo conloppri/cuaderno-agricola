@@ -2,6 +2,7 @@
 
 <?php include '../config/db.php';
 include '../controllers/globalController.php';
+include '../models/rolesUsuariosModel.php';
 
 $idExplotacion = $_GET['explotacion_id']; // Obtener el ID de la explotación de la URL
 $nombre_explotacion = obtenerNombreExplotacion($idExplotacion);
@@ -50,10 +51,12 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
         </table>
     </div>
     <div class="fab-container">
-        <div class="fab-container fab-usuario-container">
-            <span class="fab-etiqueta">Agregar usuario</span>
-            <button class="fab" onclick="abrirUsuario()">+</button>
-        </div>
+        <?php if (obtenerRolUsuarioEnExplotacion($connection, $_SESSION['usuario_id'], $idExplotacion) === 'administrador') { 
+            echo '<div class="fab-container fab-usuario-container">
+                    <span class="fab-etiqueta">Agregar usuario</span>
+                    <button class="fab" onclick="abrirUsuario()">+</button>
+                </div>';
+        }?>
         <div>
             <span class="fab-etiqueta">Agregar personal</span>
             <button class="fab" onclick="abrirFormulario()">+</button>
@@ -126,6 +129,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                 <label for="rol">Rol:</label>
                 <select name="rol" id="rol">
                     <option value="" selected disabled>Selecciona rol</option>
+                    <option value="administrador">Administrador</option>
                     <option value="propietario">Propietario</option>
                     <option value="tecnico">Técnico</option>
                     <option value="trabajador">Trabajador</option>
@@ -225,6 +229,12 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
     // Añadir usuario a explotación
     document.getElementById("usuario-form").addEventListener("submit", function(e) {
         e.preventDefault();
+
+        <?php if (obtenerRolUsuarioEnExplotacion($connection, $_SESSION['usuario_id'], $idExplotacion) !== 'administrador') { ?>
+            alert("No tienes permisos para agregar usuarios a esta explotación.");
+            cerrarUsuario();
+            return;
+        <?php } ?>
 
         const mensajeErrorUsuario = document.getElementById("mensaje-error-usuario");
         const formData = new FormData(this);

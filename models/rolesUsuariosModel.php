@@ -1,5 +1,5 @@
 <?php
-include '../config/db.php';
+include_once '../config/db.php';
 
 function obtenerRolesExplotacion(PDO $connection, $idExplotacion) {
     $stmt = $connection->prepare("SELECT u.email as email, u.id as usuario_id, ue.rol as rol FROM usuarios u JOIN usuarios_explotacion ue ON u.id = ue.usuario_id WHERE ue.explotacion_id = :explotacion_id");
@@ -52,5 +52,12 @@ function obtenerRolUsuarioEnExplotacion(PDO $connection, $usuario_id, $explotaci
 function modificarRolUsuarioEnExplotacion(PDO $connection, $usuario_id, $explotacion_id, $nuevo_rol) {
     $stmt = $connection->prepare("UPDATE usuarios_explotacion SET rol = :nuevo_rol WHERE usuario_id = :usuario_id AND explotacion_id = :explotacion_id");
     $stmt->execute(['nuevo_rol' => $nuevo_rol, 'usuario_id' => $usuario_id, 'explotacion_id' => $explotacion_id]);
+}
+
+function contarAdminExplotacion(PDO $connection, $idExplotacion) {
+    $stmt = $connection->prepare("SELECT * FROM usuarios_explotacion WHERE explotacion_id = :explotacion_id AND rol = 'administrador'");
+    $stmt->execute(['explotacion_id' => $idExplotacion]);
+    $result = $stmt->rowCount();
+    return $result;
 }
 ?>

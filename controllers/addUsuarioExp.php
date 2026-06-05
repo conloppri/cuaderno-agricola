@@ -1,6 +1,12 @@
 <?php
 session_start();
+
 include '../models/rolesUsuariosModel.php';
+
+if(obtenerRolUsuarioEnExplotacion($connection, $_SESSION['usuario_id'], $_GET['explotacion_id']) !== 'administrador') {
+    header("Location: ../views/sinPermiso.php");
+    exit();
+}
 
 header('Content-Type: application/json');
 
