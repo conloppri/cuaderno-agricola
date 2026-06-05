@@ -400,8 +400,8 @@ table {
     flex-direction: column;
     position: center;
     align-items: center;
-    background: rgb(222, 241, 205);
-    border: #45a049 solid 2px;
+    background: var(--color-card);
+    border: var(--color-primario) solid 2px;
     padding: 20px;
     border-radius: 10px;
     width: 33%;
@@ -513,10 +513,21 @@ table {
 
 .info_table .info_label {
     font-weight: bold;
-    width: 30%;
+    width: 40%;
     background-color: var(--color-secundario);
     color: var(--color-primario);
     text-align: right;
+}
+
+.maquinaria_form {
+    flex-direction: column;
+    position: center;
+    align-items: center;
+    background: var(--color-card);
+    border: var(--color-primario) solid 2px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
 }
 
 .main_campanas{
