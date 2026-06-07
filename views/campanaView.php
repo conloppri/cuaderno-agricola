@@ -45,7 +45,7 @@ if ($ano_campana == null) {
                     <p>No hay plantaciones registradas para esta campaña.</p>
                 <?php endif; ?>
             </div>
-            <div class="card-campana">
+            <div class="card-campana" onclick="mostrarDetalleCosechas()">
                 <h3>Cosechas</h3>
                 <?php if ($resumen['cosechas']): ?>
                     <p>Última cosecha:</p>
@@ -72,9 +72,14 @@ if ($ano_campana == null) {
                     <p>No hay fertilizaciones registradas para esta campaña.</p>
                 <?php endif; ?>
             </div>
-            <div class="card-campana">
+            <div class="card-campana" onclick="mostrarDetalleRiegos()">
                 <h3>Riego</h3>
-                <p>En desarrollo...</p>
+                <?php if ($resumen['riegos']): ?>
+                    <p>Último riego:</p>
+                    <p><?php echo $resumen['riegos']['fecha'] . " - " . ucfirst($resumen['riegos']['parcela']) . " - " . $resumen['riegos']['cultivo']; ?></p>
+                <?php else: ?>
+                    <p>No hay riegos registrados para esta campaña.</p>
+                <?php endif; ?>
             </div>
             <div class="card-campana">
                 <h3>Labores</h3>
@@ -112,6 +117,34 @@ if ($ano_campana == null) {
         <?php endif; ?>
     </div>
 
+    <!-- Detalles de las cosechas de la campaña -->
+    <div class="detalle-campana-cosechas">
+        <h3 style="text-align: center; grid-column: span 3;">Detalles de las cosechas de la campaña <?php echo $ano_campana; ?></h3>
+        <?php $cosechas = obtenerDetallesCosechasPorCampana($explotacion_id, $ano_campana); ?>
+        <?php if (count($cosechas) > 0): ?>
+            <table class="info_table">
+                <thead>
+                    <tr>
+                        <th>Fecha de cosecha</th>
+                        <th>Cultivo</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($cosechas as $cosecha): ?>
+                        <tr>
+                            <td><?php echo $cosecha['fecha_fin']; ?></td>
+                            <td><?php echo $cosecha['cultivo']; ?></td>
+                            <td><?php echo $cosecha['cantidad'] . " " . $cosecha['unidad']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p>No hay cosechas registradas para esta campaña.</p>
+        <?php endif; ?>
+    </div>
+
     <!-- Detalles de los tratamientos de la campaña -->
     <div class="detalle-campana-tratamientos">
         <h3 style="text-align: center; grid-column: span 3;">Detalles de los tratamientos de la campaña <?php echo $ano_campana; ?></h3>
@@ -143,34 +176,64 @@ if ($ano_campana == null) {
     </div>
 
         <!-- Detalles de las fertilizaciones de la campaña -->
-        <div class="detalle-campana-fertilizaciones">
-            <h3 style="text-align: center; grid-column: span 3;">Detalles de las fertilizaciones de la campaña <?php echo $ano_campana; ?></h3>
-            <?php $fertilizaciones = obtenerDetallesFertilizacionesPorCampana($explotacion_id, $ano_campana); ?>
-            <?php if (count($fertilizaciones) > 0): ?>
-                <table class="info_table">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Fertilizante</th>
-                            <th>Parcela</th>
-                            <th>Cultivo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($fertilizaciones as $fertilizacion): ?>
-                            <tr>
-                                <td><?php echo $fertilizacion['fecha']; ?></td>
-                                <td><?php echo $fertilizacion['fertilizante']; ?></td>
-                                <td><?php echo $fertilizacion['parcela']; ?></td>
-                                <td><?php echo $fertilizacion['cultivo']; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <p>No hay fertilizaciones registradas para esta campaña.</p>
-            <?php endif; ?>
-        </div>
+<div class="detalle-campana-fertilizaciones">
+    <h3 style="text-align: center; grid-column: span 3;">Detalles de las fertilizaciones de la campaña <?php echo $ano_campana; ?></h3>
+    <?php $fertilizaciones = obtenerDetallesFertilizacionesPorCampana($explotacion_id, $ano_campana); ?>
+    <?php if (count($fertilizaciones) > 0): ?>
+        <table class="info_table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Fertilizante</th>
+                    <th>Parcela</th>
+                    <th>Cultivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($fertilizaciones as $fertilizacion): ?>
+                    <tr>
+                        <td><?php echo $fertilizacion['fecha']; ?></td>
+                        <td><?php echo $fertilizacion['fertilizante']; ?></td>
+                        <td><?php echo $fertilizacion['parcela']; ?></td>
+                        <td><?php echo $fertilizacion['cultivo']; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>No hay fertilizaciones registradas para esta campaña.</p>
+    <?php endif; ?>
+</div>
+
+<!-- Destalles de los riegos -->
+<div class="detalle-campana-riegos">
+    <h3 style="text-align: center; grid-column: span 3;">Detalles de los riegos de la campaña <?php echo $ano_campana; ?></h3>
+    <?php $riegos = obtenerDetallesRiegosPorCampana($explotacion_id, $ano_campana); ?>
+    <?php if (count($riegos) > 0): ?>
+        <table class="info_table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Parcela</th>
+                    <th>Cantidad</th>
+                    <th>Cultivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($riegos as $riego): ?>
+                    <tr>
+                        <td><?php echo $riego['fecha']; ?></td>
+                        <td><?php echo $riego['parcela']; ?></td>
+                        <td><?php echo $riego['cantidad'] . " " . $riego['unidad']; ?></td>
+                        <td><?php echo $riego['cultivo']; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>No hay riegos registrados para esta campaña.</p>
+    <?php endif; ?>
+</div>
 
     <div class="fab-container">
         <span class="fab-etiqueta">En desarrollo</span>
@@ -181,6 +244,16 @@ if ($ano_campana == null) {
 <script>
     function mostrarDetalle() {
         $detalle = document.querySelector('.detalle-campaña');
+        if ($detalle.style.display === 'none' || $detalle.style.display === '') {
+            $detalle.style.display = 'block';
+            Sdetalle.focus();
+        } else {
+            $detalle.style.display = 'none';
+        }
+    }
+
+    function mostrarDetalleCosechas() {
+        $detalle = document.querySelector('.detalle-campana-cosechas');
         if ($detalle.style.display === 'none' || $detalle.style.display === '') {
             $detalle.style.display = 'block';
             Sdetalle.focus();
@@ -201,6 +274,16 @@ if ($ano_campana == null) {
 
     function mostrarDetalleFertilizaciones() {
         $detalle = document.querySelector('.detalle-campana-fertilizaciones');
+        if ($detalle.style.display === 'none' || $detalle.style.display === '') {
+            $detalle.style.display = 'block';
+            $detalle.focus();
+        } else {
+            $detalle.style.display = 'none';
+        }
+    }
+
+    function mostrarDetalleRiegos() {
+        $detalle = document.querySelector('.detalle-campana-riegos');
         if ($detalle.style.display === 'none' || $detalle.style.display === '') {
             $detalle.style.display = 'block';
             $detalle.focus();

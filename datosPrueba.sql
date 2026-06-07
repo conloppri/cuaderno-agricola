@@ -174,11 +174,11 @@ INSERT INTO `CuadernoDeCampoDB`.`fertilizacion` (plantacion_id, fertilizante_id,
 -- Tabla `CuadernoDeCampoDB`.`riego`
 -- -----------------------------------------------------
 INSERT INTO `CuadernoDeCampoDB`.`riego` (plantacion_id, cantidad_unidad_id, fecha_inicio, fecha_fin, superficie, cantidad, tipo_riego, tipo_energia, origen_agua) VALUES
-(1, 1, '2026-01-25', '2026-01-25', 500.0, 1, 'goteo', 'electrica', 'subterranea'),
-(2, 2, '2026-02-25', '2026-02-25', 750.0, 2, 'aspersion', 'combustible', 'superficial'),
-(3, 3, '2026-03-25', '2026-03-25', 1000.0, 3, 'manual', 'solar', 'embalse'),
-(4, 4, '2026-04-25', '2026-04-25', 1250.0, 4, 'goteo', 'electrica', 'rio'),
-(5, 5, '2026-05-25', '2026-05-25', 1500.0, 5, 'aspersion', 'combustible', 'canal'),
+(1, 6, '2026-01-25', '2026-01-25', 500.0, 1, 'goteo', 'electrica', 'subterranea'),
+(2, 6, '2026-02-25', '2026-02-25', 750.0, 2, 'aspersion', 'combustible', 'superficial'),
+(3, 6, '2026-03-25', '2026-03-25', 1000.0, 3, 'manual', 'solar', 'embalse'),
+(4, 6, '2026-04-25', '2026-04-25', 1250.0, 4, 'goteo', 'electrica', 'rio'),
+(5, 6, '2026-05-25', '2026-05-25', 1500.0, 5, 'aspersion', 'combustible', 'canal'),
 (6, 6, '2026-06-25', '2026-06-25', 1750.0, 6, 'manual', 'solar', 'red_publica');
 
 -- -----------------------------------------------------
