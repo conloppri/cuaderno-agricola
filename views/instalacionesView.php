@@ -26,16 +26,16 @@ $instalaciones = instalacionesController::obtenerInstalacionesPorExplotacion($ex
             <tr>
                 <td>
                     <div>
-                        <h4><?php echo $instalacion["nombre"]?></h4>
+                        <h3><?php echo $instalacion["nombre"]?></h3>
                     </div>
                 </td>
                 <td>
-                    <p> Superficie: <?php echo $instalacion["superficie"] ?> </p>
+                    <p> <strong>Superficie:</strong> <?php echo $instalacion["superficie"] ?>  ha</p>
                 </td>
                 <td>
                     <div class="tags">
                         <div class="tag"><?php echo $instalacion['tipo']; ?></div>
-                        <div class="tag" style="background-color: <?php if($instalacion['estado'] == 'Activa') echo '#bdf8bf'; else if($instalacion['estado'] == 'No disponible') echo '#ffaaa4'; else echo '#fad68d'; ?>">
+                        <div class="tag" style="background-color: <?php if($instalacion['estado'] == 'Disponible') echo '#bdf8bf'; else if($instalacion['estado'] == 'No disponible') echo '#ffaaa4'; else echo '#fad68d'; ?>">
                             <?php echo $instalacion['estado']; ?>
                         </div>
                     </div>
@@ -47,7 +47,7 @@ $instalaciones = instalacionesController::obtenerInstalacionesPorExplotacion($ex
 
     <dialog id="add_instalacion" class="modal_formulario instalacion_form">
         <div class="modal_content">
-            <span class="close" onclick="document.getElementById('add_instalacion').close()">&times;</span>
+            <span class="close_button" onclick="document.getElementById('add_instalacion').close()">&times;</span>
             <h2>Agregar nueva instalación</h2>
 
             <form id="instalacion_form">

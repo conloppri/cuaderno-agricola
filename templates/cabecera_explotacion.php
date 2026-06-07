@@ -32,7 +32,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
             <li><a class="<?php echo $paginaActual=='personalView.php' ? 'active': ''?>" href="../views/personalView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-users"></i> <span>Personal</span></a></li>
             <li><a class="<?php echo $paginaActual=='maquinariaView.php' ? 'active': ''?>" href="../views/maquinariaView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-tractor"></i><span>Maquinaria</span></a></li>
             <li><a class="<?php echo $paginaActual=='instalacionesView.php' ? 'active': ''?>" href="../views/instalacionesView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-building-cottage"></i><span>Instalaciones</span></a></li>
-            <li><a href="#"><i class="ti ti-plant"></i><span>Fertilizantes</span></a></li>
+            <li><a class="<?php echo $paginaActual=='catalogosView.php' ? 'active': ''?>" href="../views/catalogosView.php?explotacion_id=<?php echo $explotacion_id; ?>&catalogo=cultivos"><i class="ti ti-library"></i><span>Catálogos</span></a></li>
         </nav>
         <div>
             <button id="btnVolverInicio" class="user_button">Explotaciones</button>

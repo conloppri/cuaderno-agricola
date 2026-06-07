@@ -24,7 +24,8 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
 
     <!-- Formulario para añadir nueva parcela -->
     <dialog id="parcela_modal" class= "modal_formulario">
-        <div>
+        <div class="modal_content">
+            <span class="close_button" onclick="document.getElementById('parcela_modal').close();">&times;</span>
             <h2 style="text-align: center;">Nueva parcela</h2>
             <form id="form_parcela" method="POST">
                 <div class="grupo-form">
@@ -89,7 +90,8 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
                             <?php endif; ?>
                             <button type="button" class="add_button" onclick="abrirFormularioUniGest()">+ Nueva unidad</button>
                             <dialog class="modal_formulario" id="uniGestion_modal">
-                                <div>
+                                <div class="modal_content">
+                                    <span class="close_button" onclick="document.getElementById('uniGestion_modal').close();">&times;</span>
                                     <h2 style="text-align: center;">Nueva unidad de gestión</h2>
                                     <form id="form_uniGestion" method="POST">
                                         <input type="hidden" name="accion" value="crearUniGestion">

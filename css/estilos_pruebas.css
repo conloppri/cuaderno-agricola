@@ -238,15 +238,24 @@ nav a.active{
 
 .nav-explotacion a span{
     opacity: 0;
-
     transform: translateX(-10px);
-
     max-width: 0;
-
     overflow: hidden;
-
     white-space: nowrap;
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        max-width 0.3s ease;
+}
 
+.nav_catalogos a span{
+    padding: 5px 10px;
+    justify-content: center;
+    opacity: 0;
+    transform: translateX(-10px);
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
     transition:
         opacity 0.3s ease,
         transform 0.3s ease,
@@ -254,7 +263,8 @@ nav a.active{
 }
 
 .nav-explotacion a.active span,
-.nav-explotacion a:hover span{
+.nav-explotacion a:hover span,
+.nav_catalogos a:hover span {
     opacity: 1;
 
     transform: translateX(0);
@@ -274,6 +284,50 @@ nav li a:hover {
     gap: 20px;
     background-color: var(--color-card);
     padding: 20px;
+}
+
+.nav_catalogos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: transparent;
+}
+
+.nav_catalogos li a span{
+    color: var(--color-primario);
+    justify-content: center;
+}
+
+.nav_catalogos a:hover span{
+
+    color: var(--color-primario-hover);
+    border-radius: 20px;
+    justify-self: center;
+    font-weight: bold;
+}
+
+.nav_catalogos .ti{
+    background-color: var(--color-secundario);
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 40px;
+}
+
+.nav_catalogos a:hover{
+    background-color: transparent;
+    color: var(--color-primario-hover);
+}
+
+.nav_catalogos a.active{
+    background-color: transparent;
+    color: var(--color-primario-hover);
+}
+
+.nav_catalogos a.active .ti{
+    background-color: var(--color-primario-hover);
+    color: var(--color-font);
 }
 
 .user_button {
@@ -466,6 +520,7 @@ table {
 }
 
 .close_button {
+    justify-self: end;
     font-size: 40px;
     text-align: right;
 }
@@ -527,7 +582,11 @@ table {
     border: var(--color-primario) solid 2px;
     padding: 20px;
     border-radius: 10px;
-    width: 50%;
+    width:50%;
+}
+
+.instalacion_form{
+    width: 60%;
 }
 
 .main_campanas{
@@ -606,4 +665,9 @@ table {
     padding: 20px;
     text-align: start;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.295);
+}
+
+.main_catalogos{
+    display: grid;
+    grid-template-columns: 20% 80%;
 }

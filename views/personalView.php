@@ -66,6 +66,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
 
 <dialog id="personal_modal" class="modal_formulario">
     <div class="modal_content">
+        <span class="close_button" onclick="document.getElementById('personal_modal').close();">&times;</span>
         <h2 style="text-align: center;">Agregar Personal</h2>
         <form id="personal-form">
             <input type="hidden" name="idExplotacion" value="<?php echo $idExplotacion; ?>">
