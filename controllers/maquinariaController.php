@@ -3,6 +3,10 @@
 include "../models/maquinariaModel.php";
 
 $accion = $_GET['accion'] ?? '';
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $accion = $_POST['accion'] ?? '';
+}
+
 
 switch ($accion) {
     case 'obtenerDetallesMaquina':
@@ -10,7 +14,7 @@ switch ($accion) {
 
         header('Content-Type: application/json');
 
-        $maquina = obtenerMaquinaPorId($connection, $id);
+        $maquina = obtenerMaquinaPorId($id);
         echo json_encode([
             'alias' => $maquina['alias'],
             'tipo' => $maquina['tipo_maquina'],
@@ -28,7 +32,6 @@ switch ($accion) {
         ]);
         break;
     case 'agregarMaquinaria':
-        header('Content-Type: application/json');
         
         $explotacion_id = $_POST['explotacion_id'];
         $alias = $_POST['alias'];
@@ -44,6 +47,8 @@ switch ($accion) {
         $ultima_inspeccion = $_POST['ultima_inspeccion'] ?? null;
         $caducidad_itv = $_POST['caducidad_itv'] ?? null;
         $observaciones = $_POST['observaciones'] ?? null;
+
+        header('Content-Type: application/json');
 
         $resultado = guardarMaquinaria($explotacion_id, $alias, $tipo, $marca, $modelo, $matricula, $estado, $titular, $num_roma, $num_reganip, $fecha_adquisicion, $ultima_inspeccion, $caducidad_itv, $observaciones);
         if ($resultado) { // Si se ha guardado correctamente, se devuelve una respuesta de éxito

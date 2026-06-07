@@ -191,16 +191,15 @@ $maquinaria = maquinariaController::obtenerMaquinariaPorExplotacion($connection,
         const mensajeError = document.getElementById("mensaje-error");
         mensajeError.textContent = ""; // Limpiar mensaje de error previo
         const formData = new FormData(this);
+
         try{
             const respuesta = await fetch("../controllers/maquinariaController.php", {
                 method: "POST",
                 body: formData
             });
 
-            console.log("mensaje enviado al servidor");
            const resultado = await respuesta.json();
             
-           console.log("resultado:", resultado);
             if(resultado.ok){ 
                 alert(resultado.mensaje);
                 location.reload();

@@ -45,11 +45,86 @@ $instalaciones = instalacionesController::obtenerInstalacionesPorExplotacion($ex
         </table>
     </div>
 
+    <dialog id="add_instalacion" class="modal_formulario instalacion_form">
+        <div class="modal_content">
+            <span class="close" onclick="document.getElementById('add_instalacion').close()">&times;</span>
+            <h2>Agregar nueva instalación</h2>
+
+            <form id="instalacion_form">
+                <input type="hidden" name="accion" value="agregarInstalacion">
+                <input type="hidden" name="explotacion_id" value="<?php echo $explotacion_id; ?>">
+                <div class="grupo-form">
+                    <label for="nombre">Nombre de la instalación:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+
+                    <label for="superficie">Superficie (ha):</label>
+                    <input type="number" id="superficie" name="superficie" step="0.01" required>
+
+                    <!--`tipo` ENUM("Nave", "Almacen", "Balsa", "Silo")-->
+                    <label for="tipo">Tipo de instalación:</label>
+                    <select id="tipo" name="tipo" required>
+                        <option value="" selected disabled>Selecciona un tipo</option>
+                        <option value="Nave">Nave</option>
+                        <option value="Almacen">Almacén</option>
+                        <option value="Balsa">Balsa</option>
+                        <option value="Silo">Silo</option>
+                    </select>
+
+                    <!-- `estado` ENUM("Disponible", "No disponible", "En mantenimiento") -->
+                    <label for="estado">Estado de la instalación:</label>
+                    <select id="estado" name="estado" required>
+                        <option value="" selected disabled>Selecciona un estado</option>
+                        <option value="Disponible">Disponible</option>
+                        <option value="No disponible">No disponible</option>
+                        <option value="En mantenimiento">En mantenimiento</option>
+                    </select>
+                </div>
+                <div>
+                    <p id="mensaje-error" style="color: red; text-align: center;"></p>
+                </div>
+                <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+                    <button type="button" class="cancel_button" onclick="document.getElementById('add_instalacion').close();">Cancelar</button>
+                    <button type="submit" class="add_button">Guardar</button>
+                </div>
+            </form>
+
+    </dialog>
+
     <div class="fab-container">
         <span class="fab-etiqueta">Agregar instalación</span>
-        <button class="fab" onclick="">+</button>
+        <button class="fab" onclick="document.getElementById('add_instalacion').showModal();">+</button>
     </div>
 </div>
+
+<script>
+    document.getElementById("instalacion_form").addEventListener("submit", async function(e) {
+        e.preventDefault();
+        const mensajeError = document.getElementById("mensaje-error");
+        mensajeError.textContent = ""; // Limpiar mensaje de error previo
+        const formData = new FormData(this);
+
+        try{
+            const respuesta = await fetch("../controllers/instalacionesController.php", {
+                method: "POST",
+                body: formData
+            });
+
+           const resultado = await respuesta.json();
+            
+            if(resultado.ok){ 
+                alert(resultado.mensaje);
+                location.reload();
+            } else {
+                mensajeError.textContent = resultado.mensaje;
+                console.error(resultado.mensaje);
+            }
+        } catch (error) {
+            mensajeError.textContent = "Error en la conexión con el servidor. Por favor, inténtalo de nuevo.";
+            console.error("Error al guardar la maquinaria:", error);
+        }
+    
+    });
+    </script>
 
 <?php include '../templates/footer.php';?>
 
