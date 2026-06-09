@@ -92,4 +92,16 @@ function obtenerRolPorUsuario(PDO $connection, int $usuarioId, int $explotacionI
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result['rol'] ?? 'Desconocido'; 
 }
+
+function obtenerPlantacionesPorExplotacion(PDO $connection, int $explotacion_id) {
+    $stmt = $connection->prepare("SELECT p.*, pa.nombre AS parcela_nombre, c.nombre AS cultivo_nombre, c.variedad AS variedad_nombre 
+        FROM plantacion p 
+        JOIN parcela pa ON p.parcela_id = pa.parcela_id
+        JOIN explotacion e ON pa.explotacion_id = e.explotacion_id
+        JOIN cultivo c ON p.cultivo_id = c.cultivo_id 
+        WHERE e.explotacion_id = :explotacion_id
+        ORDER BY p.fecha_inicio DESC");
+    $stmt->execute(['explotacion_id' => $explotacion_id]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>

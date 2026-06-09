@@ -12,4 +12,9 @@ function obtenerRolUsuario(int $usuarioId, int $explotacionId) {
     global $connection;
     return obtenerRolPorUsuario($connection, $usuarioId, $explotacionId);
 }
+
+function obtenerPlantacionesExplotacion(int $explotacion_id) {
+    global $connection;
+    return obtenerPlantacionesPorExplotacion($connection, $explotacion_id);
+}
 ?>

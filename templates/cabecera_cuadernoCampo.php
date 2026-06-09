@@ -30,22 +30,25 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
         </div>
         <nav class="nav-explotacion">
             <?php if ($rolUsuario === 'administrador' || $rolUsuario === 'propietario' || $rolUsuario === 'trabajador'): ?>
-                <li><a class="<?php echo $paginaActual=='parcelasView.php' ? 'active': ''?>" href="../views/parcelasView.php?explotacion_id=<?php echo $explotacion_id; ?>"> <i class="ti ti-fence"></i> <span>Cosechas</span></a></li>
+                <li><a class="<?php echo $paginaActual=='cosechasView.php' ? 'active': ''?>" href="../views/cosechasView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-plant"></i><span>Plantaciones</span></a></li>
             <?php endif; ?>
             <?php if ($rolUsuario === 'administrador' || $rolUsuario === 'propietario' || $rolUsuario === 'trabajador'): ?>
-                <li><a class="<?php echo $paginaActual=='campanaView.php' ? 'active': ''?>" href="../views/campanaView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-calendar-smile"></i><span>Fitosanitarios</span></a></li>
+                <li><a class="<?php echo $paginaActual=='campanaView.php' ? 'active': ''?>" href="../views/campanaView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-flask"></i><span>Tratamientos</span></a></li>
             <?php endif; ?>
             <?php if ($rolUsuario === 'administrador' || $rolUsuario === 'propietario' || $rolUsuario === 'tecnico'): ?>
-                <li><a class="<?php echo $paginaActual=='personalView.php' ? 'active': ''?>" href="../views/personalView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-users"></i> <span>Analíticas</span></a></li>
+                <li><a class="<?php echo $paginaActual=='personalView.php' ? 'active': ''?>" href="../views/personalView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-report-analytics"></i><span>Analíticas</span></a></li>
             <?php endif; ?>
             <?php if ($rolUsuario === 'administrador' || $rolUsuario === 'propietario' || $rolUsuario === 'trabajador'): ?>
-                <li><a class="<?php echo $paginaActual=='maquinariaView.php' ? 'active': ''?>" href="../views/maquinariaView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-tractor"></i><span>Fertilizantes</span></a></li>
+                <li><a class="<?php echo $paginaActual=='maquinariaView.php' ? 'active': ''?>" href="../views/maquinariaView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-growth"></i><span>Fertilizantes</span></a></li>
             <?php endif; ?>
             <?php if ($rolUsuario === 'administrador' || $rolUsuario === 'propietario' || $rolUsuario === 'trabajador' || $rolUsuario === 'mecanico'): ?>
-                <li><a class="<?php echo $paginaActual=='instalacionesView.php' ? 'active': ''?>" href="../views/instalacionesView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-building-cottage"></i><span>Labores</span></a></li>
+                <li><a class="<?php echo $paginaActual=='instalacionesView.php' ? 'active': ''?>" href="../views/instalacionesView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-hammer"></i><span>Labores</span></a></li>
+            <?php endif; ?>
+            <?php if ($rolUsuario === 'administrador' || $rolUsuario === 'propietario' || $rolUsuario === 'trabajador'): ?>
+                <li><a class="<?php echo $paginaActual=='parcelasView.php' ? 'active': ''?>" href="../views/parcelasView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-box"></i><span>Cosechas</span></a></li>
             <?php endif; ?>
             <?php if ($rolUsuario === 'administrador' || $rolUsuario === 'propietario' || $rolUsuario === 'administrativo'): ?>
-                <li><a class="<?php echo $paginaActual=='catalogosView.php' ? 'active': ''?>" href="../views/catalogosView.php?explotacion_id=<?php echo $explotacion_id; ?>&catalogo=cultivos"><i class="ti ti-library"></i><span>Comerciales</span></a></li>
+                <li><a class="<?php echo $paginaActual=='catalogosView.php' ? 'active': ''?>" href="../views/catalogosView.php?explotacion_id=<?php echo $explotacion_id; ?>&catalogo=cultivos"><i class="ti ti-file-euro"></i><span>Comerciales</span></a></li>
             <?php endif; ?>
         </nav>
         <div>
