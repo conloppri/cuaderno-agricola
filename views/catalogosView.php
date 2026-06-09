@@ -2,11 +2,17 @@
 
 <?php
 include "../controllers/globalController.php";
+include "../controllers/catalogosController.php";
 
 $explotacion_id = $_GET['explotacion_id'];
 $nombre_explotacion = obtenerNombreExplotacion($explotacion_id);
 
 $catalogo = $_GET['catalogo'] ?? 'cultivos'; // Por defecto se muestra el catálogo de cultivos
+
+$cultivos = obtenerCatalogoCultivos();
+$ecorregimenes = obtenerCatalogoEcorregimenes();
+$fertilizantes = obtenerCatalogoFertilizantes();
+$fitosanitarios = obtenerCatalogoFitosanitarios();
 ?>
 
 <div class="main_content">
@@ -25,17 +31,49 @@ $catalogo = $_GET['catalogo'] ?? 'cultivos'; // Por defecto se muestra el catál
 
         <div class="catalogo_info">
             <?php if($catalogo == 'cultivos'): ?>
-                <h3>Catálogo de cultivos</h3>
-                <p>En este catálogo se pueden consultar los diferentes cultivos registrados en la aplicación, con información sobre su ciclo de cultivo, necesidades de riego y fertilización, entre otros datos relevantes para su manejo.</p>
+                <h2>Catálogo de cultivos</h2>
+                <ul class="lista-columna">
+                    <?php foreach($cultivos as $cultivo): ?>
+                        <li>
+                            <strong><?php echo $cultivo['id'] . ' ' . ucfirst($cultivo['nombre']); ?></strong> <br>
+                            Tipo: <?php echo $cultivo['tipo']; ?> - 
+                            Ciclo: <?php echo $cultivo['ciclo']; ?><br>
+                            Descripción: <?php echo $cultivo['descripcion']== null ? 'No disponible' : $cultivo['descripcion']; ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+
             <?php elseif($catalogo == 'ecorregimenes'): ?>
-                <h3>Catálogo de ecorregímenes</h3>
-                <p>En este catálogo se pueden consultar los diferentes ecorregímenes definidos en la aplicación, con información sobre las características climáticas y edáficas de cada uno.</p>
+                <h2>Catálogo de ecorregímenes</h2>
+                <ul class="lista-catalogo">
+                    <?php foreach($ecorregimenes as $ecorregimen): ?>
+                        <li>
+                            <strong><?php echo $ecorregimen['id'] . ' ' . $ecorregimen['nombre']; ?></strong><br>
+                            Descripción: <?php echo $ecorregimen['descripcion']== null ? 'No disponible' : $ecorregimen['descripcion']; ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             <?php elseif($catalogo == 'fertilizantes'): ?>
-                <h3>Catálogo de fertilizantes</h3>
-                <p>En este catálogo se pueden consultar los diferentes fertilizantes registrados en la aplicación, con información sobre su composición, dosis recomendada, etc.</p>
+                <h2>Catálogo de fertilizantes</h2>
+                <ul class="lista-columna">
+                    <?php foreach($fertilizantes as $fertilizante): ?>
+                        <li>
+                            <strong><?php echo $fertilizante['id'] . '. ' . $fertilizante['num_registro'].' '. $fertilizante['nombre']; ?></strong><br>
+                            Composición: N <?php echo $fertilizante['nitrogeno'];?>% - P <?php echo $fertilizante['fosforo'];?>% - K <?php echo $fertilizante['potasio'];?>% <br>
+                            Descripción: <?php echo $fertilizante['descripcion']== null ? 'No disponible' : $fertilizante['descripcion']; ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             <?php elseif($catalogo == 'fitosanitarios'): ?>
-                <h3>Catálogo de productos fitosanitarios</h3>
-                <p>En este catálogo se pueden consultar los diferentes productos fitosanitarios registrados en la aplicación, con información sobre su composición, dosis recomendada, etc.</p>
+                <h2>Catálogo de productos fitosanitarios</h2>
+                <ul class="lista-columna">
+                    <?php foreach($fitosanitarios as $fitosanitario): ?>
+                        <li>
+                            <strong><?php echo $fitosanitario['id'] . '. ' . $fitosanitario['num_registro'].' ' . $fitosanitario['nombre']; ?></strong><br>
+                            Descripción: <?php echo $fitosanitario['descripcion']== null ? 'No disponible' : $fitosanitario['descripcion']; ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             <?php endif; ?>
         </div>
     </div>

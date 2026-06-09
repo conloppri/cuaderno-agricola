@@ -74,9 +74,6 @@ dialog[open]::backdrop {
     position: relative;
     isolation: isolate;
     background: var(--color-background);
-    /*background: radial-gradient(
-        var(--color-secundario), rgb(255, 207, 179)
-    );*/
 }
 
 .main_content::before{
@@ -289,8 +286,10 @@ nav li a:hover {
 .nav_catalogos{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-self: flex-start;
+    justify-self: start;
     gap: 20px;
+    margin: 10px 10px;
     padding: 20px;
     background-color: transparent;
 }
@@ -670,4 +669,17 @@ table {
 .main_catalogos{
     display: grid;
     grid-template-columns: 20% 80%;
+    align-items: start;
+}
+
+.lista-catalogo{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.lista-columna{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
 }
