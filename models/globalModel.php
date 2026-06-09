@@ -85,4 +85,11 @@ function obtenerOrganizaciones(PDO $connection, int $usuarioId) {
     $stmt->execute(['usuarioId' => $usuarioId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function obtenerRolPorUsuario(PDO $connection, int $usuarioId, int $explotacionId) {
+    $stmt = $connection->prepare("SELECT rol FROM usuarios_explotacion WHERE usuario_id = :usuarioId AND explotacion_id = :explotacionId");
+    $stmt->execute(['usuarioId' => $usuarioId, 'explotacionId' => $explotacionId]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['rol'] ?? 'Desconocido'; 
+}
 ?>

@@ -26,7 +26,7 @@ include '../templates/cabecera_explotacion_principal.php';
                         <th>Comunidad</th>
                         <th>Código REA</th>
                         <th>Código SIEX</th>
-                        <th>Cuaderno de campo</th>
+                        <th>Componentes y cuaderno de campo</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>

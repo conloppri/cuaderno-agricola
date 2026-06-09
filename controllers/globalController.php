@@ -7,4 +7,9 @@ function obtenerNombreExplotacion(int $explotacion_id){
     $explotacion = obtenerExplotacionPorId($connection, $explotacion_id);
     return $explotacion["nombre"];
 }
+
+function obtenerRolUsuario(int $usuarioId, int $explotacionId) {
+    global $connection;
+    return obtenerRolPorUsuario($connection, $usuarioId, $explotacionId);
+}
 ?>
