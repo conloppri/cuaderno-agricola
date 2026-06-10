@@ -1,7 +1,10 @@
 <?php include '../models/catalogosModel.php';
+include '../config/db.php';
+include_once '../models/globalModel.php';
 
-function obtenerCatalogoCultivos() {
-    $cultivos = obtenerCultivos();
+function obtenerCatalogoDeCultivos() {
+    global $connection;
+    $cultivos = obtenerCultivos($connection);
     $resultado= [];
     foreach($cultivos as $cultivo) {
         $resultado[] = [

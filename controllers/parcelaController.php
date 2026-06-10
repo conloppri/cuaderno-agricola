@@ -78,7 +78,7 @@ class ParcelaController{
         $parcelasDetails = [];
         $infoParcelas = obtenerParcelas($idExplotacion);
         foreach ($infoParcelas as &$parcela) {
-            $provincia = obtenerProvincia($connection, $parcela['provincia_id']);
+            $provincia = obtenerProvinciaPorId($connection, $parcela['provincia_id']);
             $municipio = obtenerMunicipio($connection, $parcela['municipio_id']);
             $sigpac = str_pad($parcela['provincia_id'], 2, "0", STR_PAD_LEFT) . ':' . str_pad($parcela['municipio_id'], 3, "0", STR_PAD_LEFT) . ':' . $parcela['agregado'] . ':' . $parcela['zona'] . ':' . str_pad($parcela['poligono'], 5, "0", STR_PAD_LEFT) . ":" . str_pad($parcela['parcela'], 5, "0", STR_PAD_LEFT);
             array_push($parcelasDetails,[

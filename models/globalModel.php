@@ -2,7 +2,7 @@
 include "../config/db.php";
 
 // Función para obtener la información de provincia
-function obtenerProvincia(PDO $connection, int $idProvincia) {
+function obtenerProvinciaPorId(PDO $connection, int $idProvincia) {
 
     $stmt = $connection->prepare("SELECT nombre FROM provincia WHERE provincia_id = :id");
     $stmt->execute(['id' => $idProvincia]);
@@ -112,7 +112,7 @@ function obtenerParcelasPorExplotacion(PDO $connection, int $explotacion_id) {
 }
 
 function obtenerCultivos(PDO $connection) {
-    $stmt = $connection->prepare("SELECT cultivo_id, nombre, variedad FROM cultivo");
+    $stmt = $connection->prepare("SELECT * FROM cultivo");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
