@@ -5,17 +5,18 @@
 include '../templates/cabecera_explotacion_principal.php';
 include '../controllers/organizacionesController.php';
 ?>
-    <main>
-        <div class="contenido">
-            <div>
-                <h1>Bienvenido, <?php echo $_SESSION['username']; ?>!</h1>
-                <p>Gestiona tus organizaciones de manera eficiente.</p>
+    <div class="main_content">
+        <div class="cabecera_main">
+            <div class="cabecera_main">
+                <i class="ti ti-plant"></i>
+                <h2 class="titulo_principal">Organizaciones</h2>
             </div>
             <div class="acciones">
                 <button type="button" id="btnVolver" class="btn_volver">Volver a explotaciones</button>
-                <button type="button" id="btnAddExp" class="btn_agregar_exp">+ Añadir organización</button>
             </div>
         </div>
+        
+        
 
         <div id="tabla_organizaciones" class="table_exp">
             <table>
@@ -57,7 +58,13 @@ include '../controllers/organizacionesController.php';
                 </tbody>
             </table>
         </div>
-    </main>
+    </div>
+
+    <div class="fab-container">
+        <span class="fab-etiqueta">Añadir</span>
+        <button type="button" id="btnAddExp" class="fab">+</button>
+    </div>
+
     <script>
         // Botón para volver a la vista de explotaciones
         const btnVolver = document.getElementById('btnVolver');

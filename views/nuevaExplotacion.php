@@ -2,7 +2,7 @@
     include '../templates/cabecera_explotacion_principal.php';
     include '../models/globalModel.php';
 ?>
-    <main>
+    <div class="main_content">
         <header>
             <h1>Añadir nueva explotación</h1>
         </header>
@@ -63,8 +63,7 @@
                 <button type="button" id="btnCancelar">Cancelar</button>
             </div>
         </form>
-
-    </main>
+    </div>
 
     <script>
         // Cargar municipios al seleccionar una provincia

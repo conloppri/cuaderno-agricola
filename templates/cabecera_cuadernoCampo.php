@@ -30,7 +30,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
         </div>
         <nav class="nav-explotacion">
             <?php if ($rolUsuario === 'administrador' || $rolUsuario === 'propietario' || $rolUsuario === 'trabajador'): ?>
-                <li><a class="<?php echo $paginaActual=='cosechasView.php' ? 'active': ''?>" href="../views/cosechasView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-plant"></i><span>Plantaciones</span></a></li>
+                <li><a class="<?php echo $paginaActual=='plantacionesView.php' ? 'active': ''?>" href="../views/plantacionesView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-plant"></i><span>Plantaciones</span></a></li>
             <?php endif; ?>
             <?php if ($rolUsuario === 'administrador' || $rolUsuario === 'propietario' || $rolUsuario === 'trabajador'): ?>
                 <li><a class="<?php echo $paginaActual=='campanaView.php' ? 'active': ''?>" href="../views/campanaView.php?explotacion_id=<?php echo $explotacion_id; ?>"><i class="ti ti-flask"></i><span>Tratamientos</span></a></li>

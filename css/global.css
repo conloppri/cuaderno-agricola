@@ -56,12 +56,12 @@ a {
 }
 
 /* Pie de página */
-footer {
+/*footer {
     padding: 20px;
     background-color: #2e7431;
     margin-top: 20px;
     color: white;
-}
+}*/
 
 .enlaces-footer {
     display: flex;

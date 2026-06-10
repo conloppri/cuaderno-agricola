@@ -237,7 +237,7 @@ if ($ano_campana == null) {
 
     <div class="fab-container">
         <span class="fab-etiqueta">Cuaderno de campo</span>
-        <button class="fab" onclick="window.location.href='cosechasView.php?explotacion_id=<?php echo $explotacion_id; ?>'">+</button>
+        <button class="fab" onclick="window.location.href='plantacionesView.php?explotacion_id=<?php echo $explotacion_id; ?>'">+</button>
     </div>
 </div>
 

@@ -104,4 +104,22 @@ function obtenerPlantacionesPorExplotacion(PDO $connection, int $explotacion_id)
     $stmt->execute(['explotacion_id' => $explotacion_id]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function obtenerParcelasPorExplotacion(PDO $connection, int $explotacion_id) {
+    $stmt = $connection->prepare("SELECT parcela_id, nombre FROM parcela WHERE explotacion_id = :explotacion_id");
+    $stmt->execute(['explotacion_id' => $explotacion_id]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function obtenerCultivos(PDO $connection) {
+    $stmt = $connection->prepare("SELECT cultivo_id, nombre, variedad FROM cultivo");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function obtenerUnidadesGestionPorExplotacion(PDO $connection, int $explotacion_id) {
+    $stmt = $connection->prepare("SELECT unidad_gestion_id, nombre, superficie FROM unidad_gestion WHERE parcela_id IN (SELECT parcela_id FROM parcela WHERE explotacion_id = :explotacion_id)");
+    $stmt->execute(['explotacion_id' => $explotacion_id]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>

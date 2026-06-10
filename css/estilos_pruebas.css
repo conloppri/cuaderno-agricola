@@ -109,6 +109,11 @@ dialog[open]::backdrop {
     display: flex;
 }
 
+.acciones {
+    position: absolute;
+    right: 20px;
+}
+
 .titulo_principal {
     background:var(--color-primario);
     font-size: 32px;

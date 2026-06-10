@@ -2,7 +2,7 @@
 include '../controllers/explotacionesController.php';
 include '../templates/cabecera_explotacion_principal.php';
 ?>
-    <main>
+    <div class="main_content">
         <div class="contenido">
             <div>
                 <h1>Bienvenido, <?php echo $_SESSION['username']; ?>!</h1>
@@ -10,7 +10,6 @@ include '../templates/cabecera_explotacion_principal.php';
             </div>
             <div class="acciones">
                 <button type="button" id="btnGestionarOrg" class="btn_gestionar_org">Gestionar Organizaciones</button>
-                <button type="button" id="btnAddExp" class="btn_agregar_exp">+ Añadir explotación</button>
             </div>
         </div>
 
@@ -56,7 +55,12 @@ include '../templates/cabecera_explotacion_principal.php';
                 </tbody>
             </table>
         </div>
-    </main>
+    </div>
+
+    <div class="fab-container">
+        <span class="fab-etiqueta">Añadir</span>
+        <button type="button" id="btnAddExp" class="fab" onclick="">+</button>
+    </div>
 
     <script>
         // Botón para añadir nueva explotación
