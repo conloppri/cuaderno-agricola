@@ -45,12 +45,15 @@ class PersonalController{
             $provincia = obtenerProvinciaPorId($connection, $personal['provincia_id']);
             $municipio = obtenerMunicipio($connection, $personal['municipio_id']);
             array_push($infoPersonal, [
+                'id' => $personal['personal_id'],
                 'nombre' => $personal['nombre'] . ' ' .$personal['apellidos'],
                 'dni' => $personal['dni'],
                 'telefono' => $personal['telefono'],
                 'correo_electronico' => $personal['email'],
                 'direccion' => $personal['direccion'],
+                'provincia_id' =>$personal['provincia_id'],
                 'provincia' => $provincia,
+                'municipio_id'=> $personal['municipio_id'],
                 'municipio' => $municipio,
                 'nacionalidad' => $personal['nacionalidad'],
                 'rol' => $personal['rol']
