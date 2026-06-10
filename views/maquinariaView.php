@@ -2,11 +2,12 @@
 include "../templates/cabecera_explotacion.php";
 
 include "../controllers/globalController.php";
-
+include_once "../controllers/maquinariaController.php";
+include '../models/rolesUsuariosModel.php';
 $explotacion_id = $_GET['explotacion_id'];
 $nombre_explotacion = obtenerNombreExplotacion($explotacion_id);
+$rol = obtenerRolUsuarioEnExplotacion($connection, $_SESSION['usuario_id'], $explotacion_id);
 
-include_once "../controllers/maquinariaController.php";
 $maquinaria = maquinariaController::obtenerMaquinariaPorExplotacion($connection, $explotacion_id);
 ?>
 
@@ -42,7 +43,12 @@ $maquinaria = maquinariaController::obtenerMaquinariaPorExplotacion($connection,
         <div class="modal_content">
             <span class="close_button" onclick="document.getElementById('maquinaria_modal').close();">&times;</span>
             <div class="modal_body">
-                <h2 style="text-align: center;">Detalles de <span id="maq_alias"></span></h2>
+                <h2 style="text-align: center;">Detalles de <span id="maq_alias"></span>
+                    <?php if ($rol === 'administrador'): ?>
+                        <button class="editar_btn" type="button" onclick=""> <i class="ti ti-pencil"></i> </button>
+                        <button class="eliminar_btn" type="button" onclick=""><i class="ti ti-trash"></i> </button>
+                    <?php endif ?>
+                </h2>
                 <table id="maq_detalles" class="info_table"></table>
             </div>
         </div>
@@ -192,15 +198,15 @@ $maquinaria = maquinariaController::obtenerMaquinariaPorExplotacion($connection,
         mensajeError.textContent = ""; // Limpiar mensaje de error previo
         const formData = new FormData(this);
 
-        try{
+        try {
             const respuesta = await fetch("../controllers/maquinariaController.php", {
                 method: "POST",
                 body: formData
             });
 
-           const resultado = await respuesta.json();
-            
-            if(resultado.ok){ 
+            const resultado = await respuesta.json();
+
+            if (resultado.ok) {
                 alert(resultado.mensaje);
                 location.reload();
             } else {
@@ -211,7 +217,7 @@ $maquinaria = maquinariaController::obtenerMaquinariaPorExplotacion($connection,
             mensajeError.textContent = "Error en la conexión con el servidor. Por favor, inténtalo de nuevo.";
             console.error("Error al guardar la maquinaria:", error);
         }
-    
+
     });
 </script>
 <?php

@@ -42,7 +42,7 @@ class PersonalController{
         $datosPersonal = obtenerPersonal($connection, $idExplotacion);
         $infoPersonal = [];
         foreach ($datosPersonal as $personal) {
-            $provincia = obtenerProvincia($connection, $personal['provincia_id']);
+            $provincia = obtenerProvinciaPorId($connection, $personal['provincia_id']);
             $municipio = obtenerMunicipio($connection, $personal['municipio_id']);
             array_push($infoPersonal, [
                 'nombre' => $personal['nombre'] . ' ' .$personal['apellidos'],

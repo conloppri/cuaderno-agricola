@@ -6,13 +6,16 @@
 
 include "../controllers/comprobarUsuarioExp.php";
 include "../controllers/globalController.php";
+include_once "../controllers/parcelaController.php";
+include '../models/rolesUsuariosModel.php';
 
 //Desde la pantalla de explotaciones, se envía el id de la explotación para mostrar solo las parcelas de esa explotación. 
 
 $explotacion_id = $_GET['explotacion_id'];
 $nombre_explotacion = obtenerNombreExplotacion($explotacion_id);
 comprobarUsuarioExp($connection, $explotacion_id); // Comprobar que el usuario tiene permiso para acceder a esta explotación
-include_once "../controllers/parcelaController.php";
+$rol = obtenerRolUsuarioEnExplotacion($connection, $_SESSION['usuario_id'], $explotacion_id);
+
 $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id);
 ?>
 <div class="main_content">
@@ -58,6 +61,9 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
                     <th>Municipio</th>
                     <th>Superficie (ha)</th>
                     <th>Unidades de gestión</th>
+                    <?php if($rol === 'administrador'):?>
+                        <th>Administrar</th>
+                    <?php endif ?>
                 </tr>
             </thead>
             <tbody>
@@ -70,9 +76,15 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
                         <td><?php echo htmlspecialchars($parcela['municipio']); ?></td>
                         <td><?php echo htmlspecialchars($parcela['superficie'] . ' ha'); ?></td>
                         <td><button class="boton-detalles" type="button" onclick="toggleFila(<?php echo $parcela['id']; ?>)"> <i id="bt-flecha-<?php echo $parcela['id']; ?>" class="ti ti-plus"></i> </button></td>
+                        <?php if($rol === 'administrador'):?>
+                            <td>
+                                <button class="editar_btn" type="button" onclick=""> <i class="ti ti-pencil"></i> </button>  
+                                <button class="eliminar_btn" type="button" onclick=""><i class="ti ti-trash"></i> </button>
+                            </td>
+                        <?php endif?>
                     </tr>
                     <tr id="fila-<?php echo $parcela['id']; ?>" class="<?php echo $claseFila; ?>" style="display: none;">
-                        <td colspan="6" class="celda_detalle">
+                        <td colspan="7" class="celda_detalle">
                             <?php $unidadesGestion = ParcelaController::obtenerInfoUnidadesGestion($parcela['id']); ?>
                             <h3>Unidades de gestión</h3>
                             <?php if(count($unidadesGestion) == 0): ?>
@@ -84,6 +96,11 @@ $parcelas = ParcelaController::obtenerInfoParcelas($connection, $explotacion_id)
                                             <strong><?php echo htmlspecialchars($unidad['nombre']); ?></strong> - 
                                             Superficie: <?php echo htmlspecialchars($unidad['superficie'] ); ?> - 
                                             Uso <?php echo htmlspecialchars($unidad['uso']); ?>
+                                            <?php if($rol === 'administrador'):?>
+                                                - <button class="editar_btn" type="button" onclick=""> <i class="ti ti-pencil"></i> </button>  
+                                                <button class="eliminar_btn" type="button" onclick=""><i class="ti ti-trash"></i> </button>
+                                            <?php endif ?>
+
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>

@@ -1,12 +1,4 @@
 :root {
-    /*--color-primario: #75b678;
-    --color-secundario: #fef4c5;
-    
-    --color-background: #fafbe1;
-    
-    --color-table-even: #c7f8c9;
-    --color-table-odd: white;
-    */
 
     --color-primario: #5E8B4A;
     --color-primario-hover: #4D743D;
@@ -15,6 +7,9 @@
     --color-background: #F6F4EE;
     
     --color-font: white;
+
+    --color-editar: #E7B95A;
+    --color-eliminar: #ff5b5b;
 
     --color-table-even: #E7B95A;
     --color-table-odd: white;
@@ -362,7 +357,7 @@ table {
 .table_exp_parcelas th,
 .table_exp_parcelas td {
     border: 1px solid var(--color-primario);
-    padding: 16px;
+    padding: 12px;
     align-items: center;
 }
 
@@ -384,7 +379,7 @@ table {
 }
 
 .table_exp_inst {
-    width: 50%;
+    width: 60%;
     justify-content: center;
     
 }
@@ -437,6 +432,26 @@ table {
 
 .add_button:hover {
     background-color: var(--color-primario-hover);
+}
+
+.editar_btn{
+    background: none;
+    border: none;
+    color: var(--color-editar);
+    font-size: 22px;
+}
+
+.eliminar_btn{
+    background: none;
+    border: none;
+    color: var(--color-eliminar);
+    font-size: 22px;
+}
+
+.editar_btn:hover,
+.eliminar_btn:hover{
+    color: var(--color-primario-hover);
+    cursor: pointer;
 }
 
 .cancel_button {

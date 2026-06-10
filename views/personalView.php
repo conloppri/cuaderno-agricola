@@ -3,11 +3,14 @@
 <?php include '../config/db.php';
 include '../controllers/globalController.php';
 include '../models/rolesUsuariosModel.php';
+include_once '../controllers/personalController.php';
 
 $idExplotacion = $_GET['explotacion_id']; // Obtener el ID de la explotación de la URL
 $nombre_explotacion = obtenerNombreExplotacion($idExplotacion);
 
-include_once '../controllers/personalController.php';
+$rol = obtenerRolUsuarioEnExplotacion($connection, $_SESSION['usuario_id'], $idExplotacion);
+
+
 $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotacion);
 ?>
 
@@ -30,6 +33,9 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                     <th>Municipio</th>
                     <th>Nacionalidad</th>
                     <th>Rol</th>
+                    <?php if($rol === 'administrador'):?>
+                        <th>Administrar</th>
+                    <?php endif ?>
                 </tr>
             </thead>
             <tbody>
@@ -45,6 +51,12 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                         <td><?php echo htmlspecialchars($personal['municipio']); ?></td>
                         <td><?php echo htmlspecialchars($personal['nacionalidad']); ?></td>
                         <td><?php echo htmlspecialchars($personal['rol']); ?></td>
+                        <?php if($rol === 'administrador'):?>
+                            <td>
+                                <button class="editar_btn" type="button" onclick=""> <i class="ti ti-pencil"></i> </button>  
+                                <button class="eliminar_btn" type="button" onclick=""><i class="ti ti-trash"></i> </button>
+                            </td>
+                        <?php endif?>
                     </tr>
                     <?php endforeach; ?>
             </tbody>

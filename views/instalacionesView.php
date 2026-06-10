@@ -3,13 +3,14 @@
 <?php 
 
 include "../controllers/globalController.php";
-
+include_once "../controllers/instalacionesController.php";
+include '../models/rolesUsuariosModel.php';
 //Desde la pantalla de explotaciones, se envía el id de la explotación para mostrar solo las parcelas de esa explotación. 
 
 $explotacion_id = $_GET['explotacion_id'];
 $nombre_explotacion = obtenerNombreExplotacion($explotacion_id);
+$rol = obtenerRolUsuarioEnExplotacion($connection, $_SESSION['usuario_id'], $explotacion_id);
 
-include_once "../controllers/instalacionesController.php";
 $instalaciones = instalacionesController::obtenerInstalacionesPorExplotacion($explotacion_id);
 
 ?>
@@ -40,6 +41,12 @@ $instalaciones = instalacionesController::obtenerInstalacionesPorExplotacion($ex
                         </div>
                     </div>
                 </td>
+                <?php if($rol === 'administrador'):?>
+                            <td>
+                                <button class="editar_btn" type="button" onclick=""> <i class="ti ti-pencil"></i> </button>  
+                                <button class="eliminar_btn" type="button" onclick=""><i class="ti ti-trash"></i> </button>
+                            </td>
+                <?php endif?>
             </tr>
             <?php endforeach;?>
         </table>
