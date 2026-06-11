@@ -7,7 +7,7 @@
 
     $explotacion = obtenerExplotacionPorId($connection, $_GET['explotacion_id']);
 ?>
-    <main>
+    <main class="main_content">
         <header>
             <h1>Modificar explotación</h1>
         </header>

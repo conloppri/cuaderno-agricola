@@ -1,0 +1,13 @@
+Para crear la base de datos con los datos de prueba hay que ejecutar los scripts en el siguiente orden:
+    1. esquemaCUE.sql
+    2. datasetCUE.sql
+    3. datosPrueba.sql
+
+Existen 4 usuarios de prueba:
+
+    1. user1@example.com
+    2. user2@example.com
+    3. user3@example.com
+    4. user4@example.com
+
+    Sus contraseñas son: 123456

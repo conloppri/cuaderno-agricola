@@ -11,7 +11,7 @@ comprobarUsuarioOrg($connection, $_GET['organizacion_id']); // Comprobar que el 
 $organizacion = obtenerOrganizacion($connection, $_GET['organizacion_id']);
 ?>
 
-    <main>
+    <main class="main_content">
         <header>
             <h1>Modificar organización</h1>
         </header>

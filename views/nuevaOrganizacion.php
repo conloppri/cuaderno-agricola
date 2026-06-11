@@ -6,7 +6,7 @@ include '../templates/cabecera_explotacion_principal.php';
 include '../models/globalModel.php';
 ?>
 
-    <main>
+    <main class="main_content">
         <header>
             <h1>Añadir nueva organización</h1>
         </header>

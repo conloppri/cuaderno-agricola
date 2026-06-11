@@ -1,7 +1,7 @@
 <?php
 include '../templates/cabecera_panelUsuario.php';
 ?>
-    <main>
+    <main class="main_content">
         <div class="contenido">
             <h1>Panel de Usuario</h1>
             <p>Bienvenido <?php echo $_SESSION['username']; ?>. Aquí puedes gestionar tu cuenta y tus datos.</p>

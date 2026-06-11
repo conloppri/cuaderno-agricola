@@ -73,4 +73,15 @@ function modPlantacion($connection, $plantacion_id, $parcela_id, $unidad_gestion
         throw new Exception('Error al modificar en la base de datos: ' . $e->getMessage());
     }
 }
+
+function delPlantacion($connection, $plantacion_id){
+    try {
+        // Eliminar la plantación de la base de datos
+        $sql = "DELETE FROM plantacion WHERE plantacion_id = :plantacion_id";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute(['plantacion_id' => $plantacion_id]);
+    } catch (PDOException $e) {
+        throw new Exception('Error al eliminar la plantación: ' . $e->getMessage());
+    }
+}
 ?>

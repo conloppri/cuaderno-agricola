@@ -2,7 +2,7 @@
 // Código para la vista de nuevo usuario
 include '../templates/cabecera_explotacion_SinSesion.php';
 ?>
-    <main>
+    <main class="main_content">
         <div class="contenido">
             <h1>Crear nuevo usuario</h1>
             <form id="registro-form" class="grupo-form" method="POST" action="../controllers/registro.php">

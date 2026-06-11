@@ -51,7 +51,7 @@ $plantaciones = obtenerPlantacionesExplotacion($explotacion_id);
                                         <?php echo json_encode($plantacion["valor_densidad"]); ?>,
                                         <?php echo json_encode($plantacion["anotaciones"]); ?>
                                     )'><i class="ti ti-pencil"></i>Modificar</button>
-                            <button type="button" class="btnEliminarPlantacion" data-id="<?php echo $plantacion['plantacion_id']; ?>"><i class="ti ti-trash"></i>Eliminar</button>
+                            <button type="button" class="btnEliminarPlantacion" onclick="eliminarPlantacion(<?php echo $plantacion['plantacion_id']; ?>)"><i class="ti ti-trash"></i>Eliminar</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -209,6 +209,32 @@ $plantaciones = obtenerPlantacionesExplotacion($explotacion_id);
             document.getElementById('anotaciones').value = anotaciones;
 
             abrirFormulario();
+    }
+
+    async function eliminarPlantacion(plantacion_id){
+        let opcion = confirm("¿Estás seguro de que quieres eliminar esta plantación?");
+        if(opcion){
+            try{
+            const formData = new FormData();
+            formData.append("accion", "eliminarPlantacion");
+            formData.append("plantacion_id", plantacion_id);
+            const respuesta = await fetch("../controllers/guardarPlantacion.php", {
+                method: "POST",
+                body: formData,
+            });
+
+            const resultado = await respuesta.json();
+            if(resultado.success){
+                alert("Plantacion eliminada correctamente.");
+                location.reload();
+            } else {
+                alert(resultado.message);
+            }
+            } catch (error) {
+                console.error("Error al eliminar la plantación: ", error);
+                alert("Error con la conexión. Por favor, inténtalo de nuevo.");
+            }
+        }
     }
 
     // Manejar el envío del formulario

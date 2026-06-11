@@ -29,7 +29,7 @@
         </div>
     </header>
 
-    <main>
+    <main class="main_content">
         <div class="contenido-index">
             <h1>Bienvenido a Cuaderno de Campo</h1>
             <p>Tu herramienta para gestionar tus explotaciones agrícolas de manera eficiente.</p>
