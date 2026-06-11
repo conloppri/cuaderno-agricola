@@ -16,7 +16,7 @@ switch($accion) {
         $superficieParcela = $_POST['superficieParcela'];
         $sigpac = $_POST['sigpac'];
         $subdivisionesSigpac = ParcelaController::dividirSigpac($sigpac);
-
+        
         if($subdivisionesSigpac === null){
             // Manejar el error de formato del código SIGPAC
             echo json_encode([
@@ -67,6 +67,100 @@ switch($accion) {
             }
         }
         break;
+    case 'modificarParcela':
+        header('Content-Type: application/json'); // Establecer el tipo de contenido a JSON para la respuesta
+        
+        // Aquí se procesaría la creación de una nueva parcela utilizando los datos recibidos del formulario
+        $idExplotacion = $_POST['idExplotacion'];
+        $parcela_id = $_POST['parcela_id'];
+        $nombreParcela = $_POST['nombreParcela'];
+        $superficieParcela = $_POST['superficieParcela'];
+        $sigpac = $_POST['sigpac'];
+        $subdivisionesSigpac = ParcelaController::dividirSigpac($sigpac);
+
+        if($subdivisionesSigpac === null){
+            // Manejar el error de formato del código SIGPAC
+            echo json_encode([
+                "ok" => false,
+                "mensaje" => "Formato de SIGPAC inválido"
+            ]);
+        }else{ // Si el formato del código SIGPAC es correcto, se guarda la parcela
+            $resultado = modificarParcela($parcela_id, $nombreParcela, $superficieParcela, $subdivisionesSigpac);
+            if($resultado){ // Si se ha guardado correctamente, se devuelve una respuesta de éxito
+                echo json_encode([
+                    "ok" => true,
+                    "mensaje" => "Parcela guardada correctamente"
+                ]);
+            } else { // Si ha habido un error al guardar, se devuelve una respuesta de error
+                echo json_encode([
+                    "ok" => false,
+                    "mensaje" => "Error al guardar la parcela"
+                ]); 
+            }
+        }
+        break;
+    case 'eliminarParcela':
+        header('Content-Type: application/json');
+        $parcela_id = $_POST['parcela_id'];
+        $resultado = eliminarParcela($parcela_id);
+        if($resultado){ // Si se ha guardado correctamente, se devuelve una respuesta de éxito
+            echo json_encode([
+                "ok" => true,
+                "mensaje" => "Parcela eliminada correctamente"
+            ]);
+        } else { // Si ha habido un error al guardar, se devuelve una respuesta de error
+            echo json_encode([
+                "ok" => false,
+                "mensaje" => "Error al eliminar la parcela"
+            ]); 
+        }
+        break;
+    case 'modificarUnidad':
+        header('Content-Type: application/json'); // Establecer el tipo de contenido a JSON para la respuesta
+
+        // Aquí se procesaría la creación de una nueva unidad de gestión utilizando los datos recibidos del formulario
+        $idParcela = $_POST['idParcela'];
+        $unidad_id = $_POST['uniGes_id'];
+        $nombreUniGestion = $_POST['nombreUnidad'];
+        $superficieUniGestion = $_POST['superficieUnidad'];
+        $uso = $_POST['uso'];
+        $parcelaSuperficie = $_POST['parcelaSuperficie'];
+        if($superficieUniGestion > $parcelaSuperficie){ // Validación para evitar que la superficie de la unidad de gestión sea mayor que la superficie de la parcela
+            echo json_encode([
+                "ok" => false,
+                "mensaje" => "La superficie de la unidad de gestión (" . $superficieUniGestion . " ha) no puede ser mayor que la superficie de la parcela (" . $parcelaSuperficie . " ha)"
+            ]);
+        } else { // Si la validación es correcta, se guarda la unidad de gestión
+            $resultado = modificarUnidadGestion($unidad_id, $nombreUniGestion, $superficieUniGestion, $uso);
+            if($resultado){ // Si se ha guardado correctamente, se devuelve una respuesta de éxito
+                echo json_encode([
+                    "ok" => true,
+                    "mensaje" => "Unidad de gestión guardada correctamente"
+                ]);
+            } else { // Si ha habido un error al guardar, se devuelve una respuesta de error
+                echo json_encode([
+                    "ok" => false,
+                    "mensaje" => "Error al guardar la unidad de gestión"
+                ]); 
+            }
+        }
+        break;
+    case 'eliminarUnidad':
+        header('Content-Type: application/json');
+        $unidad_id = $_POST['unidad_id'];
+        $resultado = eliminarUnidad($unidad_id);
+        if($resultado){ // Si se ha guardado correctamente, se devuelve una respuesta de éxito
+            echo json_encode([
+                "ok" => true,
+                "mensaje" => "Parcela eliminada correctamente"
+            ]);
+        } else { // Si ha habido un error al guardar, se devuelve una respuesta de error
+            echo json_encode([
+                "ok" => false,
+                "mensaje" => "Error al eliminar la parcela"
+            ]); 
+        }
+        break;
     default:
         // Acción no reconocida, se puede manejar como un error o simplemente no hacer nada
         break;
@@ -78,9 +172,9 @@ class ParcelaController{
         $parcelasDetails = [];
         $infoParcelas = obtenerParcelas($idExplotacion);
         foreach ($infoParcelas as &$parcela) {
-            $provincia = obtenerProvincia($connection, $parcela['provincia_id']);
+            $provincia = obtenerProvinciaPorId($connection, $parcela['provincia_id']);
             $municipio = obtenerMunicipio($connection, $parcela['municipio_id']);
-            $sigpac = str_pad($parcela['provincia_id'], 2, "0", STR_PAD_LEFT) . ':' . str_pad($parcela['municipio_id'], 3, "0", STR_PAD_LEFT) . ':' . $parcela['agregado'] . ':' . $parcela['zona'] . ':' . str_pad($parcela['poligono'], 5, "0", STR_PAD_LEFT) . ":" . str_pad($parcela['parcela'], 5, "0", STR_PAD_LEFT);
+            $sigpac = str_pad($parcela['provincia_id'], 2, "0", STR_PAD_LEFT) . str_pad($parcela['municipio_id'], 3, "0", STR_PAD_LEFT) . $parcela['agregado'] . $parcela['zona'] . str_pad($parcela['poligono'], 5, "0", STR_PAD_LEFT) . str_pad($parcela['parcela'], 5, "0", STR_PAD_LEFT);
             array_push($parcelasDetails,[
                 'id' => $parcela['parcela_id'],
                 'nombre' => $parcela['nombre'],
@@ -93,14 +187,25 @@ class ParcelaController{
         return $parcelasDetails;
     }
 
+    static function obtenerInfoParcelaPorId(int $parcela_id){
+        $parcela = obtenerParcelaPorId($parcela_id);
+        $sigpac = str_pad($parcela['provincia_id'], 2, "0", STR_PAD_LEFT) . ':' . str_pad($parcela['municipio_id'], 3, "0", STR_PAD_LEFT) . ':' . $parcela['agregado'] . ':' . $parcela['zona'] . ':' . str_pad($parcela['poligono'], 5, "0", STR_PAD_LEFT) . ":" . str_pad($parcela['parcela'], 5, "0", STR_PAD_LEFT);
+        return [
+            'nombre' => $parcela['nombre'],
+            'sigpac' => $sigpac,
+            'superficie' => $parcela['superficie']
+        ];
+    }
+
     //Función para obtener la información de las unidades de gestión de una parcela, con el formato necesario para mostrarlo en la vista.
     static function obtenerInfoUnidadesGestion(int $idParcela) {
         $unidadesGestion = obtenerUnidadesGestion( $idParcela);
         $resultado = [];
         foreach ($unidadesGestion as &$unidad) {
             array_push($resultado, [
+                'id' => $unidad['unidad_gestion_id'],
                 'nombre' => $unidad['nombre'],
-                'superficie' => $unidad['superficie'] . ' ha',
+                'superficie' => $unidad['superficie'] ,
                 'uso' => $unidad['uso']
             ]);
         }
@@ -110,7 +215,7 @@ class ParcelaController{
     // Función para dividir un código SIGPAC en sus partes componentes (provincia, municipio, agregado, zona, polígono y parcela)
     static function dividirSigpac(String $sigpac) {
         try{
-            if(strlen($sigpac) !== 22){
+            if(strlen($sigpac) !== 17){
                 throw new Exception("El código SIGPAC debe tener exactamente 22 caracteres");
             }
             return [

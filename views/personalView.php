@@ -1,13 +1,16 @@
-<?php include '../templates/cabecera_explotacion.php';?>
+<?php include '../templates/cabecera_explotacion.php'; ?>
 
 <?php include '../config/db.php';
 include '../controllers/globalController.php';
 include '../models/rolesUsuariosModel.php';
+include_once '../controllers/personalController.php';
 
 $idExplotacion = $_GET['explotacion_id']; // Obtener el ID de la explotación de la URL
 $nombre_explotacion = obtenerNombreExplotacion($idExplotacion);
 
-include_once '../controllers/personalController.php';
+$rol = obtenerRolUsuarioEnExplotacion($connection, $_SESSION['usuario_id'], $idExplotacion);
+
+
 $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotacion);
 ?>
 
@@ -30,11 +33,14 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                     <th>Municipio</th>
                     <th>Nacionalidad</th>
                     <th>Rol</th>
+                    <?php if ($rol === 'administrador'): ?>
+                        <th>Administrar</th>
+                    <?php endif ?>
                 </tr>
             </thead>
             <tbody>
                 <!-- Aquí se mostrarán los datos del personal -->
-                    <?php foreach ($infoPersonal as $personal): ?>
+                <?php foreach ($infoPersonal as $personal): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($personal['nombre']); ?></td>
                         <td><?php echo htmlspecialchars($personal['dni']); ?></td>
@@ -45,18 +51,35 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                         <td><?php echo htmlspecialchars($personal['municipio']); ?></td>
                         <td><?php echo htmlspecialchars($personal['nacionalidad']); ?></td>
                         <td><?php echo htmlspecialchars($personal['rol']); ?></td>
+                        <?php if ($rol === 'administrador'): ?>
+                            <td>
+                                <button class="editar_btn" type="button" onclick='modificarPersonal(
+                                        <?php echo json_encode($personal["id"]); ?>,
+                                        <?php echo json_encode($personal["nombre"]); ?>,
+                                        <?php echo json_encode($personal["dni"]); ?>,
+                                        <?php echo json_encode($personal["telefono"]); ?>,
+                                        <?php echo json_encode($personal["correo_electronico"]); ?>,
+                                        <?php echo json_encode($personal["direccion"]); ?>,
+                                        <?php echo json_encode($personal["provincia_id"]); ?>,
+                                        <?php echo json_encode($personal["municipio_id"]); ?>,
+                                        <?php echo json_encode($personal["nacionalidad"]); ?>,
+                                        <?php echo json_encode($personal["rol"]); ?>
+                                    )'> <i class="ti ti-pencil"></i> </button>
+                                <button class="eliminar_btn" type="button" onclick=""><i class="ti ti-trash"></i> </button>
+                            </td>
+                        <?php endif ?>
                     </tr>
-                    <?php endforeach; ?>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
     <div class="fab-container">
-        <?php if (obtenerRolUsuarioEnExplotacion($connection, $_SESSION['usuario_id'], $idExplotacion) === 'administrador') { 
+        <?php if (obtenerRolUsuarioEnExplotacion($connection, $_SESSION['usuario_id'], $idExplotacion) === 'administrador') {
             echo '<div class="fab-container fab-usuario-container">
                     <span class="fab-etiqueta">Agregar usuario</span>
                     <button class="fab" onclick="abrirUsuario()">+</button>
                 </div>';
-        }?>
+        } ?>
         <div>
             <span class="fab-etiqueta">Agregar personal</span>
             <button class="fab" onclick="abrirFormulario()">+</button>
@@ -70,22 +93,23 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
         <h2 style="text-align: center;">Agregar Personal</h2>
         <form id="personal-form">
             <input type="hidden" name="idExplotacion" value="<?php echo $idExplotacion; ?>">
-            <input type="hidden" name="accion" value="crearPersonal">
+            <input id="accionPersonal" type="hidden" name="accion" value="crearPersonal">
+            <input id="personal_id" type="hidden" name="personal_id" value="">
             <div class="grupo-form">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" maxlength="45" placeholder="Nombre" required>
+                <input id="nombrePersonal" type="text" id="nombre" name="nombre" maxlength="45" placeholder="Nombre" required>
                 <label for="apellidos">Apellidos:</label>
-                <input type="text" id="apellidos" name="apellidos" maxlength="45" placeholder="Apellidos" required>
+                <input id="apellidosPersonal" type="text" id="apellidos" name="apellidos" maxlength="45" placeholder="Apellidos" required>
                 <label for="dni">DNI:</label>
-                <input type="text" id="dni" name="dni" maxlength="9" placeholder="DNI" required>
+                <input id="dniPersonal" type="text" id="dni" name="dni" maxlength="9" placeholder="DNI" required>
                 <label for="telefono">Teléfono:</label>
-                <input type="text" inputmode="numeric" maxlength="15" id="telefono" name="telefono" placeholder="Número de teléfono" required>
+                <input id="telefonoPersonal" type="text" inputmode="numeric" maxlength="15" id="telefono" name="telefono" placeholder="Número de teléfono" required>
                 <label for="correo">Email:</label>
-                <input type="email" id="email" name="correo" maxlength="45" placeholder="Email" required>
+                <input id="correoPersonal" type="email" id="email" name="correo" maxlength="45" placeholder="Email" required>
                 <label for="direccion">Dirección:</label>
-                <input type="text" id="direccion" name="direccion" maxlength="45" placeholder="Dirección" required>
+                <input id="direccionPersonal" type="text" id="direccion" name="direccion" maxlength="45" placeholder="Dirección" required>
                 <label for="provincia">Provincia:</label>
-                <select name="provincia" id="provincia">
+                <select id="provinciaPersonal" name="provincia" id="provincia">
                     <option value="" selected disabled>Selecciona provincia</option>
                     <?php
                     $provincias = obtenerProvincias($connection);
@@ -95,13 +119,13 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                     ?>
                 </select>
                 <label for="municipio">Municipio:</label>
-                <select name="municipio" id="municipio">
+                <select id="municipioPersonal" name="municipio" id="municipio">
                     <option value="" selected disabled>Selecciona municipio</option>
                 </select>
                 <label for="nacionalidad">Nacionalidad:</label>
-                <input type="text" id="nacionalidad" name="nacionalidad" maxlength="45" placeholder="Nacionalidad" required>
+                <input id="nacionalidadPersonal" type="text" id="nacionalidad" name="nacionalidad" maxlength="45" placeholder="Nacionalidad" required>
                 <label for="rol">Rol:</label>
-                <select name="rol" id="rol">
+                <select id="rolPersonal" name="rol" id="rol">
                     <option value="" selected disabled>Selecciona rol</option>
                     <option value="propietario">Propietario</option>
                     <option value="tecnico">Técnico</option>
@@ -159,6 +183,8 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
 
     function cerrarFormulario() {
         document.getElementById('personal_modal').close();
+        document.getElementById('personal-form').reset();
+        document.getElementById('accionPersonal').value = 'crearPersonal';
     }
 
     function abrirUsuario() {
@@ -171,6 +197,21 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
         document.getElementById('addUsuario_modal').close();
         document.getElementById("mensaje-error-usuario").textContent = "";
         document.getElementById('usuario-form').reset();
+    }
+
+    function modificarPersonal(personal_id, nombre, dni, telefono, correo, direccion, provincia, municipio, nacionalidad, rol) {
+        abrirFormulario();
+        document.getElementById('accionPersonal').value = 'modificarPersonal';
+        document.getElementById('personal_id').value = personal_id;
+        document.getElementById('nombrePersonal').value = nombre;
+        document.getElementById('dniPersonal').value = dni;
+        document.getElementById('telefonoPersonal').value = telefono;
+        document.getElementById('correoPersonal').value = correo;
+        document.getElementById('direccionPersonal').value = direccion;
+        document.getElementById('provinciaPersonal').value = provincia;
+        
+        document.getElementById('nacionalidadPersonal').value = nacionalidad;
+        document.getElementById('rolPersonal').value = rol;
     }
 
     document.querySelector(".gestionar_usuarios_button").addEventListener("click", function() {
@@ -204,7 +245,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
         const mensajeError = document.getElementById("mensaje-error");
         mensajeError.textContent = ""; // Limpiar mensaje de error previo
         const formData = new FormData(this);
-        try{
+        try {
             console.log("enviando datos...");
             const respuesta = await fetch("../controllers/personalController.php", {
                 method: "POST",
@@ -212,8 +253,8 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
             });
 
             const resultado = await respuesta.json();
-            
-            if(resultado.ok){ 
+
+            if (resultado.ok) {
                 alert(resultado.mensaje);
                 location.reload();
             } else {
@@ -224,7 +265,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
             mensajeError.textContent = "Error en la conexión con el servidor. Por favor, inténtalo de nuevo.";
             console.error("Error al guardar el personal:", error);
         }
-    
+
     });
 
     // Añadir usuario a explotación
@@ -241,25 +282,24 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
         const formData = new FormData(this);
 
         fetch("../controllers/addUsuarioExp.php?explotacion_id=<?php echo $idExplotacion; ?>", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(data.message);
-                cerrarUsuario();
-            } else {
-                mensajeErrorUsuario.textContent = data.message;
-                console.error(data.message);
-            }
-        })
-        .catch(error => {
-            mensajeErrorUsuario.textContent = "Error en la conexión con el servidor. Por favor, inténtalo de nuevo.";
-            console.error("Error al agregar usuario:", error);
-        });
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    cerrarUsuario();
+                } else {
+                    mensajeErrorUsuario.textContent = data.message;
+                    console.error(data.message);
+                }
+            })
+            .catch(error => {
+                mensajeErrorUsuario.textContent = "Error en la conexión con el servidor. Por favor, inténtalo de nuevo.";
+                console.error("Error al agregar usuario:", error);
+            });
     });
-
 </script>
 
 <?php

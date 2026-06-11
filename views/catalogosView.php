@@ -2,14 +2,14 @@
 
 <?php
 include "../controllers/globalController.php";
-include "../controllers/catalogosController.php";
+include_once "../controllers/catalogosController.php";
 
 $explotacion_id = $_GET['explotacion_id'];
 $nombre_explotacion = obtenerNombreExplotacion($explotacion_id);
 
 $catalogo = $_GET['catalogo'] ?? 'cultivos'; // Por defecto se muestra el catálogo de cultivos
 
-$cultivos = obtenerCatalogoCultivos();
+$cultivos = obtenerCatalogoDeCultivos();
 $ecorregimenes = obtenerCatalogoEcorregimenes();
 $fertilizantes = obtenerCatalogoFertilizantes();
 $fitosanitarios = obtenerCatalogoFitosanitarios();

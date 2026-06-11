@@ -1,7 +1,7 @@
 <?php include '../config/db.php';
 
 
-function obtenerCultivos() {
+function obtenerCultivosCatalogo() {
     global $connection;
     $sql = "SELECT * FROM cultivo";
     $result = $connection->prepare($sql);
