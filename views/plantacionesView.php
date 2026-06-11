@@ -19,22 +19,39 @@ $plantaciones = obtenerPlantacionesExplotacion($explotacion_id);
             <thead>
                 <tr>
                     <th>Fecha inicio</th>
+                    <th>Fecha fin</th>
                     <th>Parcela</th>
                     <th>Cultivo</th>
                     <th>Variedad</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody id="tablaCosechas">
+            <tbody id="tablaPlantacion">
                 <?php foreach ($plantaciones as $plantacion): ?>
                     <tr>
                         <td><?php echo $plantacion['fecha_inicio']; ?></td>
+                        <td><?php echo $plantacion['fecha_fin']; ?></td>
                         <td><?php echo $plantacion['parcela_nombre']; ?></td>
                         <td><?php echo $plantacion['cultivo_nombre']; ?></td>
                         <td><?php echo $plantacion['variedad_nombre']; ?></td>
                         <td>
-                            <button type="button" class="btnModificarCosecha" data-id="<?php echo $plantacion['plantacion_id']; ?>">Modificar</button>
-                            <button type="button" class="btnEliminarCosecha" data-id="<?php echo $plantacion['plantacion_id']; ?>">Eliminar</button>
+                            <button type="button" class="btnModificarPlantacion" onclick='modificarPlantacion(
+                                        <?php echo json_encode($plantacion["plantacion_id"]); ?>,
+                                        <?php echo json_encode($plantacion["parcela_id"]); ?>,
+                                        <?php echo json_encode($plantacion["unidad_gestion_id"]); ?>,
+                                        <?php echo json_encode($plantacion["cultivo_id"]); ?>,
+                                        <?php echo json_encode($plantacion["densidad_unidad"]); ?>,
+                                        <?php echo json_encode($plantacion["recinto"]); ?>,
+                                        <?php echo json_encode($plantacion["fecha_inicio"]); ?>,
+                                        <?php echo json_encode($plantacion["fecha_fin"]); ?>,
+                                        <?php echo json_encode($plantacion["sistema_cultivo"]); ?>,
+                                        <?php echo json_encode($plantacion["sistema_riego"]); ?>,
+                                        <?php echo json_encode($plantacion["finalidad"]); ?>,
+                                        <?php echo json_encode($plantacion["manejo"]); ?>,
+                                        <?php echo json_encode($plantacion["valor_densidad"]); ?>,
+                                        <?php echo json_encode($plantacion["anotaciones"]); ?>
+                                    )'><i class="ti ti-pencil"></i>Modificar</button>
+                            <button type="button" class="btnEliminarPlantacion" data-id="<?php echo $plantacion['plantacion_id']; ?>"><i class="ti ti-trash"></i>Eliminar</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -45,17 +62,21 @@ $plantaciones = obtenerPlantacionesExplotacion($explotacion_id);
 
 <div class="fab-container">
     <span class="fab-etiqueta">Añadir</span>
-    <button class="fab">+</button>
+    <button class="fab" onclick="abrirFormulario()">+</button>
 </div>
 
 <dialog id="modalAddPlantacion" class="modal_formulario">
     <div class="modal_content">
         <span class="close_button" onclick="cerrarFormulario();">&times;</span>
         <h2 style="text-align: center;">Agregar plantación</h2>
-        <form id="addPlantacion-form">
+        <form id="plantacion-form">
             <div class="grupo-form">
+                <input id="accionPlantacion" type="hidden" name="accion" value="crearPlantacion">
+                <input id="plantacion_id" type="hidden" name="plantacion_id">
                 <label for="fecha_inicio">Fecha inicio:</label>
                 <input type="date" id="fecha_inicio" name="fecha_inicio" required>
+                <label for="fecha_fin" id="label_fecha_fin" style="visibility: hidden;">Fecha fin:</label>
+                <input type="date" id="fecha_fin" name="fecha_fin" style="visibility: hidden;">
                 <label for="parcela">Parcela:</label>
                 <select name="parcela" id="parcela">
                     <option value="" selected disabled>Selecciona parcela</option>
@@ -80,7 +101,7 @@ $plantaciones = obtenerPlantacionesExplotacion($explotacion_id);
                 <label for="unidadGestion">Unidad de gestión:</label>
                 <select name="unidadGestion" id="unidadGestion">
                     <option value="" selected disabled>Selecciona unidad de gestión</option>
-                    <option value="">Sin unidad de gestión</option>
+                    <option value="null">Sin unidad de gestión</option>
                     <?php
                     $unidadGestion = obtenerUnidadesGestionExplotacion($explotacion_id);
                     foreach ($unidadGestion as $unidad) {
@@ -148,16 +169,50 @@ $plantaciones = obtenerPlantacionesExplotacion($explotacion_id);
 </dialog>
 
 <script>
-    document.querySelector('.fab').addEventListener('click', function() {
+    function abrirFormulario() {
         document.getElementById('modalAddPlantacion').showModal();
-    });
+    }
 
     function cerrarFormulario() {
         document.getElementById('modalAddPlantacion').close();
+        document.getElementById('accionPlantacion').value = 'crearPlantacion';
+        document.getElementById('label_fecha_fin').style.visibility = 'hidden';
+        document.getElementById('fecha_fin').style.visibility = 'hidden';
+        document.getElementById('plantacion-form').reset();
+    }
+
+    function modificarPlantacion(plantacion_id, parcela_id, unidad_gestion_id, cultivo_id, densidad_unidad, recinto, fecha_inicio, fecha_fin, sistema_cultivo, 
+        sistema_riego, finalidad, manejo, valor_densidad, anotaciones) {
+            document.getElementById('accionPlantacion').value = 'modificarPlantacion';
+            document.getElementById('label_fecha_fin').style.visibility = 'visible';
+            document.getElementById('fecha_fin').style.visibility = 'visible';
+            document.getElementById('plantacion_id').value = plantacion_id;
+
+            document.getElementById('parcela').value = parcela_id;
+
+            if (unidad_gestion_id === null || unidad_gestion_id === "") {
+                document.getElementById('unidadGestion').value = "null";
+            } else {
+                document.getElementById('unidadGestion').value = String(unidad_gestion_id);
+            }
+
+            document.getElementById('cultivo').value = cultivo_id;
+            document.getElementById('unidadDensidad').value = densidad_unidad;
+            document.getElementById('recinto').value = recinto;
+            document.getElementById('fecha_inicio').value = fecha_inicio;
+            document.getElementById('fecha_fin').value = fecha_fin;
+            document.getElementById('sistema_cultivo').value = sistema_cultivo;
+            document.getElementById('sistema_riego').value = sistema_riego;
+            document.getElementById('finalidad').value = finalidad;
+            document.getElementById('manejo').value = manejo;
+            document.getElementById('valor_densidad').value = valor_densidad;
+            document.getElementById('anotaciones').value = anotaciones;
+
+            abrirFormulario();
     }
 
     // Manejar el envío del formulario
-    document.getElementById('addPlantacion-form').addEventListener('submit', function(event) {
+    document.getElementById('plantacion-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
         const formData = new FormData(this);

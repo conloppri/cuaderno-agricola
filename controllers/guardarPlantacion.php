@@ -7,12 +7,15 @@ header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Recoger datos del formulario
+    $plantacion_id = $_POST['plantacion_id'];
+    $accion = $_POST['accion'];
     $parcela_id = $_POST['parcela'];
     $unidad_gestion_id = $_POST['unidadGestion'];
     $cultivo_id = $_POST['cultivo'];
     $densidad_unidad = $_POST['unidadDensidad'];
     $recinto = $_POST['recinto'];
     $fecha_inicio = $_POST['fecha_inicio'];
+    $fecha_fin = $_POST['fecha_fin'];
     $sistema_cultivo = $_POST['sistema_cultivo'];
     $sistema_riego = $_POST['sistema_riego'];
     $finalidad = $_POST['finalidad'];
@@ -28,9 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Insertar nueva plantación en la base de datos
     try {
-        addPlantacion($connection, $parcela_id, $unidad_gestion_id, $cultivo_id, $densidad_unidad, $recinto, $fecha_inicio, $sistema_cultivo, $sistema_riego, $finalidad, $manejo, $valor_densidad, $anotaciones);
-
-        echo json_encode(['success' => true, 'message' => 'Plantación guardada exitosamente']);
+        if($accion === 'crearPlantacion') {
+            addPlantacion($connection, $parcela_id, $unidad_gestion_id, $cultivo_id, $densidad_unidad, $recinto, $fecha_inicio, $sistema_cultivo, $sistema_riego, $finalidad, $manejo, $valor_densidad, $anotaciones);
+            echo json_encode(['success' => true, 'message' => 'Plantación guardada exitosamente']);
+        }elseif($accion === 'modificarPlantacion'){
+            modPlantacion($connection, $plantacion_id, $parcela_id, $unidad_gestion_id, $cultivo_id, $densidad_unidad, $recinto, $fecha_inicio, $fecha_fin, $sistema_cultivo, $sistema_riego, $finalidad, $manejo, $valor_densidad, $anotaciones);
+            echo json_encode(['success' => true, 'message' => 'Plantación modificada exitosamente']);
+        }
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => 'Error al guardar la plantación: ' . $e->getMessage()]);
     }
