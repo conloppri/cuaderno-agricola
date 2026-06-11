@@ -34,6 +34,51 @@ if($accion == 'crearPersonal'){
             "mensaje" => "Error al guardar el personal"
         ]); 
     }
+}elseif($accion == 'modificarPersonal'){
+    header('Content-Type: application/json'); // Establecer el tipo de contenido a JSON para la respuesta
+
+    // Aquí se procesaría la creación de un nuevo personal utilizando los datos recibidos del formulario
+    $idExplotacion = $_POST['idExplotacion'];
+    $personal_id = $_POST['personal_id'];
+    $nombre = $_POST['nombre'];
+    $dni = $_POST['dni'];
+    $apellidos = $_POST['apellidos'];
+    $telefono = $_POST['telefono'];
+    $email = $_POST['correo'];
+    $direccion = $_POST['direccion'];
+    $provinciaId = $_POST['provincia'];
+    $municipioId = $_POST['municipio'];
+    $nacionalidad = $_POST['nacionalidad'];
+    $rol = $_POST['rol'];
+
+    $resultado = modificarPersonal($personal_id, $nombre, $dni, $apellidos, $telefono, $email, $direccion, $provinciaId, $municipioId, $nacionalidad, $rol);
+    
+    if($resultado){ // Si se ha guardado correctamente, se devuelve una respuesta de éxito
+        echo json_encode([
+            "ok" => true,
+            "mensaje" => "Personal guardado correctamente"
+        ]);
+    } else { // Si ha habido un error al guardar, se devuelve una respuesta de error
+        echo json_encode([
+            "ok" => false,
+            "mensaje" => "Error al guardar el personal"
+        ]); 
+    }
+}elseif($accion == 'eliminarPersonal'){
+    header('Content-Type: application/json');
+        $personal_id = $_POST['personal_id'];
+        $resultado = eliminarPersonal($personal_id);
+        if($resultado){ // Si se ha guardado correctamente, se devuelve una respuesta de éxito
+            echo json_encode([
+                "ok" => true,
+                "mensaje" => "Personal eliminado correctamente"
+            ]);
+        } else { // Si ha habido un error al guardar, se devuelve una respuesta de error
+            echo json_encode([
+                "ok" => false,
+                "mensaje" => "Error al eliminar el personal"
+            ]); 
+        }
 }
 
 class PersonalController{
@@ -46,7 +91,8 @@ class PersonalController{
             $municipio = obtenerMunicipio($connection, $personal['municipio_id']);
             array_push($infoPersonal, [
                 'id' => $personal['personal_id'],
-                'nombre' => $personal['nombre'] . ' ' .$personal['apellidos'],
+                'nombre' => $personal['nombre'],
+                'apellidos' => $personal['apellidos'],
                 'dni' => $personal['dni'],
                 'telefono' => $personal['telefono'],
                 'correo_electronico' => $personal['email'],

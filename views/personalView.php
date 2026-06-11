@@ -42,7 +42,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                 <!-- Aquí se mostrarán los datos del personal -->
                 <?php foreach ($infoPersonal as $personal): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($personal['nombre']); ?></td>
+                        <td><?php echo htmlspecialchars($personal['nombre']. ' ' .$personal['apellidos']); ?></td>
                         <td><?php echo htmlspecialchars($personal['dni']); ?></td>
                         <td><?php echo htmlspecialchars($personal['telefono']); ?></td>
                         <td><?php echo htmlspecialchars($personal['correo_electronico']); ?></td>
@@ -56,6 +56,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                                 <button class="editar_btn" type="button" onclick='modificarPersonal(
                                         <?php echo json_encode($personal["id"]); ?>,
                                         <?php echo json_encode($personal["nombre"]); ?>,
+                                        <?php echo json_encode($personal["apellidos"]); ?>,
                                         <?php echo json_encode($personal["dni"]); ?>,
                                         <?php echo json_encode($personal["telefono"]); ?>,
                                         <?php echo json_encode($personal["correo_electronico"]); ?>,
@@ -65,7 +66,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                                         <?php echo json_encode($personal["nacionalidad"]); ?>,
                                         <?php echo json_encode($personal["rol"]); ?>
                                     )'> <i class="ti ti-pencil"></i> </button>
-                                <button class="eliminar_btn" type="button" onclick=""><i class="ti ti-trash"></i> </button>
+                                <button class="eliminar_btn" type="button" onclick='eliminarPersonal(<?php echo json_encode($personal["id"]); ?>)'><i class="ti ti-trash"></i> </button>
                             </td>
                         <?php endif ?>
                     </tr>
@@ -109,7 +110,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                 <label for="direccion">Dirección:</label>
                 <input id="direccionPersonal" type="text" id="direccion" name="direccion" maxlength="45" placeholder="Dirección" required>
                 <label for="provincia">Provincia:</label>
-                <select id="provinciaPersonal" name="provincia" id="provincia">
+                <select id="provinciaPersonal" name="provincia">
                     <option value="" selected disabled>Selecciona provincia</option>
                     <?php
                     $provincias = obtenerProvincias($connection);
@@ -119,7 +120,7 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
                     ?>
                 </select>
                 <label for="municipio">Municipio:</label>
-                <select id="municipioPersonal" name="municipio" id="municipio">
+                <select id="municipioPersonal" name="municipio">
                     <option value="" selected disabled>Selecciona municipio</option>
                 </select>
                 <label for="nacionalidad">Nacionalidad:</label>
@@ -199,19 +200,60 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
         document.getElementById('usuario-form').reset();
     }
 
-    function modificarPersonal(personal_id, nombre, dni, telefono, correo, direccion, provincia, municipio, nacionalidad, rol) {
+    function listarMunicipiosPorProvincia(provincia_id){
+        fetch("../controllers/obtenerMunicipios.php?provincia_id=" + provincia_id)
+            .then(res => res.json())
+            .then(data => {
+                const selectMunicipio = document.getElementById("municipioPersonal");
+                
+                data.forEach(m => {
+                    selectMunicipio.innerHTML += `<option value="${m.id}">${m.nombre}</option>`;
+                });
+            });
+    }
+
+    function modificarPersonal(personal_id, nombre, apellidos, dni, telefono, correo, direccion, provincia, municipio, nacionalidad, rol) {
         abrirFormulario();
         document.getElementById('accionPersonal').value = 'modificarPersonal';
         document.getElementById('personal_id').value = personal_id;
         document.getElementById('nombrePersonal').value = nombre;
+        document.getElementById('apellidosPersonal').value = apellidos;
         document.getElementById('dniPersonal').value = dni;
         document.getElementById('telefonoPersonal').value = telefono;
         document.getElementById('correoPersonal').value = correo;
         document.getElementById('direccionPersonal').value = direccion;
         document.getElementById('provinciaPersonal').value = provincia;
-        
+        listarMunicipiosPorProvincia(provincia);
+        document.getElementById('municipioPersonal').value = municipio;
         document.getElementById('nacionalidadPersonal').value = nacionalidad;
         document.getElementById('rolPersonal').value = rol;
+    }
+
+    async function eliminarPersonal(personal_id){
+        let respuesta = confirm("¿Estás seguro de que quieres eliminar este registro?");
+        if(respuesta){
+            try{
+            const formData = new FormData();
+            formData.append("accion", "eliminarPersonal");
+            formData.append("personal_id", personal_id);
+            const respuesta = await fetch("../controllers/personalController.php", {
+                method: "POST",
+                body: formData,
+            });
+
+            const resultado = await respuesta.json();
+            if(resultado.ok){
+                //Si se ha podido guardar correctamente, recargamos la página para mostrar la nueva unidad de gestión en la tabla
+                location.reload();
+                alert("Personal eliminado correctamente."); //Notificación de éxito
+            } else {
+                alert(resultado.mensaje); // Mostrar mensaje de error devuelto por el servidor
+            }
+        } catch (error) {
+            console.error("Error al eliminar el personal", error);
+            alert("Error con la conexión. Por favor, inténtalo de nuevo."); // Mensaje de error genérico
+        }
+        }
     }
 
     document.querySelector(".gestionar_usuarios_button").addEventListener("click", function() {
@@ -219,25 +261,18 @@ $infoPersonal = PersonalController::obtenerInfoPersonal($connection, $idExplotac
     });
 
     //Limitar input teléfono a números y máximo 9 dígitos
-    const telefono = document.getElementById("telefono");
+    const telefono = document.getElementById("telefonoPersonal");
     telefono.addEventListener("input", function() {
         this.value = this.value.replace(/\D/g, '').slice(0, 9);
     });
 
     //Municipios por provincia
-    document.getElementById("provincia").addEventListener("change", function() {
+    document.getElementById("provinciaPersonal").addEventListener("change", function() {
         const provinciaId = this.value;
-
-        fetch("../controllers/obtenerMunicipios.php?provincia_id=" + provinciaId)
-            .then(res => res.json())
-            .then(data => {
-                const selectMunicipio = document.getElementById("municipio");
-
-                data.forEach(m => {
-                    selectMunicipio.innerHTML += `<option value="${m.id}">${m.nombre}</option>`;
-                });
-            });
+        listarMunicipiosPorProvincia(provinciaId);
+        
     });
+
 
     //Guardar personal
     document.getElementById("personal-form").addEventListener("submit", async function(e) {
