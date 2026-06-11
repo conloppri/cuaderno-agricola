@@ -32,4 +32,9 @@ function obtenerUnidadesGestionExplotacion(int $explotacion_id) {
     global $connection;
     return obtenerUnidadesGestionPorExplotacion($connection, $explotacion_id);
 }
+
+function obtenerCatalogoUnidadDensidad() {
+    global $connection;
+    return obtenerUnidadDensidad($connection);
+}
 ?>

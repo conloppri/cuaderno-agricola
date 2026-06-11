@@ -122,4 +122,10 @@ function obtenerUnidadesGestionPorExplotacion(PDO $connection, int $explotacion_
     $stmt->execute(['explotacion_id' => $explotacion_id]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function obtenerUnidadDensidad(PDO $connection) {
+    $stmt = $connection->prepare("SELECT * FROM unidad WHERE tipo = 'densidad'");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
