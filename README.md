@@ -36,9 +36,12 @@ La aplicación web ofrece una solución integral para la gestión agrícola a tr
 
 ---
 
-## 📸 Capturas de Pantalla (Recomendado)
+## 📸 Capturas de Pantalla
 
 <img width="1915" height="907" alt="Captura de pantalla 2026-06-19 223140" src="https://github.com/user-attachments/assets/5e1efa7a-335e-41d2-a954-18ee039a2fb4" />
+
+<img width="1881" height="905" alt="Captura de pantalla 2026-06-19 224000" src="https://github.com/user-attachments/assets/28a355a1-b77d-423f-9324-ac18ac3d27af" />
+
 
 <img width="1886" height="912" alt="Captura de pantalla 2026-06-19 223011" src="https://github.com/user-attachments/assets/f7d36deb-58cd-459a-84cf-70dd428ee666" />
 
